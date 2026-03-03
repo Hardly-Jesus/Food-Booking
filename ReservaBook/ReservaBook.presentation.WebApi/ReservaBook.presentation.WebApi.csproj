@@ -8,6 +8,22 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReservaBook.Core.Aplication\ReservaBook.Core.Aplication.csproj" />
+    <ProjectReference Include="..\ReservaBook.Core.Domain\ReservaBook.Core.Domain.csproj" />
+    <ProjectReference Include="..\ReservaBook.Infraestructure.Indentity\ReservaBook.Infraestructure.Indentity.csproj" />
+    <ProjectReference Include="..\ReservaBook.Infraestructure.Persistence\ReservaBook.Infraestructure.Persistence.csproj" />
+    <ProjectReference Include="..\ReservaBook.Infraestructure.Shared\ReservaBook.Infraestructure.Shared.csproj" />
   </ItemGroup>
 
 </Project>
