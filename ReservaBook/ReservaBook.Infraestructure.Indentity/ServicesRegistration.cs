@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReservaBook.Infraestructure.Indentity.Contexts;
 using ReservaBook.Infraestructure.Indentity.Entities;
+using ReservaBook.Infraestructure.Indentity.Seeds;
 
 namespace ReservaBook.Infraestructure.Indentity
 {
@@ -132,6 +133,26 @@ namespace ReservaBook.Infraestructure.Indentity
 
 
 
+
+        #region identity Seed
+        public static async Task RunIdentitySeed(this IServiceProvider Service)
+        {
+
+            using var scope = Service.CreateScope();
+            
+            var serviceProvider = scope.ServiceProvider;
+
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+            await DefaultRoles.seedAsync(roleManager);
+            await DefaultPropietarioUser.SeedAsync(userManager);
+            await DefaultAdminUser.SeedAsync(userManager);
+            await DefaultClienteUser.SeedAsync(userManager);
+
+        }
+        #endregion
 
 
 

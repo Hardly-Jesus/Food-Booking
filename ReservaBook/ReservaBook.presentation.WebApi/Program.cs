@@ -1,5 +1,9 @@
 using ReservaBook.Infraestructure.Shared;
 using ReservaBook.Infraestructure.Indentity;
+using Microsoft.AspNetCore.Identity;
+using ReservaBook.Infraestructure.Indentity.Entities;
+using ReservaBook.Infraestructure.Indentity.Seeds;
+using ReservaBook.presentation.WebApi.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,25 +21,30 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEmailServicesIOC(builder.Configuration);
 builder.Services.AddIdentityLayerIOCForWebApi(builder.Configuration);
-
-
+builder.Services.AddHealthChecks();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddApiVersioning();
+builder.Services.AddSwaggerExtension();
+builder.Services.AddVersioningExtensions();
 
 
 
 
 var app = builder.Build();
+//await app.Services.RunIdentitySeed();
 
-// Configure the HTTP request pipeline.
-// Hola prueba de comit--Andris
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+    // Configure the HTTP request pipeline.
+    // Hola prueba de comit--Andris
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwaggerExtension(app);
+        app.MapOpenApi();
+    }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseHealthChecks("/health");
 app.MapControllers();
 
 app.Run();
