@@ -19,7 +19,7 @@ namespace ReservaBook.presentation.WebApi.Extensions
 
                 Opt.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Version = "v1",
+                    Version = "v1.0",
                     Title = "Reserva food Api",
                     Description = "this api will be resposible for overall data distribution",
                     Contact = new OpenApiContact()
@@ -34,7 +34,7 @@ namespace ReservaBook.presentation.WebApi.Extensions
 
                 Opt.SwaggerDoc("v2", new OpenApiInfo()
                 {
-                    Version = "v2",
+                    Version = "v2.0",
                     Title = "Reserva food Api",
                     Description = "this api will be resposible for overall data distribution",
                     Contact = new OpenApiContact()

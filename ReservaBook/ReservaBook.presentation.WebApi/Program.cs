@@ -1,8 +1,5 @@
 using ReservaBook.Infraestructure.Shared;
 using ReservaBook.Infraestructure.Indentity;
-using Microsoft.AspNetCore.Identity;
-using ReservaBook.Infraestructure.Indentity.Entities;
-using ReservaBook.Infraestructure.Indentity.Seeds;
 using ReservaBook.presentation.WebApi.Extensions;
 
 
@@ -31,11 +28,11 @@ builder.Services.AddVersioningExtensions();
 
 
 var app = builder.Build();
-//await app.Services.RunIdentitySeed();
+await app.Services.RunIdentitySeed();
 
-    // Configure the HTTP request pipeline.
-    // Hola prueba de comit--Andris
-    if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+// Hola prueba de comit--Andris
+if (app.Environment.IsDevelopment())
     {
         app.UseSwaggerExtension(app);
         app.MapOpenApi();

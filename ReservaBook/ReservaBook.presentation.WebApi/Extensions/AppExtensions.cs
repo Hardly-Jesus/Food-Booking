@@ -17,7 +17,7 @@ namespace ReservaBook.presentation.WebApi.Extensions
                     foreach (var apiversion in versionDescriptions)
                     {
                         var url = $"/swagger/{apiversion.GroupName}/swagger.json";
-                        var name = $"Invesment Api - {apiversion.GroupName.ToUpperInvariant()}";
+                        var name = $"Reserva food Api - {apiversion.GroupName.ToUpperInvariant()}";
                         opt.SwaggerEndpoint(url,name);
                         
                     }

@@ -4,33 +4,37 @@ using Azure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ReservaBook.Core.Aplication.Dtos.email;
 using ReservaBook.Core.Aplication.Dtos.User;
 using ReservaBook.Core.Aplication.Interfaces;
+using ReservaBook.Core.Domain.Settings;
 using ReservaBook.Infraestructure.Indentity.Entities;
-using System.Collections.Immutable;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 
 
 namespace ReservaBook.Infraestructure.Indentity.Services
 {
-    public class AccountServiceForWebApi : Core.Aplication.Interfaces.IAccountServiceForWebApi
+    public class AccountServiceForWebApi : IAccountServiceForWebApi
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly IEmailService emailService;
+        private readonly JwtSettings _jwtSettings;
 
 
 
 
-
-        public AccountServiceForWebApi(UserManager<AppUser> _userManager, SignInManager<AppUser> _signInManager, IEmailService _emailService)
+        public AccountServiceForWebApi(UserManager<AppUser> _userManager, SignInManager<AppUser> _signInManager, IEmailService _emailService, IOptions<JwtSettings> JwtSettings)
         {
             emailService = _emailService;
             userManager = _userManager;
             signInManager = _signInManager;
+            _jwtSettings = JwtSettings.Value;
 
         }
 
@@ -39,7 +43,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
         public async Task<LoginResponseDto> Authenticate(LoginDto dto)
         {
 
-            var responseDto = new LoginResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [] };
+            var responseDto = new LoginResponseDto() { Name = "", LastName = "", Errors = [], AccessToken = "" };
 
 
 
@@ -79,16 +83,16 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             }
 
 
+            JwtSecurityToken jwtSecurityToken = await GenerateJwtToken(user);
+
+
+
             var rolesList = await userManager.GetRolesAsync(user);
 
-            responseDto.Id = user.Id;
+   
             responseDto.Name = user.Name;
-            responseDto.UserName = user.UserName ?? "";
             responseDto.LastName = user.LastName;
-            responseDto.Email = user.Email ?? "";
-            responseDto.IsVerified = user.EmailConfirmed;
-            responseDto.Roles = rolesList.ToList();
-
+            responseDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
 
             return responseDto;
@@ -99,16 +103,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task SignOutAsync()
-        {
-
-            await signInManager.SignOutAsync();
-
-        }
-
-
-
-        public async Task<RegisterResponseDto> RegisterUser(SaveUserDto saveUser, string origin)
+        public async Task<RegisterResponseDto> RegisterUser(SaveUserDto saveUser)
         {
 
             var response = new RegisterResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [] };
@@ -153,12 +148,12 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(User, saveUser.Role);
-                string UrlVerification = await GetVerificationEmailUri(User, origin);
+                string token = await GetVerificationEmailToken(User);
                 await emailService.SendAsync(new EmailRequestDto()
                 {
                     To = saveUser.Email,
                     Subject = "Confirm registration",
-                    HtmlBody = "Please confirm your acount visiting this URL: "
+                    HtmlBody = $"Please confirm your acount Use this Token:{token} "
 
                 });
 
@@ -172,9 +167,6 @@ namespace ReservaBook.Infraestructure.Indentity.Services
                 response.Email = User.Email ?? "";
                 response.IsVerified = User.EmailConfirmed;
                 response.Roles = CurrentrolesList.ToList();
-
-
-
 
             }
             else
@@ -194,9 +186,11 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<EditResponseDto> EditUser(SaveUserDto saveUser, string origin)
+        public async Task<EditResponseDto> EditUser(SaveUserDto saveUser,bool? IsCreated = false)
         {
 
+
+            bool IsNotCreated = IsCreated ?? false;
             var response = new EditResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = []};
 
 
@@ -250,25 +244,35 @@ namespace ReservaBook.Infraestructure.Indentity.Services
                 await userManager.RemoveFromRolesAsync(user, rolesList);
                 await userManager.AddToRoleAsync(user, saveUser.Role);
 
-                if (!user.EmailConfirmed)
+                if (!user.EmailConfirmed && IsNotCreated)
                 {
-                    string UrlVerification = await GetVerificationEmailUri(user, origin);
+                    string token = await GetVerificationEmailToken(user);
                     await emailService.SendAsync(new EmailRequestDto()
                     {
                         To = saveUser.Email,
                         Subject = "Confirm registration",
-                        HtmlBody = "Please confirm your acount visiting this URL: "
+                        HtmlBody = $"Please confirm your acount use this URL: {token}"
 
 
                     });
                 }
 
 
-                if (!string.IsNullOrEmpty(saveUser.Password))
+
+                if (!string.IsNullOrWhiteSpace(saveUser.Password) && IsNotCreated)
                 {
 
                     var token = await userManager.GeneratePasswordResetTokenAsync(user);
-                    await userManager.ResetPasswordAsync(user, token, saveUser.Password);
+                    var resultChange = await userManager.ResetPasswordAsync(user, token, saveUser.Password);
+
+                    if (resultChange != null && !resultChange.Succeeded)
+                    {
+
+                        response.HasError = true;
+                        response.Errors.AddRange(resultChange.Errors.Select(s => s.Description).ToList());
+                        return response;
+
+                    }
 
                 }
 
@@ -538,7 +542,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-            var ressetUri = GetRessetPasswordUri(user, request.Origin);
+            var ressetToken = GetRessetPassworToken(user);
             user.EmailConfirmed = false;
 
 
@@ -550,7 +554,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
                 To = user.Email ?? "",
                 Subject = "RessetPassword",
-                HtmlBody = $"please resset your password visiting this URL: {ressetUri}"
+                HtmlBody = $"please resset your password visiting this URL: {ressetToken}"
 
 
             });
@@ -599,52 +603,76 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
         #region private Method
-        public async Task<string> GetVerificationEmailUri(AppUser user, string origin)
+        private async Task<string> GetVerificationEmailToken(AppUser user)
         {
 
             string Token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             Token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(Token));
-            var route = "Login/ConfirmEmail";
-            var ulrComplete = new Uri(string.Concat(origin, "/", route));
-            var verificationUri = QueryHelpers.AddQueryString(ulrComplete.ToString(), "UserId", user.Id);
-            verificationUri = QueryHelpers.AddQueryString(verificationUri.ToString(), "token", Token);
-
-            return verificationUri;
+            
+            return Token;
 
         }
 
 
 
 
-        public async Task<string> GetRessetPasswordUri(AppUser user, string origin)
+        private async Task<string> GetRessetPassworToken(AppUser user)
         {
 
             string Token = await userManager.GeneratePasswordResetTokenAsync(user);
+            Token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(Token));   
+            return Token;
 
-            Token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(Token));
-            var route = "Login/RessetPassword";
-            var ulrComplete = new Uri(string.Concat(origin, "/", route));
-            var ressetPassword = QueryHelpers.AddQueryString(ulrComplete.ToString(), "UserId", user.Id);
-            ressetPassword = QueryHelpers.AddQueryString(ressetPassword.ToString(), "token", Token);
+        }
 
-            return ressetPassword;
+
+
+
+
+        public async Task<JwtSecurityToken> GenerateJwtToken(AppUser user)
+        {
+        
+        
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var roles = await userManager.GetRolesAsync(user);
+
+
+
+            var rolesClaims = new List<Claim>();
+
+            foreach(var role in roles)
+            {
+                rolesClaims.Add(new Claim("role",role));
+            }
+
+
+            var claims = new[]
+            {
+
+                new Claim(JwtRegisteredClaimNames.Sub,user.UserName ?? ""),
+                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email,user.Email ?? ""),
+                new Claim("UId",user.Id),
+
+            }.Union(userClaims).Union(rolesClaims);
+
+
+            var symmectriSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecreKey));
+            var signinCredentials = new SigningCredentials(symmectriSecurityKey,SecurityAlgorithms.Aes128CbcHmacSha256);
+
+
+            var JwtSecuritytoken = new JwtSecurityToken(
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                signingCredentials: signinCredentials);
+
+
+            return JwtSecuritytoken;
 
         }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

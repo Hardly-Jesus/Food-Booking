@@ -1,12 +1,22 @@
 ﻿
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using ReservaBook.Core.Aplication.Dtos.User;
+using ReservaBook.Core.Aplication.Interfaces;
+using ReservaBook.Core.Domain.Settings;
 using ReservaBook.Infraestructure.Indentity.Contexts;
 using ReservaBook.Infraestructure.Indentity.Entities;
 using ReservaBook.Infraestructure.Indentity.Seeds;
+using ReservaBook.Infraestructure.Indentity.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace ReservaBook.Infraestructure.Indentity
 {
@@ -19,7 +29,12 @@ namespace ReservaBook.Infraestructure.Indentity
 
             #region context configuration
             GenerateConfiguration(service, config);
+            #endregion
 
+
+            #region configuration IOC
+            service.AddSingleton<IAccountServiceForWebApi, AccountServiceForWebApi>();
+            service.Configure<JwtSettings>(config.GetSection("JwtSettings"));
             #endregion
 
 
@@ -65,8 +80,6 @@ namespace ReservaBook.Infraestructure.Indentity
             {
                 opt.TokenLifespan = TimeSpan.FromHours(12); //tiempo de duracion del token
                
-
-
             });
 
 
@@ -74,17 +87,62 @@ namespace ReservaBook.Infraestructure.Indentity
             service.AddAuthentication(opt =>
             {
 
-                opt.DefaultScheme = IdentityConstants.ApplicationScheme;
-                opt.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-                opt.DefaultSignInScheme = IdentityConstants.ApplicationScheme;  
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;  
 
             }).AddCookie(IdentityConstants.ApplicationScheme,opt =>
             {
                 opt.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                opt.LoginPath = "/Login";
-                opt.AccessDeniedPath = "/Login/AccessDenied";
+            
+            }).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = false;
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = config["JwtSettings:Issuer"],
+                    ValidAudience = config["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Secretkey"] ?? ""))
+                };
 
+                opt.Events = new JwtBearerEvents()
+                {
 
+                    OnAuthenticationFailed = c =>
+                    {
+
+                        c.NoResult();   //El token tiene un formato invalido
+                        c.Response.StatusCode = 500;
+                        c.Response.ContentType = "text/plain";
+                        return c.Response.WriteAsync(c.Exception.Message.ToString());
+                    },
+                    OnChallenge = oc =>
+                    {
+
+                        oc.HandleResponse();
+                        oc.Response.StatusCode = 401; //El usuario no esta authenticado
+                        oc.Response.ContentType = "application/plain";
+                        var result =  JsonConvert.SerializeObject(new JwtResponseDto() { HasError = false, Error = "You are not authorize"});
+                        return oc.Response.WriteAsync(result);
+                    },
+                    OnForbidden = of =>
+                    {
+
+                        of.Response.StatusCode = 403; //El usuario no tiene permisos
+                        of.Response.ContentType = "application/plain";
+                        var result = JsonConvert.SerializeObject(new JwtResponseDto() { HasError = false, Error = "You are not authorize to access this resource"});
+                        return of.Response.WriteAsync(result);
+
+                    }
+                };
+                    
+                    
             });
 
 
