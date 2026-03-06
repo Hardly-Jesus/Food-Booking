@@ -4,6 +4,6 @@ namespace ReservaBook.Core.Aplication.Interfaces
 {
     public interface IEmailService
     {
-        Task SendAsync(EmailRequestDto dto);
+        Task<bool> SendAsync(EmailRequestDto dto);
     }
 }

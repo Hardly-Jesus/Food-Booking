@@ -99,10 +99,10 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             try
             {
 
-                var result = await _accountService.confirmAccounAsync(dto.UserId,dto.Token);
+                var result = await _accountService.confirmAccounAsync(dto);
 
 
-                if(result.HasError || result == null)
+                if(result == null || result.HasError)
                 {
                     return BadRequest(result!.Message);
                 }
@@ -166,7 +166,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 var result = await _accountService.RessetPassowrd(dto);
 
 
-                if (result.HasError || result == null)
+                if (result == null || result.HasError)
                 {
                     return BadRequest(result!.Errors);
                 }

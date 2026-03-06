@@ -47,7 +47,6 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-
             if (string.IsNullOrWhiteSpace(dto.Password))
             {
 
@@ -111,7 +110,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             var rolesList = await userManager.GetRolesAsync(user);
 
-   
+
             responseDto.Name = user.Name;
             responseDto.LastName = user.LastName;
             responseDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
@@ -125,10 +124,31 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<RegisterResponseDto> RegisterUser(SaveUserDto saveUser)
+
+        public async Task<RegisterResponseDto?> RegisterUser(SaveUserDto? saveUser)
         {
 
             var response = new RegisterResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [], Message = "" };
+
+
+            if (saveUser == null)
+            {
+                return null;
+
+            }
+
+
+            if (string.IsNullOrWhiteSpace(saveUser.Email)
+             || string.IsNullOrWhiteSpace(saveUser.Password)
+             || string.IsNullOrWhiteSpace(saveUser.UserName)
+             || string.IsNullOrWhiteSpace(saveUser.LastName)
+             || string.IsNullOrWhiteSpace(saveUser.Name)
+             || string.IsNullOrWhiteSpace(saveUser.Phone)
+             || string.IsNullOrWhiteSpace(saveUser.ProfileImage)
+             || string.IsNullOrWhiteSpace(saveUser.Role))
+            {
+                return null;
+            }
 
 
             var userWithSomeUserName = await userManager.FindByNameAsync(saveUser.UserName);
@@ -209,12 +229,20 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<EditResponseDto> EditUser(SaveUserDto saveUser,bool? IsCreated = false)
+        public async Task<EditResponseDto?> EditUser(SaveUserDto? saveUser, bool? IsCreated = false)
         {
 
 
             bool IsNotCreated = IsCreated ?? false;
-            var response = new EditResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = []};
+            var response = new EditResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [] };
+
+
+
+            if (saveUser == null)
+            {
+                return null;
+
+            }
 
 
             var userWithSomeUserName = await userManager.Users.FirstOrDefaultAsync(u => u.UserName == saveUser.UserName && u.Id != saveUser.Id);
@@ -331,9 +359,20 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
         public async Task<UserResponseDto> DeleteAsync(string id)
         {
+            var response = new UserResponseDto() { Errors = [], HasError = false };
+
+            if (string.IsNullOrEmpty(id))
+            {
+                response.HasError = true;
+                response.Errors.Add("You should put the user id");
+                return response;
+
+
+            }
+
+
             var user = await userManager.FindByIdAsync(id);
 
-            var response = new UserResponseDto() { Errors = [], HasError = false };
 
             if (user == null)
             {
@@ -347,15 +386,21 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             await userManager.DeleteAsync(user!);
 
-
             return response;
         }
+
 
 
         public async Task<List<UserDto>> GetAllUser(bool? IsActive = true)
         {
 
             var users = userManager.Users;
+
+
+            if (users == null)
+            {
+                return new List<UserDto>();
+            }
 
 
             List<UserDto> ListUserDto = [];
@@ -513,10 +558,26 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<UserResponseDto> RessetPassowrd(RessetPasswordRequestDto request)
+        public async Task<UserResponseDto?> RessetPassowrd(RessetPasswordRequestDto? request)
         {
 
             var response = new UserResponseDto() { Errors = [], HasError = false };
+
+
+            if (request == null)
+            {
+                return null;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(request.Id)
+               || string.IsNullOrWhiteSpace(request.Token)
+               || string.IsNullOrWhiteSpace(request.password))
+            {
+                return null;
+            }
+
+
 
 
             var user = await userManager.FindByIdAsync(request.Id);
@@ -556,6 +617,15 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             var response = new UserResponseDto() { Errors = [], HasError = false };
 
 
+            if (string.IsNullOrEmpty(request.UserName))
+            {
+                response.HasError = true;
+                response.Errors.Add("You should put de userName");
+                return response;
+
+            }
+
+
             var user = await userManager.FindByNameAsync(request.UserName);
 
             if (user == null)
@@ -572,7 +642,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             user.EmailConfirmed = false;
 
 
-             var result = await userManager.UpdateAsync(user);
+            var result = await userManager.UpdateAsync(user);
 
 
             await emailService.SendAsync(new EmailRequestDto()
@@ -589,7 +659,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             {
                 response.Message = "Please Check your email, for reseet your password";
             }
-            
+
             return response;
         }
 
@@ -600,11 +670,27 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<ConfirmResponseDto> confirmAccounAsync(string UserId, string Token)
+        public async Task<ConfirmResponseDto?> confirmAccounAsync(ConfirmRequestDto? dto)
         {
             var response = new ConfirmResponseDto() { HasError = false, Message = "" };
 
-            var user = await userManager.FindByIdAsync(UserId);
+            if (dto == null)
+            {
+                return null;
+            }
+
+
+            if (string.IsNullOrEmpty(dto.UserId)
+                || string.IsNullOrEmpty(dto.Token)
+               ) 
+            {
+
+                return null;
+           
+            }
+
+
+            var user = await userManager.FindByIdAsync(dto.UserId);
 
             if (user == null)
             {
@@ -616,8 +702,8 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             }
 
 
-            Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(Token));
-            var result = await userManager.ConfirmEmailAsync(user, Token);
+            dto.Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(dto.Token));
+            var result = await userManager.ConfirmEmailAsync(user, dto.Token);
             if (result.Succeeded)
             {
                 response.HasError = false;

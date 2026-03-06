@@ -28,10 +28,26 @@ namespace ReservaBook.Infraestructure.Shared.Services
 
 
 
-        public async Task SendAsync(EmailRequestDto dto)
+        public async Task<bool> SendAsync(EmailRequestDto? dto)
         {
             try
             {
+                if (dto == null)
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrEmpty(dto.To)
+                   || string.IsNullOrEmpty(dto.Subject)
+                   || string.IsNullOrEmpty(dto.HtmlBody)
+                  )
+                {
+
+                    return false;
+                }
+
+
+
                 dto.ToRange.Add(dto.To ?? "");
 
 
@@ -67,12 +83,14 @@ namespace ReservaBook.Infraestructure.Shared.Services
                 await smptClient.AuthenticateAsync(_mailSettings.SmtpUser, _mailSettings.SmtpPass);
                 await smptClient.SendAsync(email);
                 await smptClient.DisconnectAsync(true);
+                return true;
 
             }
             catch (Exception ex)
             {
 
                 _logger.LogError(ex, "An ocurred an error with send Email", ex);
+                return false;
 
             }
 
