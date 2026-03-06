@@ -48,15 +48,37 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
+            if (string.IsNullOrWhiteSpace(dto.Password))
+            {
+
+                responseDto.HasError = true;
+                responseDto.Errors!.Add($"You should put the password");
+                return responseDto;
+            }
+
+
+
+
+            if (string.IsNullOrWhiteSpace(dto.UserName))
+            {
+
+                responseDto.HasError = true;
+                responseDto.Errors!.Add($"You should put the UserName");
+                return responseDto;
+            }
+
+
+
             var user = await userManager.FindByNameAsync(dto.UserName);
 
-            if (user != null)
+            if (user == null)
             {
                 responseDto.HasError = true;
                 responseDto.Errors!.Add($"There is not account registered with this userName: {dto.UserName}");
                 return responseDto;
 
             }
+
 
 
 
@@ -106,7 +128,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
         public async Task<RegisterResponseDto> RegisterUser(SaveUserDto saveUser)
         {
 
-            var response = new RegisterResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [] };
+            var response = new RegisterResponseDto() { Name = "", Email = "", Id = "", LastName = "", UserName = "", Errors = [], Message = "" };
 
 
             var userWithSomeUserName = await userManager.FindByNameAsync(saveUser.UserName);
@@ -130,7 +152,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             AppUser User = new AppUser()
             {
 
-                Name = saveUser.LastName,
+                Name = saveUser.Name,
                 LastName = saveUser.LastName,
                 Email = saveUser.Email,
                 PhoneNumber = saveUser.Phone,
@@ -167,6 +189,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
                 response.Email = User.Email ?? "";
                 response.IsVerified = User.EmailConfirmed;
                 response.Roles = CurrentrolesList.ToList();
+                response.Message = "Please Check your email, for verification your account";
 
             }
             else
@@ -213,7 +236,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
             var user = await userManager.FindByIdAsync(saveUser.Id);
-            if (user != null)
+            if (user == null)
             {
                 response.HasError = true;
                 response.Errors!.Add("There is not account registered with this user");
@@ -222,15 +245,17 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-            user!.Name = saveUser.LastName;
-            user.LastName = saveUser.LastName;
-            user.PhoneNumber = saveUser.Phone;
-            user.UserName = saveUser.UserName;
-            user.EmailConfirmed = false;
+            user!.Name = !string.IsNullOrWhiteSpace(saveUser.Name) ? saveUser.Name : user.Name;
+            user.LastName = !string.IsNullOrWhiteSpace(saveUser.LastName) ? saveUser.LastName : user.LastName;
+            user.PhoneNumber = !string.IsNullOrWhiteSpace(saveUser.Phone) ? saveUser.Phone : user.PhoneNumber;
+            user.UserName = !string.IsNullOrWhiteSpace(saveUser.UserName) ? saveUser.UserName : user.UserName;
             user.ProfileImage = string.IsNullOrWhiteSpace(saveUser.ProfileImage) ? user.ProfileImage : saveUser.ProfileImage;
             user.RNC = saveUser.RNC ?? "";
-            user.EmailConfirmed = user.Email == saveUser.Email;
-            user.Email = saveUser.Email;
+            if (!IsCreated!.Value)
+            {
+                user.EmailConfirmed = user.Email == saveUser.Email;
+            }
+            user.Email = !string.IsNullOrWhiteSpace(saveUser.Email) ? saveUser.Email : user.Email;
 
 
 
@@ -244,14 +269,14 @@ namespace ReservaBook.Infraestructure.Indentity.Services
                 await userManager.RemoveFromRolesAsync(user, rolesList);
                 await userManager.AddToRoleAsync(user, saveUser.Role);
 
-                if (!user.EmailConfirmed && IsNotCreated)
+                if (!user.EmailConfirmed && !IsNotCreated)
                 {
                     string token = await GetVerificationEmailToken(user);
                     await emailService.SendAsync(new EmailRequestDto()
                     {
-                        To = saveUser.Email,
+                        To = !string.IsNullOrWhiteSpace(saveUser.Email) ? saveUser.Email : user.Email!,
                         Subject = "Confirm registration",
-                        HtmlBody = $"Please confirm your acount use this URL: {token}"
+                        HtmlBody = $"Please confirm your acount use this Token: {token}"
 
 
                     });
@@ -259,7 +284,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-                if (!string.IsNullOrWhiteSpace(saveUser.Password) && IsNotCreated)
+                if (!string.IsNullOrWhiteSpace(saveUser.Password) && !IsNotCreated)
                 {
 
                     var token = await userManager.GeneratePasswordResetTokenAsync(user);
@@ -315,11 +340,12 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
                 response.HasError = true;
                 response.Errors!.Add($"There is not Account registered with this user");
+                return response;
 
             }
 
 
-            await userManager.DeleteAsync(user);
+            await userManager.DeleteAsync(user!);
 
 
             return response;
@@ -524,7 +550,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<UserResponseDto> ForgotPasswordAsync(ForgotPasswordRequest request)
+        public async Task<UserResponseDto> ForgotPasswordAsync(ForgotPasswordRequestDto request)
         {
 
             var response = new UserResponseDto() { Errors = [], HasError = false };
@@ -542,11 +568,11 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-            var ressetToken = GetRessetPassworToken(user);
+            var ressetToken = await GetRessetPassworToken(user);
             user.EmailConfirmed = false;
 
 
-            await userManager.UpdateAsync(user);
+             var result = await userManager.UpdateAsync(user);
 
 
             await emailService.SendAsync(new EmailRequestDto()
@@ -559,6 +585,11 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             });
 
+            if (result.Succeeded)
+            {
+                response.Message = "Please Check your email, for reseet your password";
+            }
+            
             return response;
         }
 
@@ -568,15 +599,19 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
 
-        public async Task<string> confirmAccounAsync(string UserId, string Token)
+
+        public async Task<ConfirmResponseDto> confirmAccounAsync(string UserId, string Token)
         {
+            var response = new ConfirmResponseDto() { HasError = false, Message = "" };
 
             var user = await userManager.FindByIdAsync(UserId);
 
             if (user == null)
             {
 
-                return "There is not account registered with this user";
+                response.HasError = true;
+                response.Message = "There is not account registered with this user";
+                return response;
 
             }
 
@@ -585,18 +620,28 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             var result = await userManager.ConfirmEmailAsync(user, Token);
             if (result.Succeeded)
             {
-                return $"Account confirmed for {user.Email}. you can now use the app";
+                response.HasError = false;
+                response.Message = $"Account confirmed for {user.Email}. you can now use the app";
+                return response;
 
             }
             else
             {
 
-                return $"An error ocurred when while confirming this email {user.Email}";
+                response.HasError = true;
+                response.Message = $"An error ocurred when while confirming this email {user.Email}, Please verificate your token";
+                return response;
 
             }
 
 
         }
+
+
+
+
+
+
 
 
 
@@ -614,8 +659,6 @@ namespace ReservaBook.Infraestructure.Indentity.Services
         }
 
 
-
-
         private async Task<string> GetRessetPassworToken(AppUser user)
         {
 
@@ -624,8 +667,6 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             return Token;
 
         }
-
-
 
 
 
@@ -642,7 +683,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             foreach(var role in roles)
             {
-                rolesClaims.Add(new Claim("role",role));
+                rolesClaims.Add(new Claim(ClaimTypes.Role, role));
             }
 
 
@@ -657,8 +698,8 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             }.Union(userClaims).Union(rolesClaims);
 
 
-            var symmectriSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecreKey));
-            var signinCredentials = new SigningCredentials(symmectriSecurityKey,SecurityAlgorithms.Aes128CbcHmacSha256);
+            var symmectriSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+            var signinCredentials = new SigningCredentials(symmectriSecurityKey,SecurityAlgorithms.HmacSha256);
 
 
             var JwtSecuritytoken = new JwtSecurityToken(
@@ -673,7 +714,6 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
         }
         #endregion
-
 
 
 

@@ -33,7 +33,7 @@ namespace ReservaBook.Infraestructure.Indentity
 
 
             #region configuration IOC
-            service.AddSingleton<IAccountServiceForWebApi, AccountServiceForWebApi>();
+            service.AddScoped<IAccountServiceForWebApi, AccountServiceForWebApi>();
             service.Configure<JwtSettings>(config.GetSection("JwtSettings"));
             #endregion
 
@@ -126,9 +126,10 @@ namespace ReservaBook.Infraestructure.Indentity
                     {
 
                         oc.HandleResponse();
+
                         oc.Response.StatusCode = 401; //El usuario no esta authenticado
                         oc.Response.ContentType = "application/plain";
-                        var result =  JsonConvert.SerializeObject(new JwtResponseDto() { HasError = false, Error = "You are not authorize"});
+                        var result =  JsonConvert.SerializeObject(new JwtResponseDto() { HasError = true, Error = "You are not authorize"});
                         return oc.Response.WriteAsync(result);
                     },
                     OnForbidden = of =>
@@ -136,7 +137,7 @@ namespace ReservaBook.Infraestructure.Indentity
 
                         of.Response.StatusCode = 403; //El usuario no tiene permisos
                         of.Response.ContentType = "application/plain";
-                        var result = JsonConvert.SerializeObject(new JwtResponseDto() { HasError = false, Error = "You are not authorize to access this resource"});
+                        var result = JsonConvert.SerializeObject(new JwtResponseDto() { HasError = true, Error = "You are not authorize to access this resource"});
                         return of.Response.WriteAsync(result);
 
                     }
@@ -165,7 +166,7 @@ namespace ReservaBook.Infraestructure.Indentity
             {
 
 
-                var connectionStrings = config.GetConnectionString("DefaultConnection");
+                var connectionStrings = config.GetConnectionString("IdentityConnection");
                 Service.AddDbContext<IdentityContext>(
 
 

@@ -1,6 +1,8 @@
 using ReservaBook.Infraestructure.Shared;
 using ReservaBook.Infraestructure.Indentity;
 using ReservaBook.presentation.WebApi.Extensions;
+using ReservaBook.Core.Aplication;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEmailServicesIOC(builder.Configuration);
@@ -23,6 +27,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApiVersioning();
 builder.Services.AddSwaggerExtension();
 builder.Services.AddVersioningExtensions();
+builder.Services.AddServcesLayerIOC();
 
 
 

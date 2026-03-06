@@ -27,16 +27,16 @@ namespace ReservaBook.Infraestructure.Indentity.Seeds
             };
 
 
-            if (await userManager.Users.AllAsync(u => u.Id == user.Id))
+            if (await userManager.Users.AllAsync(u => u.Id != user.Id))
             {
 
                 var EntityUser = await userManager.FindByEmailAsync(user.Email);
                 if (EntityUser == null)
                 {
 
-                  await  userManager.CreateAsync(user,"123@Admn");
+                  var result = await  userManager.CreateAsync(user,"123@Admn");
                   await userManager.AddToRoleAsync(user,UserRoles.Admin.ToString());
-                
+
                 }
 
             }

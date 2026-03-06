@@ -25,12 +25,10 @@ namespace ReservaBook.Infraestructure.Indentity.Contexts
 
 
             //nombre de tablas
-            builder.Entity<IdentityUser>().ToTable("Users");
+            builder.Entity<AppUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Roles");
             builder.Entity<IdentityUserRole<string>>().ToTable("UsersRoles");
             builder.Entity<IdentityUserLogin<string>>().ToTable("UsersLogin");
-
-
 
         }
 

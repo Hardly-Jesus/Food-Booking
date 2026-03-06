@@ -26,7 +26,7 @@ namespace ReservaBook.Infraestructure.Shared
 
 
             #region services configurationIOC
-            service.AddSingleton<IEmailService,EmailService>();
+            service.AddScoped<IEmailService,EmailService>();
             #endregion
 
 

@@ -30,18 +30,18 @@ namespace ReservaBook.Infraestructure.Indentity.Seeds
 
 
 
-            if(await userManager.Users.AllAsync(u => u.Email == user.Email))
+            if(await userManager.Users.AllAsync(u => u.Id != user.Id))
             {
             
                 var userEntity =  await userManager.FindByEmailAsync(user.Email);  
 
-                if(userEntity != null)
+                if(userEntity == null)
                 {
-                    await userManager.CreateAsync(user,"123pass@");
+                    var result = await userManager.CreateAsync(user,"123Pass@");
                     await userManager.AddToRoleAsync(user,UserRoles.Propietario.ToString());
+
                 }
                 
-            
             }
 
         }

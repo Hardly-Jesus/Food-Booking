@@ -13,12 +13,16 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.13" />
-    <PackageReference Include="MimeKit" Version="4.15.0" />
+    <PackageReference Include="MimeKit" Version="4.15.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ReservaBook.Core.Aplication\ReservaBook.Core.Aplication.csproj" />
     <ProjectReference Include="..\ReservaBook.Core.Domain\ReservaBook.Core.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
