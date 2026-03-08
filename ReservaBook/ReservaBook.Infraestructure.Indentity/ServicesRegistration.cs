@@ -50,6 +50,7 @@ namespace ReservaBook.Infraestructure.Indentity
                 opt.Password.RequireNonAlphanumeric = true;
                 opt.Password.RequireLowercase = true;
                 opt.Password.RequireUppercase = true;
+              
 
 
 

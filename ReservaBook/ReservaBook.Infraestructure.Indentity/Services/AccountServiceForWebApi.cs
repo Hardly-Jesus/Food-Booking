@@ -43,7 +43,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
         public async Task<LoginResponseDto> Authenticate(LoginDto dto)
         {
 
-            var responseDto = new LoginResponseDto() { Name = "", LastName = "", Errors = [], AccessToken = "" };
+            var responseDto = new LoginResponseDto() { Name = "", LastName = "", Errors = [], AccessToken = "", Rol = ""};
 
 
 
@@ -113,8 +113,9 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             responseDto.Name = user.Name;
             responseDto.LastName = user.LastName;
+            responseDto.Rol = rolesList.FirstOrDefault()!;
             responseDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-
+            
 
             return responseDto;
 
@@ -143,8 +144,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
              || string.IsNullOrWhiteSpace(saveUser.UserName)
              || string.IsNullOrWhiteSpace(saveUser.LastName)
              || string.IsNullOrWhiteSpace(saveUser.Name)
-             || string.IsNullOrWhiteSpace(saveUser.Phone)
-             || string.IsNullOrWhiteSpace(saveUser.ProfileImage)
+             || string.IsNullOrWhiteSpace(saveUser.Phone)  
              || string.IsNullOrWhiteSpace(saveUser.Role))
             {
                 return null;
@@ -189,15 +189,36 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             if (result.Succeeded)
             {
+               
+
+
                 await userManager.AddToRoleAsync(User, saveUser.Role);
                 string token = await GetVerificationEmailToken(User);
+
+                var confirmLink =
+                   $"http://localhost:5500/Assets/view/confirmAccount.html?userId={User.Id}&token={token}";
+
+
+                var templatePath = Path.Combine(
+                       AppContext.BaseDirectory,"wwwroot",
+                      "EmailTemplates",
+                      "ConfirmYourAccount.html");
+
+
+                var html = await File.ReadAllTextAsync(templatePath);
+
+                html = html.Replace("{{USERNAME}}", saveUser.Name);
+                html = html.Replace("{{CONFIRM_LINK}}", confirmLink);
+
+
                 await emailService.SendAsync(new EmailRequestDto()
                 {
                     To = saveUser.Email,
-                    Subject = "Confirm registration",
-                    HtmlBody = $"Please confirm your acount Use this Token:{token} "
+                    Subject = "Confirmacion de cuenta",
+                    HtmlBody =  html
 
                 });
+
 
 
                 var CurrentrolesList = await userManager.GetRolesAsync(User);
@@ -299,15 +320,34 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
                 if (!user.EmailConfirmed && !IsNotCreated)
                 {
+
+
                     string token = await GetVerificationEmailToken(user);
+
+                    var confirmLink =
+                       $"http://localhost:5500/Assets/view/confirmAccount.html?userId={user.Id}&token={token}";
+
+
+                    var templatePath = Path.Combine(
+                           AppContext.BaseDirectory, "wwwroot",
+                          "EmailTemplates",
+                          "ConfirmYourAccount.html");
+
+
+                    var html = await File.ReadAllTextAsync(templatePath);
+
+                    html = html.Replace("{{USERNAME}}", saveUser.Name);
+                    html = html.Replace("{{CONFIRM_LINK}}", confirmLink);
+
+
                     await emailService.SendAsync(new EmailRequestDto()
                     {
-                        To = !string.IsNullOrWhiteSpace(saveUser.Email) ? saveUser.Email : user.Email!,
-                        Subject = "Confirm registration",
-                        HtmlBody = $"Please confirm your acount use this Token: {token}"
-
+                        To = saveUser.Email,
+                        Subject = "Confirmacion de cuenta",
+                        HtmlBody = html
 
                     });
+
                 }
 
 
@@ -572,7 +612,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
             if (string.IsNullOrWhiteSpace(request.Id)
                || string.IsNullOrWhiteSpace(request.Token)
-               || string.IsNullOrWhiteSpace(request.password))
+               || string.IsNullOrWhiteSpace(request.Password))
             {
                 return null;
             }
@@ -592,7 +632,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
 
 
             var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
-            var result = await userManager.ResetPasswordAsync(user, token, request.password);
+            var result = await userManager.ResetPasswordAsync(user, token, request.Password);
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -645,13 +685,28 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             var result = await userManager.UpdateAsync(user);
 
 
+            var encodeToken = Uri.EscapeDataString(ressetToken);
+            var confirmLink =
+               $"http://localhost:5500/Assets/view/changePassword.html?userId={user.Id}&token={encodeToken}";
+
+
+            var templatePath = Path.Combine(
+                   AppContext.BaseDirectory, "wwwroot",
+                  "EmailTemplates",
+                  "ChangePassword.html");
+
+
+            var html = await File.ReadAllTextAsync(templatePath);
+
+            html = html.Replace("{{USERNAME}}", request.UserName);
+            html = html.Replace("{{CONFIRM_LINK}}", confirmLink);
+
+
             await emailService.SendAsync(new EmailRequestDto()
             {
-
-                To = user.Email ?? "",
-                Subject = "RessetPassword",
-                HtmlBody = $"please resset your password visiting this URL: {ressetToken}"
-
+                To = user.Email!,
+                Subject = "Resetear la contraseña",
+                HtmlBody = html
 
             });
 

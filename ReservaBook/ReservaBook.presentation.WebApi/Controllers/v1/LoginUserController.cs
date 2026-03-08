@@ -104,11 +104,11 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 if(result == null || result.HasError)
                 {
-                    return BadRequest(result!.Message);
+                    return BadRequest(result);
                 }
 
 
-                return Ok(result.Message);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -137,7 +137,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 if (result.HasError || result == null)
                 {
-                    return BadRequest(result!.Errors);
+                    return BadRequest(result!);
                 }
 
 
@@ -153,7 +153,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("Change-password")]
+        [HttpPost("change-password")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -168,7 +168,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 if (result == null || result.HasError)
                 {
-                    return BadRequest(result!.Errors);
+                    return BadRequest(result!);
                 }
 
 

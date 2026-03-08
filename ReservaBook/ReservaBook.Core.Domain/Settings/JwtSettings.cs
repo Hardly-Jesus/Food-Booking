@@ -15,6 +15,6 @@ namespace ReservaBook.Core.Domain.Settings
         public required int DurationInMinutes { get; set; }
 
 
-
+       
     }
 }

@@ -30,10 +30,27 @@ builder.Services.AddVersioningExtensions();
 builder.Services.AddServcesLayerIOC();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend",
+        policy =>
+        {
+            policy
+                 .WithOrigins("http://127.0.0.1:5500",
+                              "http://localhost:5500")
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
+builder.Services.AddControllers();
 
 
 var app = builder.Build();
 await app.Services.RunIdentitySeed();
+app.UseCors("PermitirFrontend");
+
 
 // Configure the HTTP request pipeline.
 // Hola prueba de comit--Andris
