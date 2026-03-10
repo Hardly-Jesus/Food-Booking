@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace ReservaBook.presentation.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -16,11 +18,9 @@ namespace ReservaBook.presentation.WebApi.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
+          
         }
 
-
-        //comentario para un commit
-        //segundo comentario --kelvin
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
@@ -33,5 +33,7 @@ namespace ReservaBook.presentation.WebApi.Controllers
             })
             .ToArray();
         }
+
+
     }
 }
