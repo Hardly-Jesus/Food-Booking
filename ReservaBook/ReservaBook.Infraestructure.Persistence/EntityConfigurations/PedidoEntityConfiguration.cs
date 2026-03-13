@@ -1,0 +1,44 @@
+﻿
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ReservaBook.Core.Domain.Entities;
+
+namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
+{
+    public class PedidoEntityConfiguration : IEntityTypeConfiguration<Pedido>
+    {
+        public void Configure(EntityTypeBuilder<Pedido> builder)
+        {
+
+            #region basic configuration
+            builder.HasKey(r => r.Id);
+            builder.ToTable("Pedidos");
+            #endregion
+
+
+
+            #region property configuration
+
+            #endregion
+
+
+
+            #region relationShip configuration
+            builder.HasMany<Plato>(p => p._Platos)
+                    .WithOne(p => p.Pedido)
+                    .HasForeignKey(p => p.IdPedido)
+                  .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.HasOne(r => r.Pago)
+                    .WithOne(r => r.Pedido)
+                    .HasForeignKey<Pago>(r => r.IdPedido)
+                    .OnDelete(DeleteBehavior.Cascade);
+            #endregion
+
+
+        }
+    }
+}

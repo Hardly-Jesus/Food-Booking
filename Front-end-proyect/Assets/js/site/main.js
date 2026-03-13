@@ -189,6 +189,7 @@ function redirectForUserRol(role)
            break;
        case "Admin":
             window.location.href = "/Assets/view/paneles/Admin.html";
+             break;
          default:
             window.location.href = "/Assets/view/Login.html";
          break;   

@@ -113,7 +113,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("delete-user{id}")]
+        [HttpDelete("delete-user/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
