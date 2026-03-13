@@ -21,7 +21,7 @@ namespace ReservaBook.Core.Aplication.Dtos.plato
 
         [Required]
         [Range(1,int.MaxValue,ErrorMessage = "Debes de indicar un precio valido para el plato")]
-        public required double Precio { get; set; }
+        public required decimal Precio { get; set; }
         [Required(ErrorMessage = "Debes indicar una categoria para el plato")]
         public PlatoCategoria  Categoria { get; set; }
 
