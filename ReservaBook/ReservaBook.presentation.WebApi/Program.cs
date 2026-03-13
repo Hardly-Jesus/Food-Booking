@@ -1,9 +1,9 @@
-using ReservaBook.Infraestructure.Shared;
-using ReservaBook.Infraestructure.Indentity;
-using ReservaBook.presentation.WebApi.Extensions;
 using ReservaBook.Core.Aplication;
-using System.Text.Json.Serialization;
+using ReservaBook.Infraestructure.Indentity;
 using ReservaBook.Infraestructure.Persistence;
+using ReservaBook.Infraestructure.Shared;
+using ReservaBook.presentation.WebApi.Extensions;
+using System.Text.Json.Serialization;
 
 
 var builder = WebApplication.CreateBuilder(args);

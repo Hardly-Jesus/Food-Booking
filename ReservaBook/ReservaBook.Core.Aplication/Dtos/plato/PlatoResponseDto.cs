@@ -8,7 +8,7 @@ namespace ReservaBook.Core.Aplication.Dtos.plato
         public  string Nombre { get; set; } = string.Empty;
         public string Descripcion { get; set; } = string.Empty;
         public string? Imagen { get; set; }
-        public  double Precio { get; set; }
+        public  decimal Precio { get; set; }
         public string Categoria { get; set; } = string.Empty;
         public string Estado { get; set; } = string.Empty;
         public bool HasError { get; set; }
