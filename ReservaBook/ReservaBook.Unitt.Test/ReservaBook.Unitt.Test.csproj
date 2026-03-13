@@ -20,15 +20,12 @@
     <ProjectReference Include="..\ReservaBook.Core.Aplication\ReservaBook.Core.Aplication.csproj" />
     <ProjectReference Include="..\ReservaBook.Core.Domain\ReservaBook.Core.Domain.csproj" />
     <ProjectReference Include="..\ReservaBook.Infraestructure.Indentity\ReservaBook.Infraestructure.Indentity.csproj" />
+    <ProjectReference Include="..\ReservaBook.Infraestructure.Persistence\ReservaBook.Infraestructure.Persistence.csproj" />
     <ProjectReference Include="..\ReservaBook.Infraestructure.Shared\ReservaBook.Infraestructure.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
