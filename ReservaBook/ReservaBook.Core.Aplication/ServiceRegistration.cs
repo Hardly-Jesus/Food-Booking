@@ -28,6 +28,7 @@ namespace ReservaBook.Core.Aplication
             services.AddScoped<IMesaService, MesaService>();
             services.AddScoped<IPlatoService, PlatoService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IPlatoMenuServices, PlatoMenuService>();
             #endregion
 
 

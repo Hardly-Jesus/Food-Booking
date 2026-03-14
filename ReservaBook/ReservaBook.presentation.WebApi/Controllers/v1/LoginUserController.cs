@@ -55,7 +55,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Register([FromForm] CreateUserDto dto)
+        public async Task<IActionResult> Register([FromBody] CreateUserDto dto)
         {
 
             try
