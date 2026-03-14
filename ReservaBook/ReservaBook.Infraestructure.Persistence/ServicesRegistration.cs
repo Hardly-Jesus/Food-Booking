@@ -53,6 +53,7 @@ namespace ReservaBook.Infraestructure.Persistence
             Service.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
             Service.AddScoped<IMesaRepository,MesaRepository>();
             Service.AddScoped<IPlatoRepository, PlatoRepository>();
+            Service.AddScoped<IMenuRepository, MenuRepository>();
             #endregion
 
 

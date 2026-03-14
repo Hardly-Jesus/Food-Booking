@@ -7,13 +7,11 @@ namespace ReservaBook.Core.Domain.Entities
 
         public  int Id { get; set; }
         public required string Nombre { get; set; }
-        public required List<Plato> PlatosList { get; set; } = new List<Plato>();
-
-
+        public required string Descripcion { get; set; } 
 
 
         //navigation property
-        public ICollection<Plato> Platos { get; set; } = new List<Plato>();  
+        public ICollection<PlatoMenu> PlatoMenus { get; set; } = new List<PlatoMenu>();  
         
        
     }

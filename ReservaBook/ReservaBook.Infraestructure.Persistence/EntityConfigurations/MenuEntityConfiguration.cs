@@ -27,10 +27,7 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
             #region relationShips
-            builder.HasMany<Plato>(r => r.Platos)
-                   .WithOne(r => r.Menu)
-                   .HasForeignKey(r => r.IdMenu)
-                   .OnDelete(DeleteBehavior.NoAction);
+            
             #endregion
 
         }
