@@ -18,9 +18,8 @@ namespace ReservaBook.Core.Domain.Entities
 
 
         //foreign key y navigation property
-        public  int? IdMenu { get; set; }
-        public Menu? Menu { get; set; }  
-
+        
+        public ICollection<PlatoMenu> PlatoMenus { get; set; } = new List<PlatoMenu>();
         public int? IdPedido { get; set; }
         public Pedido? Pedido { get; set; }  
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    partial class ReservaBookContextModelSnapshot : ModelSnapshot
+    [Migration("20260314033008_UpdateEntityMenu")]
+    partial class UpdateEntityMenu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,6 +196,9 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("IdMenu")
+                        .HasColumnType("int");
+
                     b.Property<int?>("IdPedido")
                         .HasColumnType("int");
 
@@ -214,34 +220,13 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdMenu");
+
                     b.HasIndex("IdPedido");
 
                     b.HasIndex("PedidoId");
 
                     b.ToTable("Platos", (string)null);
-                });
-
-            modelBuilder.Entity("ReservaBook.Core.Domain.Entities.PlatoMenu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("MenuId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlatoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MenuId");
-
-                    b.HasIndex("PlatoId");
-
-                    b.ToTable("PlatoMenus", (string)null);
                 });
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Reserva", b =>
@@ -401,6 +386,11 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Plato", b =>
                 {
+                    b.HasOne("ReservaBook.Core.Domain.Entities.Menu", "Menu")
+                        .WithMany("Platos")
+                        .HasForeignKey("IdMenu")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("ReservaBook.Core.Domain.Entities.Pedido", "Pedido")
                         .WithMany("_Platos")
                         .HasForeignKey("IdPedido")
@@ -410,26 +400,9 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .WithMany("Platos")
                         .HasForeignKey("PedidoId");
 
-                    b.Navigation("Pedido");
-                });
-
-            modelBuilder.Entity("ReservaBook.Core.Domain.Entities.PlatoMenu", b =>
-                {
-                    b.HasOne("ReservaBook.Core.Domain.Entities.Menu", "Menu")
-                        .WithMany("PlatoMenus")
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReservaBook.Core.Domain.Entities.Plato", "Plato")
-                        .WithMany("PlatoMenus")
-                        .HasForeignKey("PlatoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Menu");
 
-                    b.Navigation("Plato");
+                    b.Navigation("Pedido");
                 });
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Reserva", b =>
@@ -470,7 +443,7 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Menu", b =>
                 {
-                    b.Navigation("PlatoMenus");
+                    b.Navigation("Platos");
                 });
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Mesa", b =>
@@ -485,11 +458,6 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.Navigation("Platos");
 
                     b.Navigation("_Platos");
-                });
-
-            modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Plato", b =>
-                {
-                    b.Navigation("PlatoMenus");
                 });
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Restaurante", b =>
