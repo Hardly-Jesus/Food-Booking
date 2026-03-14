@@ -25,6 +25,12 @@ namespace ReservaBook.Core.Aplication.Services
         public virtual async Task<TResponse?> AddAsync(ModelDtoAdd? entity)
         {
 
+            if (entity == null)
+            {
+
+                return null;
+                
+            }
 
             var newEntity =  _mapper.Map<Entity>(entity);
              
