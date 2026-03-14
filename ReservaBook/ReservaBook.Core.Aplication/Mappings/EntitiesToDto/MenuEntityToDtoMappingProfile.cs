@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace ReservaBook.Core.Aplication.Mappings.EntitiesToDto
 {
-    public class MunuEntityToDtoMappingProfile : Profile
+    public class MenuEntityToDtoMappingProfile : Profile
     {
 
-        public MunuEntityToDtoMappingProfile() 
+        public MenuEntityToDtoMappingProfile() 
         {
 
             CreateMap<Menu, CreateMenuDto>()
