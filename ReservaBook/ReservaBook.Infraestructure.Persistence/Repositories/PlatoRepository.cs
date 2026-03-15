@@ -12,8 +12,26 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
     public class PlatoRepository : GenericRepository<Plato>, IPlatoRepository
     {
 
+        private readonly ReservaBookContext _context;
+
         public PlatoRepository(ReservaBookContext appContext) : base(appContext)
         {
+            this._context = appContext;
+        }
+
+
+        public async Task<bool> ChangeStatus(int idPlato, string Statu)
+        {
+            var entity = await _context.Set<Plato>().FindAsync(idPlato);
+
+            if (entity == null)
+            {
+                return false;
+            }
+
+            entity.Estado = Statu;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

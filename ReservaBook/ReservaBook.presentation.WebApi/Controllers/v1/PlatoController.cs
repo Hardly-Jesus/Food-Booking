@@ -7,6 +7,8 @@ using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.presentation.WebApi.Handlers;
 
+
+
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
     [ApiVersion("1.0")]
@@ -95,6 +97,49 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
             }
+        }
+
+
+
+        [HttpPost("change-status")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatusPlatoRequestDto request)
+        {
+
+            try
+            {
+
+                if (request == null)
+                {
+                    return BadRequest("Debes indicar valores valido para cambiar el estado");
+                }
+
+
+                var entity = await _PlatoService.ChangeStatus(request.IdPlato, request.Status);
+
+                if (!entity)
+                {
+
+                    return NotFound("No se encontro una mesa con ese id, favor verificar");
+
+                }
+
+
+                return NoContent();
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
         }
 
 

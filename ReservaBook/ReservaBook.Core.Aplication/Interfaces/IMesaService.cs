@@ -7,6 +7,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     public interface IMesaService : IGenericService<CreateMesaRequestDto, CreateMesaRequestDto,MesaResponseDto,Mesa>
     {
 
+        Task<bool> ChangeStatus(int idMesa, string Status);
 
     }
 }

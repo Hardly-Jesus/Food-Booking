@@ -9,20 +9,20 @@ using ReservaBook.Core.Domain.Interfaces;
 
 namespace ReservaBook.Core.Aplication.Services
 {
-    public class MesaService : GenericService<CreateMesaRequestDto, CreateMesaRequestDto,MesaResponseDto,Mesa>, IMesaService
+    public class MesaService : GenericService<CreateMesaRequestDto, CreateMesaRequestDto, MesaResponseDto, Mesa>, IMesaService
     {
         private readonly IMapper _mapper;
         private readonly IMesaRepository _mesaRepository;
-        private readonly IRestauranteRepository _restauranteRepository; 
+        private readonly IRestauranteRepository _restauranteRepository;
 
 
 
-        public MesaService(IMesaRepository _mesaRepository, IMapper mapper, IRestauranteRepository _restauranteRepository) : base(_mesaRepository,mapper)
+        public MesaService(IMesaRepository _mesaRepository, IMapper mapper, IRestauranteRepository _restauranteRepository) : base(_mesaRepository, mapper)
         {
-           this._mapper = mapper;
-           this._mesaRepository = _mesaRepository;
-           this._restauranteRepository = _restauranteRepository;
-          
+            this._mapper = mapper;
+            this._mesaRepository = _mesaRepository;
+            this._restauranteRepository = _restauranteRepository;
+
         }
 
 
@@ -54,10 +54,10 @@ namespace ReservaBook.Core.Aplication.Services
                     response.HasError = true;
                     response.Errors.Add("No se encontro un restaurante relacionado para esta mesa, debes crear uno si no loas hecho");
                     return response;
-                
+
                 }
 
-                entity.IdRestaurante = restaurante.Id;  
+                entity.IdRestaurante = restaurante.Id;
                 return await base.AddAsync(entity);
             }
             catch (Exception ex)
@@ -70,10 +70,34 @@ namespace ReservaBook.Core.Aplication.Services
 
         }
 
+        public async Task<bool> ChangeStatus(int idMesa, string Status)
+        {
+            try
+            {
+                if(idMesa <= 0)
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(Status))
+                {
+                    return false;    
+                }
 
 
 
+                await _mesaRepository.ChangeStatus(idMesa,Status);
+                return true;
 
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Ocurrio un error la intentar cambiar el estado de la mesa "  + ex.Message);
+                    
+            }
+            
+        }
 
 
 
@@ -119,22 +143,22 @@ namespace ReservaBook.Core.Aplication.Services
 
             var response = new MesaResponseDto() { HasError = true, Errors = [] };
 
-             var IsExit = await _mesaRepository.GetByIdAsync(id);
+            var IsExit = await _mesaRepository.GetByIdAsync(id);
 
             if (IsExit == null)
             {
                 response.HasError = true;
                 response.Errors.Add("No se encontro una mesa con ese id, favor verificar");
                 return response;
-                
+
             }
 
 
 
             entity!.Id = IsExit.Id;
-            entity.Estado = IsExit.Estado;  
-            entity.IdRestaurante = IsExit.IdRestaurante;    
-           return  await base.UpdateAsync(id, entity); 
+            entity.Estado = IsExit.Estado;
+            entity.IdRestaurante = IsExit.IdRestaurante;
+            return await base.UpdateAsync(id, entity);
 
         }
 

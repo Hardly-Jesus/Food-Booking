@@ -39,16 +39,20 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 }
 
 
-                var entity = await _service.AddPlatoAlMenu(dto.IdMenu,dto.IdPlatos);
-
-                if (entity.HasError)
+                var entities = await _service.AddPlatoAlMenu(dto.IdMenu,dto.IdPlatos);
+                foreach (var entity in entities)
                 {
-                    return NotFound(entity.Errors);
 
+                    if (entity.HasError)
+                    {
+                        return NotFound(entity.Errors);
+
+                    }
                 }
+               
 
 
-                return Ok(entity);
+                return Ok(entities);
 
             }
             catch (Exception ex)
