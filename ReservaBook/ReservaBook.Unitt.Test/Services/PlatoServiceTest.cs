@@ -2,11 +2,14 @@
 using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
+using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Dtos.plato;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
 using ReservaBook.Core.Domain.Common.Enums;
+using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
@@ -377,6 +380,68 @@ namespace ReservaBook.Unitt.Test.Services
             result.Id.Should().Be(entityAdded!.Id);  
             result.Precio.Should().Be(entityAdded!.Precio); 
          
+        }
+
+
+
+        [Fact]
+        public async Task ChangeStatus_should_return_true_when_changeStatus()
+        {
+
+
+            //arrange
+            var service = CreateService();
+            var entity = new CreatePlatoRequestDto()
+            {
+                Id = 0,
+                Nombre = "Mangu con salami",
+                Descripcion = "Es un plato de entrada .....",
+                Categoria = PlatoCategoria.Entradas.ToString(),
+                Estado = Estado.Disponible.ToString(),
+                Precio = 120.25m,
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+            };
+
+
+            //act
+            var PlatoAdded = await service.AddAsync(entity);
+            var result = await service.ChangeStatus(PlatoAdded!.Id, Estado.NoDisponible.ToString());
+
+
+            //assert
+            result.Should().BeTrue();
+      
+        }
+
+
+
+        [Fact]
+        public async Task ChangeStatus_should_return_false_when_not_changeStatus()
+        {
+
+
+            //arrange
+            var service = CreateService();
+            var entity = new CreatePlatoRequestDto()
+            {
+                Id = 0,
+                Nombre = "Mangu con salami",
+                Descripcion = "Es un plato de entrada .....",
+                Categoria = PlatoCategoria.Entradas.ToString(),
+                Estado = Estado.Disponible.ToString(),
+                Precio = 120.25m,
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+            };
+
+
+            //act
+            var PlatoAdded = await service.AddAsync(entity);
+            var result = await service.ChangeStatus(PlatoAdded!.Id, "");
+
+
+            //assert
+            result.Should().BeFalse();
+
         }
 
         #endregion

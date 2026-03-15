@@ -8,6 +8,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     public interface IPlatoService : IGenericService<CreatePlatoRequestDto, CreatePlatoRequestDto,PlatoResponseDto,Plato>
     {
 
+        Task<bool> ChangeStatus(int idPlato, string Status);
 
     }
 }

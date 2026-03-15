@@ -11,7 +11,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
 
-        Task<PlatoMenuResponseDto> AddPlatoAlMenu(int menuId, List<int> idPlatos);
+        Task<List<PlatoMenuResponseDto>> AddPlatoAlMenu(int menuId, List<int> idPlatos);
 
         Task<PlatoMenuResponseDto> DeletePlatoDelMenu(int idMenu, int idPlato);
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    partial class ReservaBookContextModelSnapshot : ModelSnapshot
+    [Migration("20260315150451_UpdateMigrationAndEntityPedido")]
+    partial class UpdateMigrationAndEntityPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,17 +185,11 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CantidadPlatos")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdPedido")
                         .HasColumnType("int");
 
                     b.Property<int>("IdPlato")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

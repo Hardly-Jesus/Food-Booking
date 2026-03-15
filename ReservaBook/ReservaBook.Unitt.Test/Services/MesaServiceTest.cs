@@ -536,6 +536,121 @@ namespace ReservaBook.Unitt.Test.Services
         }
 
 
+
+
+
+        [Fact]
+        public async Task ChangeStatus_Should_return_true_when_Change()
+        {
+
+            //arrange
+            var service = CreateService();
+            var context = new ReservaBookContext(_dbContextOptions);
+
+
+            var restaurante = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+
+            };
+
+            context.Restaurantes.Add(restaurante);
+            await context.SaveChangesAsync();
+
+
+
+            var entity = new CreateMesaRequestDto()
+            {
+                Id = 0,
+                IdRestaurante = restaurante.Id,
+                Nombre = "Mesa tornado",
+                Descripcion = "Es un es una mesa tornado ....",
+                CantidadPersonas = 5,
+                Estado = Estado.Disponible.ToString(),
+                UsurioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+
+            };
+
+
+
+
+            //act
+            var MesaAdded = await service.AddAsync(entity);
+            var result = await service.ChangeStatus(MesaAdded!.Id,Estado.NoDisponible.ToString());
+
+
+            //assert
+            result.Should().BeTrue();
+          
+
+
+        }
+
+
+
+
+        [Fact]
+        public async Task ChangeStatus_Should_return_false_when_not_Change()
+        {
+
+            //arrange
+            var service = CreateService();
+            var context = new ReservaBookContext(_dbContextOptions);
+
+
+            var restaurante = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+
+            };
+
+            context.Restaurantes.Add(restaurante);
+            await context.SaveChangesAsync();
+
+
+
+            var entity = new CreateMesaRequestDto()
+            {
+                Id = 0,
+                IdRestaurante = restaurante.Id,
+                Nombre = "Mesa tornado",
+                Descripcion = "Es un es una mesa tornado ....",
+                CantidadPersonas = 5,
+                Estado = Estado.Disponible.ToString(),
+                UsurioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+
+            };
+
+
+
+
+            //act
+            var MesaAdded = await service.AddAsync(entity);
+            var result = await service.ChangeStatus(MesaAdded!.Id, " ");
+
+
+            //assert
+            result.Should().BeFalse();
+
+        }
+
+
         #endregion
 
 

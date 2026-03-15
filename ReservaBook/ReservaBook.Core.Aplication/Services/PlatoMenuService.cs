@@ -14,20 +14,23 @@ namespace ReservaBook.Core.Aplication.Services
         private readonly IPlatoMenuRepository _repo;
         private readonly IMenuRepository _menuRepository;
         private readonly IPlatoRepository platoRepository;
+        private readonly IMapper _mapper;
         public PlatoMenuService(IPlatoMenuRepository _repo, IMenuRepository _menuRepository, IPlatoRepository platoRepository, IMapper _mapper) : base(_repo, _mapper)
         {
 
             this.platoRepository = platoRepository;
             this._repo = _repo;
+            this._mapper = _mapper;
             this._menuRepository = _menuRepository;
 
         }
 
 
 
-        public async Task<PlatoMenuResponseDto> AddPlatoAlMenu(int menuId, List<int> idPlatos)
+        public async Task<List<PlatoMenuResponseDto>> AddPlatoAlMenu(int menuId, List<int> idPlatos)
         {
             var response = new PlatoMenuResponseDto() { HasError = false , Errors = [] };
+            var responses = new List<PlatoMenuResponseDto>();
 
             try
             {
@@ -36,7 +39,8 @@ namespace ReservaBook.Core.Aplication.Services
 
                     response.HasError = true;
                     response.Errors.Add("Ocurrio un error: el id del menu debe ser valido, favor verificar");
-                    return response;
+                    responses.Add(response);
+                    return responses;
 
                 }
 
@@ -47,7 +51,8 @@ namespace ReservaBook.Core.Aplication.Services
 
                     response.HasError = true;
                     response.Errors.Add("Ocurrio un error: no se ha seleccionado ni un plato, favor verificar");
-                    return response;
+                    responses.Add(response);
+                    return responses;
 
                 }
 
@@ -60,7 +65,8 @@ namespace ReservaBook.Core.Aplication.Services
 
                     response.HasError = true;
                     response.Errors.Add("message: no se encontro un menu con ese id, favor verificar");
-                    return response;
+                    responses.Add(response);
+                    return responses;
 
                 }
 
@@ -71,9 +77,10 @@ namespace ReservaBook.Core.Aplication.Services
 
                     response.HasError = true;
                     response.Errors.Add("message: no se encontro un menu con ese id, favor verificar");
-                    return response;
-
+                    responses.Add(response);
+                    return responses;
                 }
+
 
                 var listEntities = new List<PlatoMenu>();
 
@@ -97,8 +104,6 @@ namespace ReservaBook.Core.Aplication.Services
                         Id = 0,
                         MenuId = menuId,
                         PlatoId = idPlato
-
-
                     };
                 
 
@@ -107,17 +112,21 @@ namespace ReservaBook.Core.Aplication.Services
                 }
 
 
+
+
                 if(listEntities != null || listEntities!.Count > 0)
                 {
 
                     await _repo.AddRange(listEntities);
-                    return response;
+                    var map = _mapper.Map<List<PlatoMenuResponseDto>>(listEntities); 
+                    return map;
                 }
 
 
                 response.HasError = true;
                 response.Errors.Add("Ocurrio un error al intentar agregar el plato al menu");
-                return response;
+                responses.Add(response);
+                return responses;
 
             }
             catch (Exception ex)
@@ -128,6 +137,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
         }
+
 
 
 
@@ -148,7 +158,7 @@ namespace ReservaBook.Core.Aplication.Services
 
                 var relacion = await _repo.GetByIdPlatoYMenuId(idPlato,idMenu);
 
-                if(relacion != null)
+                if(relacion == null)
                 {
                     response.HasError = true;
                     response.Errors.Add("El plato seleccionado no pertenece a ese menu");

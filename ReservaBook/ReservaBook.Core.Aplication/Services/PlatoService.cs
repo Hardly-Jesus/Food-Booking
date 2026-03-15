@@ -109,6 +109,34 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
+        public async Task<bool> ChangeStatus(int idPlato, string Status)
+        {
+            try
+            {
+                if (idPlato <= 0)
+                {
+                    return false;
+                }
+
+                if (string.IsNullOrWhiteSpace(Status))
+                {
+                    return false;
+                }
+
+
+
+                await _PlatoRepository.ChangeStatus(idPlato, Status);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Ocurrio un error la intentar cambiar el estado del plato " + ex.Message);
+
+            }
+
+        }
 
 
 

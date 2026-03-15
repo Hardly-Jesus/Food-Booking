@@ -6,7 +6,7 @@ namespace ReservaBook.Core.Domain.Interfaces
     public interface IPlatoRepository : IGenericRepository<Plato>
     {
 
-
+        Task<bool> ChangeStatus(int idPlato, string Statu);
 
 
     }

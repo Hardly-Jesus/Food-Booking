@@ -18,7 +18,6 @@ namespace ReservaBook.Core.Aplication.Dtos.plato
 
         //foreign key y navigation property
         public int? IdMenu { get; set; }
-        public int? IdPedido { get; set; }
 
     }
 
