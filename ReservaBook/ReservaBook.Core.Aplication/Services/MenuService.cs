@@ -22,6 +22,36 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
+        public async Task<DeleteMenuResponseDto?> DeleteMenuAsync(int id)
+        {
+            var response = new DeleteMenuResponseDto() { Success = false, IsCreated = true };
+
+            try
+            {
+
+                bool result = await base.DeleteAsync(id);
+
+                if (result)
+                {
+                    response.Success = true;
+                    response.IsCreated = true;
+                    return response;
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+
+
+                throw new Exception("Ocurrio un error al intentar eliminar el menu " + ex.Message);
+
+
+            }
+        }
+
+
 
         public override async Task<MenuResponseDto?> UpdateAsync(int id, CreateMenuDto? entity)
         {

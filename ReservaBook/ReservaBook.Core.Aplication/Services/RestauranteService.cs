@@ -30,7 +30,7 @@ namespace ReservaBook.Core.Aplication.Services
                     return null;
 
 
-                var response = new RestauranteResponseDto() { HasError = false, Errors = [] };
+                var response = new RestauranteResponseDto() { HasError = false, Errors = [], IsCreated = false};
 
                 if (entity.Telefono.Length > 10 || entity.Telefono.Length < 10)
                 {
@@ -48,6 +48,7 @@ namespace ReservaBook.Core.Aplication.Services
                 }
 
 
+                response.IsCreated = true;
                 return await base.AddAsync(entity);
             }
             catch (Exception ex)
@@ -89,6 +90,14 @@ namespace ReservaBook.Core.Aplication.Services
             
             }
         }
+
+
+
+
+       
+
+
+
 
 
 
@@ -142,6 +151,35 @@ namespace ReservaBook.Core.Aplication.Services
 
         }
 
+
+        public async  Task<DeleteRestauranteResponseDto?> DeleteRestauranteAsync(int id)
+        {
+            var response = new DeleteRestauranteResponseDto() { Success = false, IsCreated = true};
+
+            try
+            {
+
+                bool result = await base.DeleteAsync(id);
+
+                if (result)
+                {
+                    response.Success = true;
+                    response.IsCreated = true;
+                    return response;
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+
+                 
+                throw new Exception("Ocurrio un error al intentar eliminar el restaurante " + ex.Message);
+            
+            
+            }
+        }
     }
 
 

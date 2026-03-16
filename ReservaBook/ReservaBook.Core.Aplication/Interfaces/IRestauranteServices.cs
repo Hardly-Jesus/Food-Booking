@@ -10,5 +10,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
 
+        Task<DeleteRestauranteResponseDto?> DeleteRestauranteAsync(int id);
+
     }
 }

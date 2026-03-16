@@ -101,7 +101,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
         [HttpPost("Delete-restaurante/{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -116,14 +116,14 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 }
 
 
-                var result = await _restauranteServices.DeleteAsync(id);
+                var result = await _restauranteServices.DeleteRestauranteAsync(id);
 
-                if (!result)
+                if (result == null || !result.Success)
                 {
                     return NotFound("No se contro un recurso con ese id");
                 }
 
-                return NoContent();
+                return Ok(result);
 
             }
             catch (Exception ex)
@@ -135,6 +135,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             }
 
         }
+
 
 
 

@@ -25,11 +25,14 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
 
+
+
             #region relationShip configuration
             builder.HasOne(r => r.Pago)
                     .WithOne(r => r.Pedido)
                     .HasForeignKey<Pago>(r => r.IdPedido)
                     .OnDelete(DeleteBehavior.Cascade);
+
             #endregion
 
 
