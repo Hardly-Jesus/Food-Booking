@@ -45,6 +45,8 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
+
+
         public virtual async Task<bool> DeleteAsync(int id)
         {
 

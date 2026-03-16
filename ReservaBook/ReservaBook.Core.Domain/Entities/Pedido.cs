@@ -8,7 +8,7 @@ namespace ReservaBook.Core.Domain.Entities
     {
         public int Id { get; set; }
         public required DateOnly Fecha { get; set; }
-        public required int  Hora { get; set; }
+        public required TimeOnly  Hora { get; set; }
         public required  EstadoPedido Estado { get; set; }
 
          
@@ -17,6 +17,10 @@ namespace ReservaBook.Core.Domain.Entities
 
         public int IdRestaurante { get; set; } 
         public Restaurante? Restaurante { get; set; }    
+
+
+        public required int  IdMesa {get;set;}
+        public Mesa? Mesa { get; set; }
 
 
         public Pago? Pago { get; set; }

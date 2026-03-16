@@ -7,7 +7,10 @@ namespace ReservaBook.Core.Aplication.Interfaces
 {
     public interface IMenuService : IGenericService<CreateMenuDto, CreateMenuDto,MenuResponseDto,Menu>
     {
-        
+
+
+        Task<DeleteMenuResponseDto> DeleteMenuAsync(int id);
+
 
     }
 }

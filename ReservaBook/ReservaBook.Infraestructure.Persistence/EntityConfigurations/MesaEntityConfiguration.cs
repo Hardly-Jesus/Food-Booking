@@ -32,7 +32,11 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
             builder.HasMany<Reserva>(r => r.Reservas)
                    .WithOne(r => r._Mesa)
                    .HasForeignKey(r => r.IdMesa)
-                   .OnDelete(DeleteBehavior.Cascade);       
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany<Pedido>(r => r.Pedidos)
+                          .WithOne(r => r.Mesa)
+                          .HasForeignKey(r => r.IdMesa);
             #endregion
 
         }

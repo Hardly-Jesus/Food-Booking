@@ -20,6 +20,7 @@ namespace ReservaBook.Core.Aplication.Dtos.restaurante
         public  string? Imagen { get; set; }
         public bool HasError { get; set; }
         public List<string> Errors { get; set; } = new List<string>();
+        public bool IsCreated { get; set; }
          
     }
 }

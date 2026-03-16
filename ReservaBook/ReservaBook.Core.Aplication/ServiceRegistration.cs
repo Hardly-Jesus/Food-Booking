@@ -1,12 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Aplication.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReservaBook.Core.Aplication
 {
@@ -29,6 +24,7 @@ namespace ReservaBook.Core.Aplication
             services.AddScoped<IPlatoService, PlatoService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IPlatoMenuServices, PlatoMenuService>();
+            services.AddScoped<IPedidoService, PedidoService>();
             #endregion
 
 

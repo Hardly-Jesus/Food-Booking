@@ -16,6 +16,7 @@ namespace ReservaBook.Core.Domain.Entities
         public  Restaurante? Restaurante { get; set; }
 
 
+        public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
         public ICollection<Reserva>? Reservas { get; set; } = new List<Reserva>();
 
     }

@@ -12,8 +12,8 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    [Migration("20260315193952_UpdateMigrationAndEntities")]
-    partial class UpdateMigrationAndEntities
+    [Migration("20260315205530_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,13 +164,18 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
 
-                    b.Property<int>("Hora")
+                    b.Property<TimeOnly>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<int>("IdMesa")
                         .HasColumnType("int");
 
                     b.Property<int>("IdRestaurante")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdMesa");
 
                     b.HasIndex("IdRestaurante");
 
@@ -288,8 +293,8 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
 
-                    b.Property<int>("Hora")
-                        .HasColumnType("int");
+                    b.Property<TimeOnly>("Hora")
+                        .HasColumnType("time");
 
                     b.Property<int>("IdMesa")
                         .HasColumnType("int");
@@ -415,11 +420,19 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Pedido", b =>
                 {
+                    b.HasOne("ReservaBook.Core.Domain.Entities.Mesa", "Mesa")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("IdMesa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ReservaBook.Core.Domain.Entities.Restaurante", "Restaurante")
                         .WithMany("Pedidos")
                         .HasForeignKey("IdRestaurante")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Mesa");
 
                     b.Navigation("Restaurante");
                 });
@@ -505,6 +518,8 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Mesa", b =>
                 {
+                    b.Navigation("Pedidos");
+
                     b.Navigation("Reservas");
                 });
 

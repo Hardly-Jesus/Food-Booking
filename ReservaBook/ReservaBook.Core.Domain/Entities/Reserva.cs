@@ -8,7 +8,7 @@ namespace ReservaBook.Core.Domain.Entities
         public int Id { get; set; }
 
         public required DateOnly Fecha { get; set; }
-        public required int Hora {  get; set; }
+        public required TimeOnly Hora {  get; set; }
         public required string Mesa { get; set; }
         public required int CantidadPersona { get; set; }
         public required string Estado { get; set; }
