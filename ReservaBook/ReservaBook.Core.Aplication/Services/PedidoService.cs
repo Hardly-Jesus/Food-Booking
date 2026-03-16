@@ -42,13 +42,16 @@ namespace ReservaBook.Core.Aplication.Services
 
                 var response = new PedidoResponseDto() { HasError = false, Errors = [] };
 
+                var fechaHoraPedido = entity.Fecha.ToDateTime(entity.Hora);
+                var fechaHoraActual = DateTime.Now;
 
-                if (entity.Fecha < DateOnly.FromDateTime(DateTime.Now))
+                if (fechaHoraPedido < fechaHoraActual)
                 {
                     response.HasError = true;
-                    response.Errors.Add("La fecha del pedido debe ser mayor o igual a la fecha actual");
+                    response.Errors.Add("La fecha y hora del pedido debe ser mayor o igual a la fecha actual");
                     return response;
                 }
+
 
 
 
@@ -73,7 +76,7 @@ namespace ReservaBook.Core.Aplication.Services
                 if (entity.Hora > TimeOnly.FromDateTime(DateTime.MaxValue))
                 {
                     response.HasError = true;
-                    response.Errors.Add("La hora introduccida no es valida,favro verificar");
+                    response.Errors.Add("La hora introduccida no es valida,favor verificar");
                     return response;
                 }
 

@@ -157,7 +157,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
         [HttpDelete("delete-pedido/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PedidoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeletePedido([FromRoute] PedidoIdRequestDto dto)
@@ -183,7 +183,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-                return Ok(entity);
+                return NoContent();
 
 
             }
