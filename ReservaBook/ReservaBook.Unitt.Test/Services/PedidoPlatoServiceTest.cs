@@ -4,9 +4,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReservaBook.Core.Aplication.Dtos.pdidoPlato;
-using ReservaBook.Core.Aplication.Dtos.pedido;
-using ReservaBook.Core.Aplication.Dtos.plato;
-using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
 using ReservaBook.Core.Domain.Common.Enums;
@@ -598,38 +595,6 @@ namespace ReservaBook.Unitt.Test.Services
             result.Should().BeNullOrEmpty();
          
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #endregion
 
 
