@@ -4,9 +4,6 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ReservaBook.Core.Aplication.Dtos.menu;
-using ReservaBook.Core.Aplication.Dtos.plato;
-using ReservaBook.Core.Aplication.Dtos.platoMenu;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
 using ReservaBook.Core.Domain.Common.Enums;
@@ -49,26 +46,26 @@ namespace ReservaBook.Unitt.Test.Services
             }, loggerFactory);
 
 
-
             _mapper = config.CreateMapper();
-
 
         }
 
 
 
+
         #region private method
-        public PlatoMenuService CreateService()
+        public (PlatoMenuService,RestauranteRepository) CreateService()
         {
             var context = new ReservaBookContext(dbContextOptions);
             var repo = new PlatoMenuRepository(context);
             var menuRepo = new MenuRepository(context);
             var PlatoRepo = new PlatoRepository(context);
-
+            var restauranteRepo = new RestauranteRepository(context);   
             var service = new PlatoMenuService(repo,menuRepo,PlatoRepo,_mapper);
-            return service;
+            return (service,restauranteRepo);
         }
         #endregion
+
 
 
 
@@ -78,12 +75,30 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrange
-            var service =  CreateService();
+            var (service,restauranteRepo) =  CreateService();
 
             var context = new ReservaBookContext(dbContextOptions);
             var menuRepo = new MenuRepository(context);
             var PlatoRepo = new PlatoRepository(context);
-         
+
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
             var plato = new Plato()
             {
 
@@ -102,7 +117,8 @@ namespace ReservaBook.Unitt.Test.Services
             {
                 Id = 0,
                 Nombre = "Comida china",
-                Descripcion = "Es un menu orientada a comida china ......"
+                Descripcion = "Es un menu orientada a comida china ......",
+                IdRestaurante = restauranteAdded.Id
 
 
             };
@@ -135,7 +151,7 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrange
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
 
             var context = new ReservaBookContext(dbContextOptions);
             var menuRepo = new MenuRepository(context);
@@ -155,11 +171,33 @@ namespace ReservaBook.Unitt.Test.Services
 
 
 
+
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
+
+
             var menu = new Menu()
             {
                 Id = 0,
                 Nombre = "Comida china",
-                Descripcion = "Es un menu orientada a comida china ......"
+                Descripcion = "Es un menu orientada a comida china ......",
+                IdRestaurante = restauranteAdded.Id
 
 
             };

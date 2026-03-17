@@ -20,10 +20,8 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
             #region property configuration
-
+            builder.Property(r => r.Total).HasPrecision(22, 2);
             #endregion
-
-
 
 
 

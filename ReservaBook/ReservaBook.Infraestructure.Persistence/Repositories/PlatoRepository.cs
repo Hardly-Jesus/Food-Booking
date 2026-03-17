@@ -33,5 +33,21 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<Plato?>> GetAllByIdMenu(int idMenu)
+        {
+
+
+
+
+            return [];
+
+
+
+
+
+        }
+
+
     }
 }

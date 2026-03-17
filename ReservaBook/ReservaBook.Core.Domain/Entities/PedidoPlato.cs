@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ReservaBook.Core.Domain.Entities
 {
@@ -15,7 +11,6 @@ namespace ReservaBook.Core.Domain.Entities
         public Plato? Plato { get; set; }
         public required decimal PrecioUnitario { get; set; }
         public required  int CantidadPlatos {get;set;}
-
 
     }
 }

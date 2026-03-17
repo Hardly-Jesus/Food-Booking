@@ -10,7 +10,7 @@ namespace ReservaBook.Core.Domain.Entities
         public required DateOnly Fecha { get; set; }
         public required TimeOnly  Hora { get; set; }
         public required  EstadoPedido Estado { get; set; }
-
+        public required decimal Total { get; set; }
          
         //foreign key y navigation property
         public ICollection<PedidoPlato> PedidoPlatos { get; set; } = new List<PedidoPlato>();

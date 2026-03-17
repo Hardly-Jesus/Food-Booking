@@ -2,7 +2,6 @@
 
 using AutoMapper;
 using ReservaBook.Core.Aplication.Dtos.menu;
-using ReservaBook.Core.Aplication.Dtos.plato;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
@@ -13,11 +12,35 @@ namespace ReservaBook.Core.Aplication.Services
     {
 
         private readonly IMenuRepository menuRepository;
+        private readonly IRestauranteRepository repoRestaurante;
 
 
-        public MenuService(IMenuRepository menuRepository, IMapper _mapper) : base(menuRepository, _mapper)
+        public MenuService(IMenuRepository menuRepository, IMapper _mapper, IRestauranteRepository repoRestaurante) : base(menuRepository, _mapper)
         {
             this.menuRepository = menuRepository;   
+            this.repoRestaurante = repoRestaurante;  
+        }
+
+
+
+
+
+
+
+        public override async Task<MenuResponseDto?> AddAsync(CreateMenuDto? entity)
+        {
+
+            if (entity == null)
+            {
+                return null;
+            }
+
+
+            var restaurante = await repoRestaurante.GetByUserId(entity.IdUsuario);
+
+            entity.IdRestaurante = restaurante!.Id;
+            return await base.AddAsync(entity);
+
         }
 
 
@@ -62,6 +85,7 @@ namespace ReservaBook.Core.Aplication.Services
 
             }
 
+            var restaurante = await repoRestaurante.GetByUserId(entity.IdUsuario);
             var response = new MenuResponseDto() { HasErrors = true, Errors = [] };
 
             var IsExit = await menuRepository.GetByIdAsync(id);
@@ -77,6 +101,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
             entity!.Id = IsExit.Id;
+            entity.IdRestaurante = restaurante!.Id;
             return await base.UpdateAsync(id, entity);
 
         }

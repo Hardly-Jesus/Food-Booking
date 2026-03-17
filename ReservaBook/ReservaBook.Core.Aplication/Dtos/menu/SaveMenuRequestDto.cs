@@ -15,6 +15,6 @@ namespace ReservaBook.Core.Aplication.Dtos.menu
         [Required(ErrorMessage = "Debes indicar una descripcion para el menu")]
         public required string Descripcion { get; set; }
 
-
+    
     }
 }

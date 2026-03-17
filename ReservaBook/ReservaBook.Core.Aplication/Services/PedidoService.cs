@@ -97,6 +97,7 @@ namespace ReservaBook.Core.Aplication.Services
 
                 entity.IdRestaurante = restaurante.Id;
                 entity.IdMesa = mesa.Id;
+                entity.Total = 0;
                 entity.Estado = EstadoPedido.Pendiente;
                 return await base.AddAsync(entity);
             }
@@ -177,6 +178,7 @@ namespace ReservaBook.Core.Aplication.Services
             entity.Estado = IsExit.Estado;
             entity.IdRestaurante = IsExit.IdRestaurante;    
             entity.IdMesa = IsExit.IdMesa;
+            entity.Total = IsExit.Total;
             return await base.UpdateAsync(id, entity);
 
         }

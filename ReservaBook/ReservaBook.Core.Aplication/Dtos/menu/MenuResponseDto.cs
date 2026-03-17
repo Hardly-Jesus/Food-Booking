@@ -12,6 +12,7 @@ namespace ReservaBook.Core.Aplication.Dtos.menu
         public  List<string>? Errors { get; set; } = new List<string>();
         public  bool HasErrors { get; set; }
         public bool IsCreated { get; set; }
+        public  int IdRestaurante { get; set; }
 
 
     }
