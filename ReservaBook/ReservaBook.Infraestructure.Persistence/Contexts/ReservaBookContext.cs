@@ -20,7 +20,8 @@ namespace ReservaBook.Infraestructure.Persistence.Contexts
         public DbSet<Reseña> Reseñas { get; set; }      
         public DbSet<Reserva> Reservas { get; set; }
         public DbSet<Restaurante> Restaurantes { get; set; }
-
+        public DbSet<PlatoMenu> PlatoMenus { get; set; }
+        public DbSet<PedidoPlato> PedidoPlatos { get; set; }
 
 
 

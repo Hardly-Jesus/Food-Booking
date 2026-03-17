@@ -7,7 +7,7 @@ namespace ReservaBook.Core.Domain.Interfaces
     {
 
         Task<bool> ChangeStatus(int idPlato, string Statu);
-
+        Task<List<Plato?>> GetAllByIdMenu(int idMenu);
 
     }
 }

@@ -25,11 +25,12 @@ namespace ReservaBook.Core.Aplication
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IPlatoMenuServices, PlatoMenuService>();
             services.AddScoped<IPedidoService, PedidoService>();
+            services.AddScoped<IPedidoPlatoService, PedidoPlatoService>();
             #endregion
 
 
         }
-
+        
 
 
     }

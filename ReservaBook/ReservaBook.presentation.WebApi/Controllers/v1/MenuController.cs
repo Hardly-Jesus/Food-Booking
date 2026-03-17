@@ -79,8 +79,9 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                     return BadRequest("Debes introduccir los valores correctamente, favor verificar");
                 }
 
-
+                var userId = User.FindFirst("UId").Value;
                 var map = _mapper.Map<CreateMenuDto>(dto);
+                map.IdUsuario = userId;
                 var entity = await menuService.AddAsync(map);
 
                 if(entity == null)

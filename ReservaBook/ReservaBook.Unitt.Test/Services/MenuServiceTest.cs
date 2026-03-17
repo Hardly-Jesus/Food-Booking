@@ -5,8 +5,10 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReservaBook.Core.Aplication.Dtos.menu;
+using ReservaBook.Core.Aplication.Dtos.restaurante;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
+using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 using System.Runtime.CompilerServices;
@@ -55,13 +57,14 @@ namespace ReservaBook.Unitt.Test.Services
 
 
         #region private method
-        public MenuService CreateService()
+        public (MenuService, RestauranteRepository) CreateService()
         {
 
             var context = new ReservaBookContext(_dbContextOptions);
             var repo = new MenuRepository(context);
-            var service = new MenuService(repo,mapper);
-            return service;
+            var RestauranteRepo = new RestauranteRepository(context);
+            var service = new MenuService(repo,mapper, RestauranteRepo);
+            return (service,RestauranteRepo);
 
         }
         #endregion
@@ -76,13 +79,33 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service,restauranteRepo) = CreateService();
+           
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu picante",
-                Descripcion = "Es un menu orientado a comida picante"
+                Descripcion = "Es un menu orientado a comida picante",
+                IdRestaurante = restauranteAdded.Id
+
 
             };
 
@@ -110,7 +133,7 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service,restauranteRepo) = CreateService();
             CreateMenuDto menu = null!;
             
 
@@ -135,13 +158,32 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu picante",
-                Descripcion = "Es un menu orientado a comida picante"
+                Descripcion = "Es un menu orientado a comida picante",
+                IdRestaurante = restauranteAdded.Id,
 
             };
 
@@ -152,7 +194,8 @@ namespace ReservaBook.Unitt.Test.Services
 
                 Id = 0,
                 Nombre = "Menu Inglesa",
-                Descripcion = "Es un menu orientado a comida Inglesa"
+                Descripcion = "Es un menu orientado a comida Inglesa",
+                IdRestaurante = restauranteAdded.Id,
 
             };
 
@@ -181,15 +224,35 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+      
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu picante",
-                Descripcion = "Es un menu orientado a comida picante"
-
+                Descripcion = "Es un menu orientado a comida picante",
+                IdRestaurante = restauranteAdded.Id,
             };
+
 
 
 
@@ -218,14 +281,32 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu picante",
-                Descripcion = "Es un menu orientado a comida picante"
-
+                Descripcion = "Es un menu orientado a comida picante",
+                IdRestaurante = restauranteAdded.Id,
+                
             };
 
 
@@ -250,8 +331,9 @@ namespace ReservaBook.Unitt.Test.Services
         {
 
             //arrage
-            var service = CreateService();
+            var (service,restauranteRepo) = CreateService();
           
+
 
 
 
@@ -276,14 +358,33 @@ namespace ReservaBook.Unitt.Test.Services
 
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
             var listEntities = new List<CreateMenuDto>();
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+         
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu picante",
-                Descripcion = "Es un menu orientado a comida picante"
+                Descripcion = "Es un menu orientado a comida picante",
+                IdRestaurante = restauranteAdded.Id
 
             };
 
@@ -293,7 +394,8 @@ namespace ReservaBook.Unitt.Test.Services
 
                 Id = 0,
                 Nombre = "Menu ingles",
-                Descripcion = "Es un menu orientado a comida inglesa"
+                Descripcion = "Es un menu orientado a comida inglesa",
+                IdRestaurante = restauranteAdded.Id
 
             };
 
@@ -303,7 +405,8 @@ namespace ReservaBook.Unitt.Test.Services
 
                 Id = 0,
                 Nombre = "Menu chino",
-                Descripcion = "Es un menu orientado a comida china"
+                Descripcion = "Es un menu orientado a comida china",
+                IdRestaurante = restauranteAdded.Id
 
             };
 
@@ -313,9 +416,9 @@ namespace ReservaBook.Unitt.Test.Services
             listEntities.Add(menu2);
             listEntities.Add(menu3);
 
-            foreach(var entity in listEntities)
+            foreach(var _entity in listEntities)
             {
-                await service.AddAsync(entity);
+                await service.AddAsync(_entity);
             }
 
 
@@ -343,7 +446,7 @@ namespace ReservaBook.Unitt.Test.Services
 
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
 
            
 
@@ -367,13 +470,30 @@ namespace ReservaBook.Unitt.Test.Services
 
 
             //arrage
-            var service = CreateService();
+            var (service, restauranteRepo) = CreateService();
+            var entity = new Restaurante()
+            {
+                Id = 0,
+                Nombre = "Restaurante Layola",
+                Direccion = "Azua, Calle Duartes #91",
+                Telefono = "8291239091",
+                HorarioInicio = new TimeOnly(08, 30),
+                HorarioFin = new TimeOnly(14, 30),
+                EspecialidadGastronomica = "Comida Italiana",
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/00c035ee-81e1-44a9-828a-57967eb9b88a.jpg",
+                UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+            };
+
+
+            var restauranteAdded = await restauranteRepo.AddAsync(entity);
+
             var menu = new CreateMenuDto()
             {
 
                 Id = 0,
                 Nombre = "Menu chino",
-                Descripcion = "Es un menu orientado a comida china"
+                Descripcion = "Es un menu orientado a comida china",
+                IdRestaurante = restauranteAdded.Id
 
             };
 

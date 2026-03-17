@@ -11,7 +11,7 @@ namespace ReservaBook.Core.Aplication.Dtos.pedido
         public required DateOnly Fecha { get; set; }
         public required TimeOnly Hora { get; set; }
         public required EstadoPedido Estado { get; set; }
-
+        public required decimal Total { get; set; }
 
         //id de foreign key
         public required int IdRestaurante { get; set; }

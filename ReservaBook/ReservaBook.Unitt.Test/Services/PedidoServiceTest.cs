@@ -121,6 +121,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
                 IdRestaurante = restauranteAdded.Id
+                ,Total = 0m
             };
 
        
@@ -221,7 +222,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
             var pedidoAdded = await service.AddAsync(pedido);
@@ -233,7 +235,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromTimeSpan(TimeSpan.FromHours(10)),
                 Estado = pedidoAdded!.Estado,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
             //act
@@ -303,7 +306,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
             var pedidoAdded = await service.AddAsync(pedido);
@@ -373,7 +377,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
             var pedidoAdded = await service.AddAsync(pedido);
@@ -466,7 +471,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = new TimeOnly(19,2),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
 
@@ -479,6 +485,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
                 IdRestaurante = restauranteAdded.Id
+                ,Total = 0,
             };
 
 
@@ -491,7 +498,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = new TimeOnly(22,0),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m,
             };
 
 
@@ -604,7 +612,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                Total = 0m
             };
 
             var pedidoAdded = await service.AddAsync(pedido);
@@ -642,8 +651,6 @@ namespace ReservaBook.Unitt.Test.Services
 
 
            
-
-
             //act
             var result = await service.GetByIdAsync(999);
 
@@ -654,6 +661,8 @@ namespace ReservaBook.Unitt.Test.Services
            
 
         }
+
+
         #endregion
 
 

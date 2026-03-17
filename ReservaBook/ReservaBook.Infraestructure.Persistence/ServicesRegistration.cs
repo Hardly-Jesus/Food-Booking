@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
@@ -55,7 +56,8 @@ namespace ReservaBook.Infraestructure.Persistence
             Service.AddScoped<IPlatoRepository, PlatoRepository>();
             Service.AddScoped<IMenuRepository, MenuRepository>();
             Service.AddScoped<IPlatoMenuRepository, PlatoMenuRepository>();
-            Service.AddScoped<IPedidoRepository,PedidoRepository>();    
+            Service.AddScoped<IPedidoRepository,PedidoRepository>();
+            Service.AddScoped<IPedidoPlatoRepository, PedidoPlatoRepository>();
             #endregion
 
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    partial class ReservaBookContextModelSnapshot : ModelSnapshot
+    [Migration("20260316193032_UpdateEntityPedido")]
+    partial class UpdateEntityPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
