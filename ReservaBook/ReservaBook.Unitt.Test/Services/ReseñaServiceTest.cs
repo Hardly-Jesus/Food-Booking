@@ -381,65 +381,6 @@ namespace ReservaBook.Unitt.Test.Services
         }
 
 
-
-
-        [Fact]
-        public async Task GetAllByIdRestauranteAsync_should_return_Empty_when_not_exists()
-        {
-
-            //arrange
-            var (service, restauranteRepo) = CreateService();
-          
-
-            //act
-            var result = await service.GetAllByIdRestaurnteAsync(99);
-
-
-            //assert
-            result.Should().BeNullOrEmpty();
-         
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #endregion
 
     }

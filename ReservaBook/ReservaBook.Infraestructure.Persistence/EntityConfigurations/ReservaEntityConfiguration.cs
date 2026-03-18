@@ -18,7 +18,6 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
             #region property configuration
-            builder.Property( r => r.Mesa).IsRequired().HasMaxLength(250);
             builder.Property(r => r.Estado).IsRequired().HasMaxLength(200);
             #endregion
 
