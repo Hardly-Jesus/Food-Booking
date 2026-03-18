@@ -9,10 +9,8 @@ namespace ReservaBook.Core.Domain.Entities
 
         public required DateOnly Fecha { get; set; }
         public required TimeOnly Hora {  get; set; }
-        public required string Mesa { get; set; }
-        public required int CantidadPersona { get; set; }
+        public required string IdUsuario { get; set; }
         public required string Estado { get; set; }
-
 
 
 
