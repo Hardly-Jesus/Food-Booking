@@ -60,6 +60,7 @@ namespace ReservaBook.Infraestructure.Persistence
             Service.AddScoped<IPedidoPlatoRepository, PedidoPlatoRepository>();
             Service.AddScoped<IReseñaRepository, ReseñaRepository>();
             Service.AddScoped<IReservaResporitory, ReservaRepository>();
+            Service.AddScoped<IPagoRepository, PagoRepository>();
             #endregion
 
 
