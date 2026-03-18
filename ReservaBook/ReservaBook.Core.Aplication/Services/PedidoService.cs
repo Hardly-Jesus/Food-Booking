@@ -64,14 +64,6 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
-                if (entity.Hora < TimeOnly.FromDateTime(DateTime.Now))
-                {
-                    response.HasError = true;
-                    response.Errors.Add("La hora del pedido debe ser mayor o igual a la hora actual");
-                    return response;
-                }
-
-
 
                 if (entity.Hora > TimeOnly.FromDateTime(DateTime.MaxValue))
                 {
