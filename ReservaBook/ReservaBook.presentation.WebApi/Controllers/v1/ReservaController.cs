@@ -205,7 +205,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 }
 
 
-                return Created("", entity);
+                return NoContent();
 
             }
             catch (Exception ex)

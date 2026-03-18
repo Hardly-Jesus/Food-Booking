@@ -28,8 +28,9 @@ namespace ReservaBook.Core.Aplication
             services.AddScoped<IPedidoPlatoService, PedidoPlatoService>();
             services.AddScoped<IReseñaService, ReseñaService>();
             services.AddScoped<IReservaRestauranteService, ReservaService>();
+            services.AddScoped<IPagoService, PagoService>();
             #endregion
-
+                
 
         }
         
