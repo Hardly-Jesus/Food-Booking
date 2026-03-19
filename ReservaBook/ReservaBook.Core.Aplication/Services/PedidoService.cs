@@ -14,13 +14,15 @@ namespace ReservaBook.Core.Aplication.Services
         private readonly IPedidoRepository _repo;
         private readonly IMesaRepository mesaRepository;
         private readonly IRestauranteRepository restauranteRepository;  
+        private readonly INotificacionRepository notificacionRepository;
 
-        public PedidoService(IPedidoRepository _rep, IMesaRepository mesaRepository, IRestauranteRepository restauranteRepository,IMapper _mapper) : base(_rep, _mapper)
+        public PedidoService(IPedidoRepository _rep, IMesaRepository mesaRepository, IRestauranteRepository restauranteRepository, INotificacionRepository notificacionRepository, IMapper _mapper) : base(_rep, _mapper)
         {
 
             this._repo = _rep;
             this.restauranteRepository = restauranteRepository;
             this.mesaRepository = mesaRepository;
+            this.notificacionRepository = notificacionRepository;
 
 
         }
@@ -85,6 +87,20 @@ namespace ReservaBook.Core.Aplication.Services
 
                 }
 
+                var notificacion = new Notificacion()
+                {
+
+                    Id = 0,
+                    Fecha = DateTime.Now,
+                    Tipo = "Realizacion de pedido",
+                    Descripcion = "Un cliente realizo un pedido, favor verificar y antender de ser autentico",
+                    ReceptorId = restaurante.UsuarioId,
+                    SenderId = entity.ClienteId
+
+                };
+
+
+                await notificacionRepository.AddAsync(notificacion);
 
 
                 entity.IdRestaurante = restaurante.Id;
@@ -164,6 +180,25 @@ namespace ReservaBook.Core.Aplication.Services
                 return response;
 
             }
+
+
+            var restaurante = await restauranteRepository.GetByIdAsync(entity.IdRestaurante);
+
+            var notificacion = new Notificacion()
+            {
+
+                Id = 0,
+                Fecha = DateTime.Now,
+                Tipo = "Realizacion de pedido",
+                Descripcion = "Un cliente realizo un pedido, favor verificar y antender de ser autentico",
+                ReceptorId = restaurante!.UsuarioId,
+                SenderId = entity.ClienteId
+
+            };
+
+
+            await notificacionRepository.AddAsync(notificacion);
+
 
 
             entity!.Id = IsExit.Id;

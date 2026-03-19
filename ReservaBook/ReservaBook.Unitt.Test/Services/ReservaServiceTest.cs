@@ -56,7 +56,8 @@ namespace ReservaBook.Unitt.Test.Services
             var repo = new ReservaRepository(context);
             var mesaRepository = new MesaRepository(context);
             var restauranteService = new RestauranteRepository(context);
-            var service = new ReservaService(repo,mesaRepository,mapper);
+            var notificacion = new NotificacionRepository(context);
+            var service = new ReservaService(repo,mesaRepository,notificacion, restauranteService, mapper);
             return (service,mesaRepository,restauranteService);
 
         }

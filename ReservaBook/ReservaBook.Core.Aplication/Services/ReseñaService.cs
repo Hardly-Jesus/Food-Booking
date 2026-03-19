@@ -12,13 +12,16 @@ namespace ReservaBook.Core.Aplication.Services
     {
         private readonly IMapper _mapper;
         private readonly IReseñaRepository _reseñaRepository;
-
-
-        public ReseñaService(IReseñaRepository _reseñaRepository, IMapper _mapper) : base(_reseñaRepository, _mapper)
+        private readonly INotificacionRepository _notificacionRepo;
+        private readonly IRestauranteRepository _restaurante;
+        public ReseñaService(IReseñaRepository _reseñaRepository, INotificacionRepository _notificacionRepo, IRestauranteRepository _restaurante, IMapper _mapper) : base(_reseñaRepository, _mapper)
         {
             this._mapper = _mapper;
             this._reseñaRepository = _reseñaRepository;
+            this._notificacionRepo = _notificacionRepo;
+            this._restaurante = _restaurante;
 
+          
         }
 
 
@@ -50,6 +53,21 @@ namespace ReservaBook.Core.Aplication.Services
                     return response;
                 }
 
+
+                var restaurante = await _restaurante.GetByIdAsync(entity.IdRestaurante);
+
+                var notificacion = new Notificacion()
+                {
+
+                    Id = 0,
+                    Fecha = DateTime.Now,
+                    Tipo = "Realizacion de reseña",
+                    Descripcion = "Un cliente realizo una reseña en tu restaurante, favor verificar y contestar de ser posible",
+                    ReceptorId = restaurante!.UsuarioId,
+                    SenderId = entity.ClienteId,
+                };
+
+                await _notificacionRepo.AddAsync(notificacion);
                 return await base.AddAsync(entity);
 
             }
@@ -62,7 +80,7 @@ namespace ReservaBook.Core.Aplication.Services
 
         }
 
-        public async Task<List<ReseñaResponseDto>> GetAllByIdRestaurnteAsync(int idRestaurante)
+        public async Task<List<ReseñaResponseDto?>> GetAllByIdRestaurnteAsync(int idRestaurante)
         {
             try
             {
@@ -137,6 +155,22 @@ namespace ReservaBook.Core.Aplication.Services
                 entity.Id = IsExit.Id;
                 entity.IdRestaurante = IsExit.IdRestaurante;
 
+
+
+                var restaurante = await _restaurante.GetByIdAsync(entity.IdRestaurante);
+
+                var notificacion = new Notificacion()
+                {
+
+                    Id = 0,
+                    Fecha = DateTime.Now,
+                    Tipo = "Realizacion de reseña",
+                    Descripcion = "Un cliente realizo una reseña en tu restaurante, favor verificar y contestar de ser posible",
+                    ReceptorId = restaurante!.UsuarioId,
+                    SenderId = entity.ClienteId,
+                };
+
+                await _notificacionRepo.AddAsync(notificacion);
 
                 return await base.UpdateAsync(entity.Id, entity);
             }

@@ -14,11 +14,15 @@ namespace ReservaBook.Core.Aplication.Services
         private readonly IMapper _mapper;
         private readonly IReservaResporitory _reservaRepository;
         private readonly IMesaRepository mesaRepository;
-        public ReservaService(IReservaResporitory _reservaRepository, IMesaRepository mesaRepository, IMapper _mapper) : base(_reservaRepository, _mapper)
+        private readonly INotificacionRepository _notificacionRepo;
+        private readonly IRestauranteRepository restauranteRepository;
+        public ReservaService(IReservaResporitory _reservaRepository, IMesaRepository mesaRepository, INotificacionRepository _notificacionRepo, IRestauranteRepository restauranteRepository, IMapper _mapper) : base(_reservaRepository, _mapper)
         {
             this._mapper = _mapper;
             this._reservaRepository = _reservaRepository; 
             this.mesaRepository = mesaRepository;
+            this._notificacionRepo = _notificacionRepo;
+            this.restauranteRepository = restauranteRepository;
 
 
         }
@@ -90,6 +94,20 @@ namespace ReservaBook.Core.Aplication.Services
                     return response;
                 }
 
+                var restaurante = await restauranteRepository.GetByIdAsync(entity.IdRestaurante);
+
+                var notificacionDuenio = new Notificacion()
+                { Id = 0, 
+                  Fecha = DateTime.Now, 
+                  Descripcion = "Se realizo una reserva correctamente por parte un cliente, favor verificar y atender de ser correspondiente y autentica la reserva", 
+                  Tipo = "Reserva de mesa",
+                  SenderId = entity.IdUsuario,
+                  ReceptorId = restaurante!.UsuarioId}
+                ;
+
+                await _notificacionRepo.AddAsync(notificacionDuenio);
+
+
                 entity.Estado = EstadoSolicitudes.Pendiente.ToString();
               
                 return await base.AddAsync(entity);
@@ -101,6 +119,7 @@ namespace ReservaBook.Core.Aplication.Services
             }
 
         }
+
 
         public async Task<List<ReservaResponseDto>?> GetAllReservaByIdUsuario(string IdUsuario)
         {
@@ -194,6 +213,19 @@ namespace ReservaBook.Core.Aplication.Services
                     return response;
                 }
 
+
+                var restaurante = await restauranteRepository.GetByIdAsync(IsExite!.IdRestaurante);
+
+
+                var notificacionDuenio = new Notificacion()
+                {
+                    Id = 0,
+                    Fecha = DateTime.Now,
+                    Descripcion = "Un cliente actualizo los datos de una reserva, favor verificar y anteder de ser authentica la reserva",
+                    Tipo = "Reserva de mesa",
+                    SenderId = entity.IdUsuario,
+                    ReceptorId = restaurante!.UsuarioId
+                };
 
 
                 entity.Estado = IsExite!.Estado;
