@@ -1,17 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ReservaBook.Core.Aplication.Interfaces;
+using ReservaBook.Core.Aplication.Services;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReservaBook.Core.Aplication
 {
     public static class ServiceRegistration
     {
 
-        public static void AddServcesLayerIOC(this IServiceCollection services)
+        public static void AddServicesLayerIOC(this IServiceCollection services)
         {
 
             #region generalConfiguration
@@ -21,11 +18,23 @@ namespace ReservaBook.Core.Aplication
 
 
             #region services Registration IOC
+            services.AddScoped(typeof(IGenericService<,,,>),typeof(GenericService<,,,>));
+            services.AddScoped<IRestauranteServices, RestauranteService>();
+            services.AddScoped<IMesaService, MesaService>();
+            services.AddScoped<IPlatoService, PlatoService>();
+            services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IPlatoMenuServices, PlatoMenuService>();
+            services.AddScoped<IPedidoService, PedidoService>();
+            services.AddScoped<IPedidoPlatoService, PedidoPlatoService>();
+            services.AddScoped<IReseñaService, ReseñaService>();
+            services.AddScoped<IReservaRestauranteService, ReservaService>();
+            services.AddScoped<IPagoService, PagoService>();
+            services.AddScoped<INotificacionService, NotificacionService>();
             #endregion
-
+                
 
         }
-
+        
 
 
     }

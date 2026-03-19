@@ -1,7 +1,8 @@
-using ReservaBook.Infraestructure.Shared;
-using ReservaBook.Infraestructure.Indentity;
-using ReservaBook.presentation.WebApi.Extensions;
 using ReservaBook.Core.Aplication;
+using ReservaBook.Infraestructure.Indentity;
+using ReservaBook.Infraestructure.Persistence;
+using ReservaBook.Infraestructure.Shared;
+using ReservaBook.presentation.WebApi.Extensions;
 using System.Text.Json.Serialization;
 
 
@@ -22,12 +23,14 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 builder.Services.AddEmailServicesIOC(builder.Configuration);
 builder.Services.AddIdentityLayerIOCForWebApi(builder.Configuration);
+
+builder.Services.AddPersistencesLayerIOC(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApiVersioning();
 builder.Services.AddSwaggerExtension();
 builder.Services.AddVersioningExtensions();
-builder.Services.AddServcesLayerIOC();
+builder.Services.AddServicesLayerIOC();
 
 
 builder.Services.AddCors(options =>
@@ -46,7 +49,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-
+//prueba git
 var app = builder.Build();
 await app.Services.RunIdentitySeed();
 app.UseCors("PermitirFrontend");
