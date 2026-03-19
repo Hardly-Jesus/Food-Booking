@@ -54,8 +54,9 @@ namespace ReservaBook.Unitt.Test.Services
         {
             var context = new ReservaBookContext(_dbContextOptions);
             var repo = new ReseñaRepository(context);
+            var notificacion = new NotificacionRepository(context);
             var restauranteRepo = new RestauranteRepository(context);   
-            var service = new ReseñaService(repo,_mapper);
+            var service = new ReseñaService(repo,notificacion,restauranteRepo,_mapper);
             return (service,restauranteRepo); 
         }
         #endregion

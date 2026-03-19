@@ -72,6 +72,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             try
             {
 
+                var userId = User.FindFirst("UId")!.Value;
+
                 if(dto == null)
                 {
                     return BadRequest("Debes introduccir los valores correctamente  favor verificar");
@@ -79,6 +81,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
                 var map = _mapper.Map<CreatePedidoRequestDto>(dto);
+                map.ClienteId = userId;
                 var entity = await pedidoService.AddAsync(map);
 
 
@@ -117,7 +120,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         {
             try
             {
-              
+
+                var userId = User.FindFirst("UId")!.Value;
 
                 if (dto == null)
                 {
@@ -127,6 +131,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
                 var map = _mapper.Map<CreatePedidoRequestDto>(dto);
+                map.ClienteId = userId;
                 var entity = await pedidoService.UpdateAsync(id,map);
 
 

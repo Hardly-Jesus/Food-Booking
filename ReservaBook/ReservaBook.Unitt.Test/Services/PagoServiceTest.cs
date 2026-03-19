@@ -5,7 +5,6 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReservaBook.Core.Aplication.Dtos.pago;
-using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
 using ReservaBook.Core.Domain.Common.Enums;
@@ -61,8 +60,9 @@ namespace ReservaBook.Unitt.Test.Services
             var repo = new PagoRepository(Context);
             var pedidoRepo = new PedidoRepository(Context);
             var mesaRepo = new MesaRepository(Context);
+            var notificaciones = new NotificacionRepository(Context);
             var restauranteRepo = new RestauranteRepository(Context);
-            var service = new PagoService(_mapper,repo);
+            var service = new PagoService(_mapper,repo,notificaciones,restauranteRepo,pedidoRepo);
             return (service, pedidoRepo,mesaRepo,restauranteRepo);
         
         }

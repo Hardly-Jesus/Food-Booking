@@ -60,9 +60,10 @@ namespace ReservaBook.Unitt.Test.Services
         {
             var context = new ReservaBookContext(_dbContextOptions);
             var repo = new PedidoRepository(context);
-            var mesaRepo = new MesaRepository(context); 
+            var mesaRepo = new MesaRepository(context);
+            var notificaciones = new NotificacionRepository(context);
             var restauranteRepo = new RestauranteRepository(context);
-            var service = new PedidoService(repo,mesaRepo,restauranteRepo,_mapper);
+            var service = new PedidoService(repo,mesaRepo,restauranteRepo,notificaciones,_mapper);
             return service;
         }
         #endregion
@@ -428,10 +429,11 @@ namespace ReservaBook.Unitt.Test.Services
             var context = new ReservaBookContext(_dbContextOptions);
             var mesaRepo = new MesaRepository(context);
             var repo = new PedidoRepository(context);
+            var notificacion = new NotificacionRepository(context);
             var restauranteRepo = new RestauranteRepository(context);
 
 
-            var service = new PedidoService(repo,mesaRepo,restauranteRepo,_mapper);
+            var service = new PedidoService(repo,mesaRepo,restauranteRepo,notificacion,_mapper);
 
             var restaurante = new Restaurante()
             {
@@ -542,10 +544,11 @@ namespace ReservaBook.Unitt.Test.Services
             var context = new ReservaBookContext(_dbContextOptions);
             var mesaRepo = new MesaRepository(context);
             var repo = new PedidoRepository(context);
+            var notificacion = new NotificacionRepository(context);
             var restauranteRepo = new RestauranteRepository(context);
 
 
-            var service = new PedidoService(repo, mesaRepo, restauranteRepo, _mapper);
+            var service = new PedidoService(repo, mesaRepo, restauranteRepo, notificacion,_mapper);
 
 
             //act

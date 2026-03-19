@@ -61,6 +61,7 @@ namespace ReservaBook.Infraestructure.Persistence
             Service.AddScoped<IReseñaRepository, ReseñaRepository>();
             Service.AddScoped<IReservaResporitory, ReservaRepository>();
             Service.AddScoped<IPagoRepository, PagoRepository>();
+            Service.AddScoped<INotificacionRepository, NotificacionRepository>();
             #endregion
 
 

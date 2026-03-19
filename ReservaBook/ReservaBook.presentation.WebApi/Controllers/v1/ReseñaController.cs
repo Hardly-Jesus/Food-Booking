@@ -81,6 +81,10 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         {
             try
             {
+
+                var userId = User.FindFirst("UId")!.Value;
+
+
                 if (dto == null)
                 {
 
@@ -90,6 +94,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
                 var map = _mapper.Map<CreateReseñaDto>(dto);
+                map.ClienteId = userId;
                 var entity = await service.
                     AddAsync(map);
 
@@ -166,6 +171,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
             try
             {
+                var userId = User.FindFirst("UId")!.Value;
+
                 if (dto == null)
                 {
 
@@ -183,6 +190,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
                 var map = _mapper.Map<CreateReseñaDto>(dto);
+                map.ClienteId = userId;
                 var entity = await service.
                     UpdateAsync(id,map);
 
