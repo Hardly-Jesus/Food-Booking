@@ -8,9 +8,9 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
 
-        private readonly ReservaBookContextc _appContext;
+        private readonly ReservaBookContext _appContext;
 
-        public GenericRepository(ReservaBookContextc appContext)
+        public GenericRepository(ReservaBookContext appContext)
         {
         
            this._appContext = appContext;
