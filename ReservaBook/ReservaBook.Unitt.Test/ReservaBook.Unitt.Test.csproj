@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -21,6 +21,9 @@
     <ProjectReference Include="..\ReservaBook.Core.Domain\ReservaBook.Core.Domain.csproj" />
     <ProjectReference Include="..\ReservaBook.Infraestructure.Indentity\ReservaBook.Infraestructure.Indentity.csproj" />
     <ProjectReference Include="..\ReservaBook.Infraestructure.Shared\ReservaBook.Infraestructure.Shared.csproj" />
+    
+    <!-- ✅ REFERENCIA AGREGADA (SOLUCIÓN DEL ERROR) -->
+    <ProjectReference Include="..\ReservaBook.Infraestructure.Persistence\ReservaBook.Infraestructure.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
     <Folder Include="Services\" />
   </ItemGroup>
 
