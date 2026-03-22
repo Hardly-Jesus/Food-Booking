@@ -16,3 +16,7 @@ namespace ReservaBook.Core.Domain.Entities
         public Pedido? Pedido { get; set; }
     }
 }
+
+// Prueba
+
+// Prueba
