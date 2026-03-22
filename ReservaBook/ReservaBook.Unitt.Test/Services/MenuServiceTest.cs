@@ -95,7 +95,6 @@ namespace ReservaBook.Unitt.Test.Services
             };
 
 
-
             var restauranteAdded = await restauranteRepo.AddAsync(entity);
 
             var menu = new CreateMenuDto()
@@ -104,18 +103,14 @@ namespace ReservaBook.Unitt.Test.Services
                 Id = 0,
                 Nombre = "Menu picante",
                 Descripcion = "Es un menu orientado a comida picante",
-                IdRestaurante = restauranteAdded.Id
-
+                IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
 
 
-
-
             //act
             var result = await service.AddAsync(menu);
-
-
 
             //assert
             result.Should().NotBeNull();
@@ -184,7 +179,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Menu picante",
                 Descripcion = "Es un menu orientado a comida picante",
                 IdRestaurante = restauranteAdded.Id,
-
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
             };
 
 
@@ -196,6 +191,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Menu Inglesa",
                 Descripcion = "Es un menu orientado a comida Inglesa",
                 IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
 
@@ -238,10 +234,8 @@ namespace ReservaBook.Unitt.Test.Services
                 UsuarioId = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
             };
 
-
-      
+ 
             var restauranteAdded = await restauranteRepo.AddAsync(entity);
-
 
 
             var menu = new CreateMenuDto()
@@ -251,29 +245,24 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Menu picante",
                 Descripcion = "Es un menu orientado a comida picante",
                 IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
             };
-
-
 
 
             CreateMenuDto menu2 = null!;
            
-
-
-
-
 
             //act
             var menuAddes = await service.AddAsync(menu);
             var result = await service.UpdateAsync(menuAddes!.Id, menu2);
 
 
-
             //assert
             result.Should().BeNull();
          
-
         }
+
+
 
 
         [Fact]
@@ -306,7 +295,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Menu picante",
                 Descripcion = "Es un menu orientado a comida picante",
                 IdRestaurante = restauranteAdded.Id,
-                
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
+
             };
 
 
@@ -320,7 +310,6 @@ namespace ReservaBook.Unitt.Test.Services
 
             //assert
             result.Should().BeTrue();
-
 
         }
 
@@ -349,6 +338,8 @@ namespace ReservaBook.Unitt.Test.Services
 
 
         }
+
+
 
 
 
@@ -384,7 +375,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Id = 0,
                 Nombre = "Menu picante",
                 Descripcion = "Es un menu orientado a comida picante",
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
 
@@ -395,7 +387,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Id = 0,
                 Nombre = "Menu ingles",
                 Descripcion = "Es un menu orientado a comida inglesa",
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
 
@@ -406,7 +399,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Id = 0,
                 Nombre = "Menu chino",
                 Descripcion = "Es un menu orientado a comida china",
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
 
@@ -493,10 +487,10 @@ namespace ReservaBook.Unitt.Test.Services
                 Id = 0,
                 Nombre = "Menu chino",
                 Descripcion = "Es un menu orientado a comida china",
-                IdRestaurante = restauranteAdded.Id
+                IdRestaurante = restauranteAdded.Id,
+                IdUsuario = "4d7ad823-3ddb-4ff2-9888-b6b831ff64fa"
 
             };
-
 
 
             //act
@@ -504,8 +498,6 @@ namespace ReservaBook.Unitt.Test.Services
             var result = await service.GetByIdAsync(entitieAdded!.Id);
 
             
-
-
 
             //assert
             result.Should().NotBeNull();
