@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ReservaBook.Infraestructure.Persistence.Migrations
+namespace ReservaBook.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class UpdateEntityReserva : Migration

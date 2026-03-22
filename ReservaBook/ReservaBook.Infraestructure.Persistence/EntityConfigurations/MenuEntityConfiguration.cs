@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ReservaBook.Core.Domain.Entities;
 
-namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
+namespace ReservaBook.Infrastructure.Persistence.EntityConfigurations
 {
     public class MenuEntityConfiguration : IEntityTypeConfiguration<Menu>
     {

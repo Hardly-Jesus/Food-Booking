@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ReservaBook.Infraestructure.Indentity.Migrations
+namespace ReservaBook.Infrastructure.Indentity.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
+
 #nullable disable
 
 namespace ReservaBook.Infraestructure.Persistence.Migrations

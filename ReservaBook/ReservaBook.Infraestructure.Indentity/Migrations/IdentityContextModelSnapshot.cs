@@ -6,9 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Indentity.Contexts;
 
+
 #nullable disable
 
-namespace ReservaBook.Infraestructure.Indentity.Migrations
+namespace ReservaBook.Infrastructure.Indentity.Migrations
 {
     [DbContext(typeof(IdentityContext))]
     partial class IdentityContextModelSnapshot : ModelSnapshot

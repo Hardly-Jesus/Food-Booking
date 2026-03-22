@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
+using ReservaBook.Infraestructure.Persistence.Repositories;
 
-namespace ReservaBook.Infraestructure.Persistence.Repositories
+namespace ReservaBook.Infrastructure.Persistence.Repositories
 {
     public class ReservaRepository : GenericRepository<Reserva>, IReservaResporitory
     {

@@ -34,23 +34,23 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
             #region relationship
-            builder.HasMany<Reserva>(r => r.Reservas)
+            builder.HasMany(r => r.Reservas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany<Mesa>(r => r.Mesas)
+            builder.HasMany(r => r.Mesas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.NoAction);
 
 
-            builder.HasMany<Pedido>(r => r.Pedidos)
+            builder.HasMany(r => r.Pedidos)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany<Reseña>(r => r.Reseñas)
+            builder.HasMany(r => r.Reseñas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                     .OnDelete(DeleteBehavior.Cascade);

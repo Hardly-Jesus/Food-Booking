@@ -1,7 +1,7 @@
 using ReservaBook.Core.Aplication;
 using ReservaBook.Infraestructure.Indentity;
-using ReservaBook.Infraestructure.Persistence;
 using ReservaBook.Infraestructure.Shared;
+using ReservaBook.Infrastructure.Persistence;
 using ReservaBook.presentation.WebApi.Extensions;
 using System.Text.Json.Serialization;
 
