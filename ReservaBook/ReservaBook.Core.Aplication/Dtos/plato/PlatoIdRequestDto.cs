@@ -13,3 +13,7 @@ namespace ReservaBook.Core.Aplication.Dtos.plato
         public int Id { get; set; }
     }
 }
+
+// Prueba
+
+// Prueba

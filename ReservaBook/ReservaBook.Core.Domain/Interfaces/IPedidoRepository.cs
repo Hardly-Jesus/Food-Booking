@@ -10,3 +10,7 @@ namespace ReservaBook.Core.Domain.Interfaces
         Task<bool> ChangeStatus(int IdPedido, EstadoPedido pedido);
     }
 }
+
+// Prueba
+
+// Prueba
