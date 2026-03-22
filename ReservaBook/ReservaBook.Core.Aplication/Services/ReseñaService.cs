@@ -25,6 +25,7 @@ namespace ReservaBook.Core.Aplication.Services
         }
 
 
+
         public override async Task<ReseñaResponseDto?> AddAsync(CreateReseñaDto? entity)
         {
             var response = new ReseñaResponseDto() { HasErrors = false, Errors = [] };
@@ -100,13 +101,13 @@ namespace ReservaBook.Core.Aplication.Services
                     response.HasErrors = true;
                     response.Errors.Add("No se encontraron las reseña del restaurante indicado");
                     listResponse.Add(response);
-                    return listResponse;
+                    return listResponse!;
 
                 }
 
 
                 var map = _mapper.Map<List<ReseñaResponseDto>>(entities);
-                return map;
+                return map!;
 
             }
             catch (Exception ex)
