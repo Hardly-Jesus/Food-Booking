@@ -103,7 +103,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Mesa tornado",
                 Descripcion = "Es un es una mesa tornado ....",
                 CantidadPersonas = 5,
-                Estado = Estado.Disponible.ToString(),
+                Estado = Estado.Disponible.ToString()
 
             };
 
@@ -118,8 +118,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
                 Total = 0m
             };
 
