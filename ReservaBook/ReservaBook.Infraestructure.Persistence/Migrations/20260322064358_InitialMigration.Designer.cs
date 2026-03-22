@@ -12,7 +12,7 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    [Migration("20260322061821_InitialMigration")]
+    [Migration("20260322064358_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
