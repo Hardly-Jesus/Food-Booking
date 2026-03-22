@@ -17,10 +17,10 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             _context = appContext;
         }
 
-        public async Task<List<PedidoPlato?>> AddRange(List<PedidoPlato>? pedidoPlatos)
+        public async Task<List<PedidoPlato>> AddRange(List<PedidoPlato> pedidoPlatos)
         {
 
-            if (pedidoPlatos == null && !pedidoPlatos!.Any())
+            if (pedidoPlatos == null || !pedidoPlatos.Any())
             {
                 return [];
             }

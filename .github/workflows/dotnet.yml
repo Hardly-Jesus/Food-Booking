@@ -33,7 +33,7 @@ jobs:
         run: dotnet restore ./ReservaBook
 
       - name: Compilar proyecto
-        run: dotnet build ./ReservaBook --no-restore --configuration Release
+        run: dotnet build ReservaBook.sln --no-restore --configuration Release
 
       - name: Ejecutar pruebas unitarias
         run: dotnet test ./ReservaBook --no-build --configuration Release --logger trx
