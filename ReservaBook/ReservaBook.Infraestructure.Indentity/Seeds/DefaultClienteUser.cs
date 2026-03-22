@@ -2,11 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.Infraestructure.Indentity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReservaBook.Infraestructure.Indentity.Seeds
 {

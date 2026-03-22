@@ -3,10 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
-using ReservaBook.Infraestructure.Persistence.Repositories;
-using System.Runtime.InteropServices;
 
-namespace ReservaBook.Infrastructure.Persistence.Repositories
+
+namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
     public class PagoRepository : GenericRepository<Pago>, IPagoRepository
     {

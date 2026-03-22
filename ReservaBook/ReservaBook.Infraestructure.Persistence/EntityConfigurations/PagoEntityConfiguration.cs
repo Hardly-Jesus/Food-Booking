@@ -1,11 +1,10 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ReservaBook.Core.Domain.Entities;
 
-namespace ReservaBook.Infrastructure.Persistence.EntityConfigurations
+namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 {
     public class PagoEntityConfiguration : IEntityTypeConfiguration<Pago>
     {

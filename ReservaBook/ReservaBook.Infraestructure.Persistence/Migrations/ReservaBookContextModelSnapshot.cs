@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
-
 #nullable disable
 
-namespace ReservaBook.Infrastructure.Persistence.Migrations
+namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
     partial class ReservaBookContextModelSnapshot : ModelSnapshot
