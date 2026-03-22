@@ -10,3 +10,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
         Task<List<NotificacionResponseDto>> GetNotificacionByReceptorId(string receptorId);
     }
 }
+
+// Prueba
+
+// Prueba

@@ -30,10 +30,14 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restaurar dependencias
-        run: dotnet restore ./ReservaBook/ReservaBook.sln
+        run: dotnet restore ./ReservaBook
 
       - name: Compilar proyecto
-        run: dotnet build ./ReservaBook/ReservaBook.sln --no-restore --configuration Release
+        run: dotnet build ./ReservaBook --no-restore --configuration Release
 
       - name: Ejecutar pruebas unitarias
-        run: dotnet test ./ReservaBook/ReservaBook.sln --no-build --configuration Release --logger trx
+        run: dotnet test ./ReservaBook --no-build --configuration Release --logger trx
+
+# Prueba
+
+# Prueba

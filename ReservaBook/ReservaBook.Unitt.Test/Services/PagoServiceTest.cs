@@ -77,7 +77,6 @@ namespace ReservaBook.Unitt.Test.Services
         public async Task AddAsync_should_return_responseDto_when_added()
         {
 
-
             //arrange
             var (service, pedidoRepo,mesaRepo,restauranteRepo) = CreateService();
 
@@ -139,15 +138,13 @@ namespace ReservaBook.Unitt.Test.Services
             var result = await service.AddAsync(pago);  
 
 
-
-
-
             //assert
               result.Should().NotBeNull();
               result.Id.Should().Be(1);
               result.Monto.Should().Be(pago.Monto);
 
         }
+
 
 
 
@@ -316,3 +313,7 @@ namespace ReservaBook.Unitt.Test.Services
 
     }
 }
+
+// Prueba
+
+// Prueba

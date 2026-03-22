@@ -16,3 +16,7 @@ namespace ReservaBook.Core.Aplication.Dtos.platoMenu
         public int IdMenu { get; set; }
     }
 }
+
+// Prueba
+
+// Prueba
