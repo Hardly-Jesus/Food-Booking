@@ -11,6 +11,7 @@ using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
+
 namespace ReservaBook.Unitt.Test.Services
 {
     public class PedidoPlatoServiceTest 
@@ -237,7 +238,7 @@ namespace ReservaBook.Unitt.Test.Services
 
          
             //act
-            var result = await service.AddRangeAsync(null);
+            var result = await service.AddRangeAsync(null!);
 
 
             //assert 
