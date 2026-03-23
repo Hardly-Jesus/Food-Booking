@@ -7,3 +7,6 @@ namespace ReservaBook.Core.Aplication.Interfaces
         Task<bool> SendAsync(EmailRequestDto dto);
     }
 }
+// Prueba
+
+// Prueba

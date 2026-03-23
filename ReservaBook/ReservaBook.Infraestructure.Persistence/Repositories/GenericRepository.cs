@@ -2,7 +2,6 @@
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
-
 namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
@@ -12,8 +11,8 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
 
         public GenericRepository(ReservaBookContext appContext)
         {
-        
-           this._appContext = appContext;
+
+            _appContext = appContext;
         
         }
 
@@ -88,3 +87,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         }
     }
 }
+
+// Prueba
+
+// Prueba

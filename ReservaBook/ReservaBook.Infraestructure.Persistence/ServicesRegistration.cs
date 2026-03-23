@@ -1,16 +1,12 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ReservaBook.Core.Domain.Entities;
+
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReservaBook.Infraestructure.Persistence
 {
@@ -77,3 +73,7 @@ namespace ReservaBook.Infraestructure.Persistence
 
 }
 
+
+// Prueba
+
+// Prueba

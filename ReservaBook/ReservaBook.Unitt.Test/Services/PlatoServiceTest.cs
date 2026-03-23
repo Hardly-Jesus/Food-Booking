@@ -10,6 +10,7 @@ using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
+
 namespace ReservaBook.Unitt.Test.Services
 {
     public class PlatoServiceTest
@@ -444,4 +445,11 @@ namespace ReservaBook.Unitt.Test.Services
         #endregion
 
     }
+
+
+
+    //probando CI
 }
+
+
+
