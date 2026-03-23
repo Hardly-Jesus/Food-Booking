@@ -3,18 +3,14 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReservaBook.Core.Aplication.Dtos.mesa;
-using ReservaBook.Core.Aplication.Dtos.restaurante;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
 using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace ReservaBook.Unitt.Test.Services
 {
@@ -271,7 +267,7 @@ namespace ReservaBook.Unitt.Test.Services
             
 
             //act
-            var result = await service.UpdateAsync(entitiy1Added.Id, entity);
+            var result = await service.UpdateAsync(entitiy1Added!.Id, entity);
 
 
             //assert

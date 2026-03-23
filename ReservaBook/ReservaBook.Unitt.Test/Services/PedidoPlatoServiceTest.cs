@@ -11,6 +11,7 @@ using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
+
 namespace ReservaBook.Unitt.Test.Services
 {
     public class PedidoPlatoServiceTest 
@@ -131,8 +132,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
                 Total = 0m
             };
 
@@ -237,7 +237,7 @@ namespace ReservaBook.Unitt.Test.Services
 
          
             //act
-            var result = await service.AddRangeAsync(null);
+            var result = await service.AddRangeAsync(null!);
 
 
             //assert 

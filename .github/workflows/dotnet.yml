@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: CI Pipeline
 
 on:
@@ -38,8 +35,5 @@ jobs:
         run: dotnet build ./ReservaBook/ReservaBook.sln --no-restore --configuration Release
 
       - name: Ejecutar pruebas unitarias
-        run: dotnet test ./ReservaBook --no-build --configuration Release --logger trx
+        run: dotnet test ./ReservaBook/ReservaBook.sln --no-build --configuration Release --logger "trx"
 
-# Prueba
-
-# Prueba

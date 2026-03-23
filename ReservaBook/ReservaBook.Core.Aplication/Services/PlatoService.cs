@@ -1,8 +1,6 @@
 ﻿
 using AutoMapper;
-using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Dtos.plato;
-using ReservaBook.Core.Aplication.Dtos.restaurante;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;

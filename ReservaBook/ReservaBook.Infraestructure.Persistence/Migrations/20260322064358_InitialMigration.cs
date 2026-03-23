@@ -12,20 +12,6 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Menus",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Menus", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Notificaciones",
                 columns: table => new
                 {
@@ -81,29 +67,24 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlatoMenus",
+                name: "Menus",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlatoId = table.Column<int>(type: "int", nullable: false),
-                    MenuId = table.Column<int>(type: "int", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdRestaurante = table.Column<int>(type: "int", nullable: false),
+                    RestauranteId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlatoMenus", x => x.Id);
+                    table.PrimaryKey("PK_Menus", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlatoMenus_Menus_MenuId",
-                        column: x => x.MenuId,
-                        principalTable: "Menus",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PlatoMenus_Platos_PlatoId",
-                        column: x => x.PlatoId,
-                        principalTable: "Platos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Menus_Restaurantes_RestauranteId",
+                        column: x => x.RestauranteId,
+                        principalTable: "Restaurantes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -150,6 +131,32 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PlatoMenus",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlatoId = table.Column<int>(type: "int", nullable: false),
+                    MenuId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlatoMenus", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PlatoMenus_Menus_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menus",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlatoMenus_Platos_PlatoId",
+                        column: x => x.PlatoId,
+                        principalTable: "Platos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
                 {
@@ -158,6 +165,7 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     Fecha = table.Column<DateOnly>(type: "date", nullable: false),
                     Hora = table.Column<TimeOnly>(type: "time", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(22,2)", precision: 22, scale: 2, nullable: false),
                     IdRestaurante = table.Column<int>(type: "int", nullable: false),
                     IdMesa = table.Column<int>(type: "int", nullable: false)
                 },
@@ -187,6 +195,7 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Monto = table.Column<decimal>(type: "decimal(22,2)", precision: 22, scale: 2, nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    UsuarioId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdPedido = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -236,8 +245,7 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateOnly>(type: "date", nullable: false),
                     Hora = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Mesa = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    CantidadPersona = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IdMesa = table.Column<int>(type: "int", nullable: false),
                     IdRestaurante = table.Column<int>(type: "int", nullable: false),
@@ -264,6 +272,11 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_RestauranteId",
+                table: "Menus",
+                column: "RestauranteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Mesas_IdRestaurante",

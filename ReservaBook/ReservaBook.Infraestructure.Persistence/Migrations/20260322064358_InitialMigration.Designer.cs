@@ -12,7 +12,7 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    [Migration("20260315205530_InitialMigration")]
+    [Migration("20260322064358_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -37,12 +37,20 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdRestaurante")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("RestauranteId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RestauranteId");
 
                     b.ToTable("Menus", (string)null);
                 });
@@ -142,6 +150,10 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .HasPrecision(22, 2)
                         .HasColumnType("decimal(22,2)");
 
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdPedido")
@@ -172,6 +184,10 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
                     b.Property<int>("IdRestaurante")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(22, 2)
+                        .HasColumnType("decimal(22,2)");
 
                     b.HasKey("Id");
 
@@ -282,9 +298,6 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CantidadPersona")
-                        .HasColumnType("int");
-
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -302,10 +315,9 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.Property<int>("IdRestaurante")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mesa")
+                    b.Property<string>("IdUsuario")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PagoId")
                         .HasColumnType("int");
@@ -394,6 +406,15 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Restaurantes", (string)null);
+                });
+
+            modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Menu", b =>
+                {
+                    b.HasOne("ReservaBook.Core.Domain.Entities.Restaurante", "Restaurante")
+                        .WithMany("Menus")
+                        .HasForeignKey("RestauranteId");
+
+                    b.Navigation("Restaurante");
                 });
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Mesa", b =>
@@ -539,6 +560,8 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("ReservaBook.Core.Domain.Entities.Restaurante", b =>
                 {
+                    b.Navigation("Menus");
+
                     b.Navigation("Mesas");
 
                     b.Navigation("Pedidos");
