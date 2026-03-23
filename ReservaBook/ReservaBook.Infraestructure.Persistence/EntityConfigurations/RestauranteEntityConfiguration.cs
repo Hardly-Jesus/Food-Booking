@@ -1,12 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ReservaBook.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 {
@@ -34,23 +29,23 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
 
 
             #region relationship
-            builder.HasMany<Reserva>(r => r.Reservas)
+            builder.HasMany(r => r.Reservas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany<Mesa>(r => r.Mesas)
+            builder.HasMany(r => r.Mesas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.NoAction);
 
 
-            builder.HasMany<Pedido>(r => r.Pedidos)
+            builder.HasMany(r => r.Pedidos)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasMany<Reseña>(r => r.Reseñas)
+            builder.HasMany(r => r.Reseñas)
                    .WithOne(r => r.Restaurante)
                    .HasForeignKey(r => r.IdRestaurante)
                     .OnDelete(DeleteBehavior.Cascade);
@@ -59,3 +54,7 @@ namespace ReservaBook.Infraestructure.Persistence.EntityConfigurations
         }
     }
 }
+
+// Prueba
+
+// Prueba

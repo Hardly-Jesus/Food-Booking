@@ -26,3 +26,7 @@ namespace ReservaBook.Core.Domain.Entities
 
     }
 }
+
+// Prueba
+
+// Prueba

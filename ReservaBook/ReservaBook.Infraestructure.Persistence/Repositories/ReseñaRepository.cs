@@ -15,7 +15,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         {
 
 
-            this._context = appContext;
+            _context = appContext;
 
 
         }
@@ -41,3 +41,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         }
     }
 }
+
+// Prueba
+
+// Prueba

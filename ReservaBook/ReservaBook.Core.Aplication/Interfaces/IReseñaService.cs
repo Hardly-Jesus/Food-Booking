@@ -9,8 +9,12 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
 
-        Task<List<ReseñaResponseDto?>> GetAllByIdRestaurnteAsync(int idRestaurante);
+        Task<List<ReseñaResponseDto>> GetAllByIdRestaurnteAsync(int idRestaurante);
 
 
     }
 }
+
+// Prueba
+
+// Prueba

@@ -89,7 +89,7 @@ namespace ReservaBook.Infraestructure.Shared.Services
             catch (Exception ex)
             {
 
-                _logger.LogError(ex, "An ocurred an error with send Email", ex);
+                _logger.LogError(ex, "An error occurred while sending email");
                 return false;
 
             }
@@ -102,3 +102,7 @@ namespace ReservaBook.Infraestructure.Shared.Services
 
     }
 }
+
+// Prueba
+
+// Prueba

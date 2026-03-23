@@ -12,6 +12,7 @@ using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
+
 namespace ReservaBook.Unitt.Test.Services
 {
     public class PagoServiceTest
@@ -77,7 +78,6 @@ namespace ReservaBook.Unitt.Test.Services
         public async Task AddAsync_should_return_responseDto_when_added()
         {
 
-
             //arrange
             var (service, pedidoRepo,mesaRepo,restauranteRepo) = CreateService();
 
@@ -103,7 +103,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Nombre = "Mesa tornado",
                 Descripcion = "Es un es una mesa tornado ....",
                 CantidadPersonas = 5,
-                Estado = Estado.Disponible.ToString(),
+                Estado = Estado.Disponible.ToString()
 
             };
 
@@ -118,8 +118,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
                 Total = 0m
             };
 
@@ -139,15 +138,13 @@ namespace ReservaBook.Unitt.Test.Services
             var result = await service.AddAsync(pago);  
 
 
-
-
-
             //assert
               result.Should().NotBeNull();
               result.Id.Should().Be(1);
               result.Monto.Should().Be(pago.Monto);
 
         }
+
 
 
 
@@ -316,3 +313,7 @@ namespace ReservaBook.Unitt.Test.Services
 
     }
 }
+
+// Prueba
+
+// Prueba
