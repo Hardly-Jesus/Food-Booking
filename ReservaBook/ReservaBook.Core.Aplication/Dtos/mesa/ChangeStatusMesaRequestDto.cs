@@ -14,3 +14,7 @@ namespace ReservaBook.Core.Aplication.Dtos.mesa
         public required string Status { get; set; } 
     }
 }
+
+// Prueba
+
+// Prueba

@@ -12,3 +12,7 @@ namespace ReservaBook.Core.Domain.Common.Enums
         NoDisponible = 2
     }
 }
+
+// Prueba
+
+// Prueba
