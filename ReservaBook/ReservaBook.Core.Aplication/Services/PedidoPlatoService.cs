@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Dtos.pdidoPlato;
-using ReservaBook.Core.Aplication.Dtos.pedido;
-using ReservaBook.Core.Aplication.Dtos.plato;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
@@ -30,6 +27,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
         }
+
 
 
         public async Task<List<PedidosPlatoResponseDto?>> AddRangeAsync(List<CreatePedidoPlatoDto> dto)
@@ -90,7 +88,7 @@ namespace ReservaBook.Core.Aplication.Services
 
                 }
 
-                decimal total = await CalcularMonto(listMonto);
+                decimal total =  CalcularMonto(listMonto);
 
                 if (total == 0)
                 {
@@ -118,7 +116,7 @@ namespace ReservaBook.Core.Aplication.Services
 
                 await _repo.AddRange(listEntities);
                 var map = _mapper.Map<List<PedidosPlatoResponseDto>>(listEntities);
-                return map;
+                return map!;
             }
             catch (Exception ex)
             {
@@ -171,7 +169,7 @@ namespace ReservaBook.Core.Aplication.Services
             await base.UpdateAsync(entity.Id, entity);
 
             var items = await _repo.GetByPedidoId(IsExit.IdPedido);
-            decimal total = items.Sum(x => x.PrecioUnitario * x.CantidadPlatos);
+            decimal total = items.Sum(x => x!.PrecioUnitario * x.CantidadPlatos);
             pedido.Total = total;       
             var updatePedido = await _pedidoRepo.UpdateAsync(pedido.Id,pedido);
 
@@ -198,7 +196,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
         #region private method
-        public async Task<decimal> CalcularMonto(List<decimal> montos)
+        public  decimal CalcularMonto(List<decimal> montos)
         {
             try
             {

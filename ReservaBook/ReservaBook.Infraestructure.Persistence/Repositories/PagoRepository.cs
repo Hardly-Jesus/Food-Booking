@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
-using System.Runtime.InteropServices;
+
 
 namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
@@ -38,3 +38,5 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
 // Prueba
 
 // Prueba
+
+//comentario para probar CI

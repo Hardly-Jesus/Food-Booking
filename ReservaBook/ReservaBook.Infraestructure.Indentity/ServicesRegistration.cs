@@ -15,7 +15,6 @@ using ReservaBook.Infraestructure.Indentity.Contexts;
 using ReservaBook.Infraestructure.Indentity.Entities;
 using ReservaBook.Infraestructure.Indentity.Seeds;
 using ReservaBook.Infraestructure.Indentity.Services;
-using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace ReservaBook.Infraestructure.Indentity

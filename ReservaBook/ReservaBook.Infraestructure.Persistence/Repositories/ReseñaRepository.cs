@@ -15,7 +15,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         {
 
 
-            this._context = appContext;
+            _context = appContext;
 
 
         }
