@@ -11,7 +11,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     public interface IPedidoPlatoService : IGenericService<CreatePedidoPlatoDto, CreatePedidoPlatoDto, PedidosPlatoResponseDto,PedidoPlato>
     {
 
-        Task<List<PedidosPlatoResponseDto?>> AddRangeAsync(List<CreatePedidoPlatoDto> dto);
+        Task<List<PedidosPlatoResponseDto>> AddRangeAsync(List<CreatePedidoPlatoDto> dto);
  
     }
 

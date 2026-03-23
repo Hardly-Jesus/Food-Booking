@@ -80,7 +80,7 @@ namespace ReservaBook.Core.Aplication.Services
 
         }
 
-        public async Task<List<ReseñaResponseDto?>> GetAllByIdRestaurnteAsync(int idRestaurante)
+        public async Task<List<ReseñaResponseDto>> GetAllByIdRestaurnteAsync(int idRestaurante)
         {
             try
             {

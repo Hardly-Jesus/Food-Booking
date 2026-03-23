@@ -32,7 +32,7 @@ namespace ReservaBook.Core.Aplication.Services
         }
 
 
-        public async Task<List<PedidosPlatoResponseDto?>> AddRangeAsync(List<CreatePedidoPlatoDto> dto)
+        public async Task<List<PedidosPlatoResponseDto>> AddRangeAsync(List<CreatePedidoPlatoDto> dto)
         {
             try
             {
@@ -171,7 +171,7 @@ namespace ReservaBook.Core.Aplication.Services
             await base.UpdateAsync(entity.Id, entity);
 
             var items = await _repo.GetByPedidoId(IsExit.IdPedido);
-            decimal total = items.Sum(x => x.PrecioUnitario * x.CantidadPlatos);
+            decimal total = items.Where(x => x != null).Sum(x => x!.PrecioUnitario * x.CantidadPlatos);
             pedido.Total = total;       
             var updatePedido = await _pedidoRepo.UpdateAsync(pedido.Id,pedido);
 
