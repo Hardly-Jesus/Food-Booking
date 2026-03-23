@@ -29,12 +29,7 @@ namespace ReservaBook.Core.Aplication.Services
         }
 
 
-<<<<<<< HEAD
         public async Task<List<PedidosPlatoResponseDto>> AddRangeAsync(List<CreatePedidoPlatoDto> dto)
-=======
-
-        public async Task<List<PedidosPlatoResponseDto?>> AddRangeAsync(List<CreatePedidoPlatoDto> dto)
->>>>>>> origin/Dev
         {
             try
             {
