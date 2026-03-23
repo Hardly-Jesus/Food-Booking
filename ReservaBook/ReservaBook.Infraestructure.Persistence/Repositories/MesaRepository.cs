@@ -2,7 +2,6 @@
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
-
 namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
     public class MesaRepository : GenericRepository<Mesa>, IMesaRepository
@@ -34,3 +33,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
 
     }
 }
+
+// Prueba
+
+// Prueba

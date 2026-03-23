@@ -12,8 +12,8 @@ using ReservaBook.Infraestructure.Persistence.Contexts;
 namespace ReservaBook.Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(ReservaBookContext))]
-    [Migration("20260318012900_UpdateEntityPagoAddPropertyUsuarioId")]
-    partial class UpdateEntityPagoAddPropertyUsuarioId
+    [Migration("20260322064358_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -574,3 +574,7 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
         }
     }
 }
+
+// Prueba
+
+// Prueba

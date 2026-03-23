@@ -4,7 +4,6 @@ using AutoMapper;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Dtos.pedido;
 using ReservaBook.Core.Aplication.Mappings.EntitiesToDto;
 using ReservaBook.Core.Aplication.Services;
@@ -12,6 +11,7 @@ using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
+
 
 namespace ReservaBook.Unitt.Test.Services
 {
@@ -126,13 +126,8 @@ namespace ReservaBook.Unitt.Test.Services
             };
 
        
-
-
             //act
             var result = await service.AddAsync(pedido);
-
-
-
 
 
             //assert
@@ -143,6 +138,9 @@ namespace ReservaBook.Unitt.Test.Services
 
         }
 
+
+
+        
 
 
 
@@ -672,3 +670,7 @@ namespace ReservaBook.Unitt.Test.Services
 
     }
 }
+
+// Prueba
+
+// Prueba

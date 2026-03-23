@@ -45,3 +45,7 @@ async function confirmarCuenta() {
 window.addEventListener("DOMContentLoaded", () => {
     confirmarCuenta();
 });
+
+// Prueba
+
+// Prueba
