@@ -267,7 +267,7 @@ namespace ReservaBook.Unitt.Test.Services
             
 
             //act
-            var result = await service.UpdateAsync(entitiy1Added.Id, entity);
+            var result = await service.UpdateAsync(entitiy1Added!.Id, entity);
 
 
             //assert

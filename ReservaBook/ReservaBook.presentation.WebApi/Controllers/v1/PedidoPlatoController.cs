@@ -92,7 +92,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                     foreach (var entity in listEntities)
                     {
 
-                        if (entity.HasError)
+                        if (entity!.HasError)
                         {
 
                             return BadRequest(entity.Errors);

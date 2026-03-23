@@ -132,8 +132,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
                 Total = 0m
             };
 
