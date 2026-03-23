@@ -5,6 +5,7 @@ using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
+
 namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
     public class PedidoPlatoRepository : GenericRepository<PedidoPlato>, IPedidoPlatoRepository
@@ -17,10 +18,10 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             _context = appContext;
         }
 
-        public async Task<List<PedidoPlato?>> AddRange(List<PedidoPlato>? pedidoPlatos)
+        public async Task<List<PedidoPlato>> AddRange(List<PedidoPlato> pedidoPlatos)
         {
 
-            if (pedidoPlatos == null && !pedidoPlatos!.Any())
+            if (pedidoPlatos == null || !pedidoPlatos.Any())
             {
                 return [];
             }
@@ -50,3 +51,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         }
     }
 }
+
+// Prueba
+
+// Prueba

@@ -82,7 +82,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 var map = _mapper.Map<CreateRestauranteRequestDto>(saveRestaurante);
                 map.Id = 0;
                 map.UsuarioId = userId; 
-                map.Imagen = FileHandler.Upload(saveRestaurante.Imagen, userId, "", false, "");
+                map.Imagen = FileHandler.Upload(saveRestaurante.Imagen, userId, "", false, "")!;
                 var result = await _restauranteServices.AddAsync(map);
 
 
@@ -244,3 +244,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
     }
 }
+
+// Prueba
+
+// Prueba

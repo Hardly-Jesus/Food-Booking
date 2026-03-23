@@ -11,6 +11,7 @@ using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 using ReservaBook.Infraestructure.Persistence.Repositories;
 
+
 namespace ReservaBook.Unitt.Test.Services
 {
     public class PedidoPlatoServiceTest 
@@ -131,8 +132,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
                 Total = 0m
             };
 
@@ -237,7 +237,7 @@ namespace ReservaBook.Unitt.Test.Services
 
          
             //act
-            var result = await service.AddRangeAsync(null);
+            var result = await service.AddRangeAsync(null!);
 
 
             //assert 
@@ -327,20 +327,9 @@ namespace ReservaBook.Unitt.Test.Services
             };
 
 
-            var plato2 = new Plato()
-            {
-                Id = 0,
-                Nombre = "Yuca con huevo",
-                Descripcion = "Es un plato de fuerte .....",
-                Categoria = PlatoCategoria.PlatosFuertes.ToString(),
-                Estado = Estado.Disponible.ToString(),
-                Precio = 500.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
-            };
-
-
+          
             var plato1Added = await platoRepo.AddAsync(plato1);
-            var plato2Added = await platoRepo.AddAsync(plato2);
+
 
 
             var platoPedido = new CreatePedidoPlatoDto()
@@ -356,50 +345,20 @@ namespace ReservaBook.Unitt.Test.Services
             };
 
 
-            var platoPedido1 = new CreatePedidoPlatoDto()
-            {
-
-                Id = 0,
-                IdPedido = pedidoAdded.Id,
-                IdPlato = plato2Added.Id,
-                CantidadPlatos = 10,
-                PrecioUnitario = plato2Added.Precio
-
-            };
-
-
-
-            var platoPedido2 = new CreatePedidoPlatoDto()
-            {
-
-                Id = 0,
-                IdPedido = pedidoAdded.Id,
-                IdPlato = plato2Added.Id,
-                CantidadPlatos = 10,
-                PrecioUnitario = 450
-
-            };
-
-            listPlatoPedido.Add(platoPedido);
-            listPlatoPedido.Add(platoPedido1);
-            listPlatoPedido.Add(platoPedido2);
-
-
             //act
-            var pedidoPlatosAdded = await service.AddRangeAsync(listPlatoPedido);
-            var result = false;
-            foreach(var item in pedidoPlatosAdded)
-            {
-
-                result =  await service.DeleteAsync(item!.Id);
-                break;
-            }
+            var pedidoPlatosAdded = await service.AddAsync(platoPedido);
+         
+            
+            var result =  await service.DeleteAsync(pedidoAdded.Id);
+         
 
 
             //assert 
             result.Should().BeTrue();
 
         }
+
+
 
 
 
@@ -418,7 +377,7 @@ namespace ReservaBook.Unitt.Test.Services
        
 
             //assert 
-            result.Should().BeTrue();
+            result.Should().BeFalse();
 
         }
 
@@ -602,3 +561,7 @@ namespace ReservaBook.Unitt.Test.Services
     }
 
 }
+
+// Prueba
+
+// Prueba

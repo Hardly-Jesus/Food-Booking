@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReservaBook.Infraestructure.Indentity.Entities;
 
-
 namespace ReservaBook.Infraestructure.Indentity.Contexts
 {
     public class IdentityContext : IdentityDbContext<AppUser>
@@ -35,3 +34,7 @@ namespace ReservaBook.Infraestructure.Indentity.Contexts
 
     }
 }
+
+// Prueba
+
+// Prueba
