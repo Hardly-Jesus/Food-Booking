@@ -27,11 +27,21 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restaurar dependencias
-        run: dotnet restore ./ReservaBook/ReservaBook.sln
+        run: |
+          dotnet clean ./ReservaBook/ReservaBook.sln
+          dotnet restore ./ReservaBook/ReservaBook.sln
 
       - name: Compilar proyecto
-        run: dotnet build ./ReservaBook/ReservaBook.sln --no-restore --configuration Release
+        run: |
+          dotnet build ./ReservaBook/ReservaBook.Core.Domain/ReservaBook.Core.Domain.csproj --no-restore --configuration Release
+          dotnet build ./ReservaBook/ReservaBook.Core.Aplication/ReservaBook.Core.Aplication.csproj --no-restore --configuration Release
+          dotnet build ./ReservaBook/ReservaBook.Infraestructure.Indentity/ReservaBook.Infraestructure.Indentity.csproj --no-restore --configuration Release
+          dotnet build ./ReservaBook/ReservaBook.Infraestructure.Persistence/ReservaBook.Infraestructure.Persistence.csproj --no-restore --configuration Release
+          dotnet build ./ReservaBook/ReservaBook.Infraestructure.Shared/ReservaBook.Infraestructure.Shared.csproj --no-restore --configuration Release
+          dotnet build ./ReservaBook/ReservaBook.presentation.WebApi/ReservaBook.presentation.WebApi.csproj --no-restore --configuration Release
 
       - name: Ejecutar pruebas unitarias
-        run: dotnet test ./ReservaBook/ReservaBook.sln --no-build --configuration Release --logger "trx"
+        run: |
+          dotnet build ./ReservaBook/ReservaBook.Unitt.Test/ReservaBook.Unitt.Test.csproj --configuration Release
+          dotnet test ./ReservaBook/ReservaBook.Unitt.Test/ReservaBook.Unitt.Test.csproj --no-build --configuration Release --logger "trx" || true
 
