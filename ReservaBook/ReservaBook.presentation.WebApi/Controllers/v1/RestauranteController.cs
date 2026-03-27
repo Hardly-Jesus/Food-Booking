@@ -100,7 +100,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-        [HttpPost("Delete-restaurante/{id}")]
+        [HttpDelete("Delete-restaurante/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -211,6 +211,40 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
         }
 
+
+
+
+
+
+        [HttpGet("GetByUserId")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByUserId()
+        {
+            try
+            {
+
+                var usuarioId = User.FindFirst("UId")!.Value;
+                var result = await _restauranteServices.GetByUserId(usuarioId);
+
+                if (result == null)
+                {
+                    return NotFound("No se pudo encontrar el restaurante registrado");
+                }
+
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
+        }
 
 
 

@@ -64,10 +64,12 @@ if (app.Environment.IsDevelopment())
     }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHealthChecks("/health");
 app.MapControllers();
+
 
 app.Run();
 
