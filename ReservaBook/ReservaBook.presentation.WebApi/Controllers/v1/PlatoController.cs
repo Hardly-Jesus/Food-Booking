@@ -99,6 +99,112 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [HttpGet("get-Platos-menu")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoMenu()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoMenu(userId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado en el menu, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+        [HttpGet("get-Plato-not-add-Menu")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoNotAddInMenu()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoNotAddMenu(userId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener el listado de platos, favor volver a intentar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+        [HttpGet("get-indicadores")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetIndicadores()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetIndicadoresDto(userId);
+
+
+                if (entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener los indicadores, favor volver a verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
 
 
 

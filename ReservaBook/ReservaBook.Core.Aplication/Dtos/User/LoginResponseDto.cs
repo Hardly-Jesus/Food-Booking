@@ -8,6 +8,7 @@ namespace ReservaBook.Core.Aplication.Dtos.User
 
         public required string Name { get; set; }
         public required string LastName { get; set; }
+        public string UsuarioId { get; set; }
         public required string Rol { get; set; }
         public bool HasError { get; set; }
         public List<string>? Errors { get; set; }

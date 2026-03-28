@@ -1,8 +1,8 @@
-﻿using ReservaBook.Core.Domain.Common.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using ReservaBook.Core.Domain.Common.Enums;
 using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
-
 
 namespace ReservaBook.Infraestructure.Persistence.Repositories
 {
@@ -31,7 +31,17 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             return true;
         }
 
+        public async Task<List<Pedido>> GetPedidosByRestauranteId(int restauranteId)
+        {
 
+            var entities = await _context.Set<Pedido>().Where(p => p.IdRestaurante == restauranteId).ToListAsync();
+
+            if (entities == null) return [];
+
+
+            return entities;
+
+        }
     }
 }
 
