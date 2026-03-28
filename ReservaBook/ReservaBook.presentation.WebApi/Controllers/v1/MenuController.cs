@@ -65,6 +65,46 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [HttpGet("get-menus-propietario")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByPropietario()
+        {
+            try
+            {
+
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await menuService.GetByPropietario(userId);
+
+                if (entities == null)
+                {
+
+                    return NotFound(entities!.Errors);
+
+                }
+
+
+
+                return Ok(entities);
+
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
 
         [HttpPost("add-menu")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MenuResponseDto))]

@@ -21,6 +21,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             _context = appContext;  
         }
 
+
         public async Task<List<Notificacion?>> GetByReceptorId(string receptor)
         {
             var entities = await _context.Set<Notificacion>().Where(n => n.ReceptorId == receptor || n.SenderId == receptor).ToListAsync();
@@ -35,6 +36,7 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             return entities!;
            
         }
+
     }
 }
 

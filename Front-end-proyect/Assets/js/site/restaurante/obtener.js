@@ -17,7 +17,7 @@ async function getRestauranteByUsuarioId(){
             }
         });
           
-        console.log(result.data);
+    
         renderRestaurante(result.data);
     
     }catch(err){

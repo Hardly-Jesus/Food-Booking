@@ -165,6 +165,7 @@ async function LoginEnpoint(userName,Password)
 
     localStorage.setItem("token",json.accessToken)
     localStorage.setItem("rol",json.rol)
+    localStorage.setItem("UsuarioId",json.usuarioId);
     
     redirectForUserRol(json.rol);
   }catch(err){

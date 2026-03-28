@@ -114,11 +114,11 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             responseDto.Name = user.Name;
             responseDto.LastName = user.LastName;
             responseDto.Rol = rolesList.FirstOrDefault()!;
+            responseDto.UsuarioId = user.Id;
             responseDto.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             
 
             return responseDto;
-
 
         }
 

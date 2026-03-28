@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Panel del propietario del restaurante">
-<title>Dasboard Propietario</title>
+<title>Eliminar mesa</title>
 <link rel="stylesheet" href="/Assets/css/lib/bootStrap/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-<link rel="stylesheet" href="/Assets/css/site/main.css">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -59,42 +58,67 @@
 <i class="bi bi-bell"></i> Notificaciones
 </a>
 </li>
-
 </ul>
-
 </div>
 </div>
 </nav>
-
 </header>
 
 <main class="flex-grow-1 container py-4">
-
-    <div class="container-dasboard d-flex justify-content-center">
-    <div id="IndicadodoresContainer" class="row col-12 col-md-8 col-lg-10">
     
-    </div>
-    </div>
+    
+        <div class="container d-flex justify-content-center mt-5 mb-5">
+  <div class="col-12 col-sm-6 col-md-5"> 
+    <div class="card shadow rounded-4">
 
+      <div class="card-header bg-danger text-white text-center">
+        <h4 class="fw-bold mb-0">Eliminar Menu</h4>
+      </div>
+
+      <div class="card-body text-center">
+
+        <p class="mb-4 fs-5">
+          ¿Estás seguro de que deseas eliminar este menu?
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button id="btnCancelar" class="btn btn-outline-warning px-4">
+           <a href="/Assets/view/Propietario/menu/menu.html" class="text-decoration-none"> 
+              <i class="bi bi-skip-backward-circle-fill"></i>   Cancelar   
+           </a> 
+          </button>
+        
+
+        
+          <button id="btnEliminar" class="btn btn-outline-danger px-4">
+            Eliminar <i class="bi bi-trash3-fill"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+        
 </main>
-
 <footer class="bg-primary text-light text-center py-3 mt-auto">
-
 <div class="container">
-
 <p class="mb-1">
 <i class="bi bi-egg-fried"></i> Food App
 <i class="bi bi-heart-fill text-danger"></i>
 <small>© 2026 Todos los derechos reservados</small>
 </p>
-
 </div>
 
 </footer>
-
 <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
 <script src="/Assets/js/lib/bootStrap/bootstrap.min.js"></script>
-<script src="/Assets/js/site/dasboard/dasboard.js"></script>
+<script src="/Assets/js/site/menu/delete.js"></script>
+
 </body>
 </html>
+
+
 

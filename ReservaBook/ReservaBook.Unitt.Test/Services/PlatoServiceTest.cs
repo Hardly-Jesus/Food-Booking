@@ -56,7 +56,10 @@ namespace ReservaBook.Unitt.Test.Services
 
             var context = new ReservaBookContext(dbContextOptions);
             var repo = new PlatoRepository(context);
-            var service = new PlatoService(repo,_mapper);
+            var menu = new MenuRepository(context);
+            var platoMenu = new PlatoMenuRepository(context);
+            var Restaurante = new RestauranteRepository(context);
+            var service = new PlatoService(repo,Restaurante,menu,platoMenu,_mapper);
             return service;     
 
         }
