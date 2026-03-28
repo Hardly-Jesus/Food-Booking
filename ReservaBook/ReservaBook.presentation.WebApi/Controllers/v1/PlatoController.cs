@@ -63,6 +63,45 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [HttpGet("get-Platos-byUsuariId")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllByUsuarioId()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoByUsuarioId(userId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+
+
 
         [HttpPost("add-plato")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -73,6 +112,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
             try
             {
+
+               
                 if (request == null)
                 {
 
@@ -85,6 +126,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 var map = _mapper.Map<CreatePlatoRequestDto>(request);
                 map.Estado = Estado.Disponible.ToString();
                 map.Imagen = FileHandler.Upload(request.Imagen,userId,"",false,"Platos");
+                map.UsuarioId = userId; 
                 var entities = await _PlatoService.AddAsync(map);
 
    
@@ -146,6 +188,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
         [HttpPut("update-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -166,7 +209,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 var userId = User.FindFirst("UId")!.Value;
                 var map = _mapper.Map<CreatePlatoRequestDto>(request);
-                map.Imagen = FileHandler.Upload(request.Imagen, userId, "", true, "Platos");
+                map.Imagen = FileHandler.Upload(request.Imagen, userId, "", true, "");
                 var entities = await _PlatoService.UpdateAsync(id,map);
 
                 if(entities!.HasError)
@@ -189,7 +232,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("delete-plato/{id}")]
+
+        [HttpDelete("delete-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -221,6 +265,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
         [HttpGet("getById/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -248,50 +293,6 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

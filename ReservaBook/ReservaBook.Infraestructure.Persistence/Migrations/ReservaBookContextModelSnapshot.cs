@@ -259,6 +259,10 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .HasPrecision(22, 2)
                         .HasColumnType("decimal(22,2)");
 
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Platos", (string)null);
@@ -571,7 +575,3 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
         }
     }
 }
-
-// Prueba
-
-// Prueba

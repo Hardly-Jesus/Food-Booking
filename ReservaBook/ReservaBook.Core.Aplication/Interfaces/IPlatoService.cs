@@ -9,7 +9,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
         Task<bool> ChangeStatus(int idPlato, string Status);
-
+        Task<List<PlatoResponseDto>> GetListPlatoByUsuarioId(string UsuarioId);
     }
 }
 
