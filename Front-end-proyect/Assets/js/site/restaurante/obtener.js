@@ -106,13 +106,6 @@ function renderRestaurante(data) {
 }
 
 
-async function DeleteRestaurante(id){
-
-
-
-
-}
-
 
 
 

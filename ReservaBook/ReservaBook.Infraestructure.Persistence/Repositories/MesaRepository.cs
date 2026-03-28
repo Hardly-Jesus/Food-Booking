@@ -1,4 +1,5 @@
-﻿using ReservaBook.Core.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
@@ -30,6 +31,20 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
 
 
 
+        public async Task<List<Mesa>> GetMesasByRestauranteId(int idRestaurante)
+        {
+            var entity = await _context.Set<Mesa>().Where(x => x.IdRestaurante == idRestaurante).ToListAsync();
+
+            if (entity == null)
+            {
+                return [];
+            }
+
+
+
+            return entity;
+          
+        }
 
     }
 }

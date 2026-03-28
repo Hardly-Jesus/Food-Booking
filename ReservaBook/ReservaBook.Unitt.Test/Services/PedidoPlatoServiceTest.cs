@@ -88,7 +88,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -148,7 +149,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -160,7 +162,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.PlatosFuertes.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 500.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -263,7 +266,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -323,7 +327,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b",
             };
 
 
@@ -399,7 +404,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -460,7 +466,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -472,7 +479,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.PlatosFuertes.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 500.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 

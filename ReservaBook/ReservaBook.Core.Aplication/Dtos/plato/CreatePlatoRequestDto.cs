@@ -14,7 +14,7 @@ namespace ReservaBook.Core.Aplication.Dtos.plato
         public required decimal Precio { get; set; }
         public required string Categoria { get; set; }
         public required string Estado { get; set; }
-
+        public string UsuarioId { get; set; }
 
 
         //foreign key y navigation property

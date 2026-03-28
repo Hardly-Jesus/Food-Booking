@@ -10,11 +10,12 @@ namespace ReservaBook.Core.Aplication.Services
     public class PlatoService : GenericService<CreatePlatoRequestDto, CreatePlatoRequestDto, PlatoResponseDto, Plato>,IPlatoService
     {
         private readonly IPlatoRepository _PlatoRepository;
-
+        private readonly IMapper _Mapper;
 
         public PlatoService(IPlatoRepository _PlatoRepository, IMapper _mapper) : base(_PlatoRepository, _mapper)
         {
             this._PlatoRepository = _PlatoRepository;
+            this._Mapper = _mapper;
 
         }
 
@@ -96,9 +97,17 @@ namespace ReservaBook.Core.Aplication.Services
 
             }
 
+
+            if (entity.Imagen == null || string.IsNullOrEmpty(entity.Imagen))
+            {
+                entity.Imagen = IsExit.Imagen;  
+            
+            }
              
             entity!.Id = IsExit.Id;
             entity.Estado = IsExit.Estado;
+            entity.UsuarioId = IsExit.UsuarioId;
+
             return await base.UpdateAsync(id, entity);
 
         }
@@ -136,19 +145,32 @@ namespace ReservaBook.Core.Aplication.Services
 
         }
 
+        public async Task<List<PlatoResponseDto>> GetListPlatoByUsuarioId(string UsuarioId)
+        {
+
+            try
+            {
+                var entiies = await _PlatoRepository.GetListPlatoByUsuarioId(UsuarioId);
+
+                 if (entiies == null || entiies.Count == 0)
+                {
+                    return [];
+                }
+
+                 var map = _Mapper.Map<List<PlatoResponseDto>>(entiies);
+                return map;
 
 
+            }
+            catch (Exception ex)
+            {
 
+                throw new Exception("Ocurrio un error al obtener tus platos registrado " + ex.Message);
+            
+           
+            }
 
-
-
-
-
-
-
-
-
-
+        }
     }
 }
 

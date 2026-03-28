@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Common.Enums;
+using ReservaBook.Core.Domain.Entities;
 
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
@@ -41,6 +42,42 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             try
             {
                 var entities = await _mesaService.GetlAllAsync();
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return NotFound("No se encontraron mesas registrada");
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
+        }
+
+
+
+
+        [HttpGet("Get-mesas")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MesaResponseDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByUserId()
+        {
+
+            try
+            {
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _mesaService.GetMesasByRestauranteId(userId);
 
                 if (entities == null || entities.Count == 0)
                 {
@@ -153,7 +190,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("Delete/{id}")]
+        [HttpDelete("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
