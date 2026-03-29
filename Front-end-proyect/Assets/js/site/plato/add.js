@@ -26,7 +26,6 @@ e.preventDefault();
 
 
 
-
 async function addPlato(nombre,descripcion,imagen,precio,categoria)
 {
     try
