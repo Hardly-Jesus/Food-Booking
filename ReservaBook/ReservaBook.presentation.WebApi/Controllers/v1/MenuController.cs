@@ -8,7 +8,6 @@ using ReservaBook.Core.Aplication.Interfaces;
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Propietario")]
     public class MenuController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -27,7 +26,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario,Cliente")]
         [HttpGet("get-menus")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -64,7 +63,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-menus-propietario")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -104,8 +103,50 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-menu/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByUsuarioId(string usuarioId)
+        {
+            try
+            {
 
 
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await menuService.GetByPropietario(usuarioId);
+
+                if (entities == null)
+                {
+
+                    return NotFound(entities!.Errors);
+
+                }
+
+
+
+                return Ok(entities);
+
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
         [HttpPost("add-menu")]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -148,7 +189,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPut("update-menu/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -193,7 +234,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPost("delete-menu/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -235,7 +276,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-byId/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
