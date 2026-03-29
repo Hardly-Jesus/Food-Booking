@@ -25,6 +25,7 @@ async function getNotificaciones(){
     }
 }
 
+
 function renderNotificaciones(data) {
 
   container.innerHTML = "";

@@ -120,7 +120,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpDelete("test-delete/{id}")]
+        [HttpDelete("delete-resenia{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

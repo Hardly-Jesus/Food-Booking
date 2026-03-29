@@ -12,7 +12,6 @@ using ReservaBook.presentation.WebApi.Handlers;
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Propietario")]
     public class PlatoController : BaseApiController
     {
 
@@ -28,7 +27,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-All-Plato")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(PlatoResponseDto))]
@@ -62,7 +61,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-Platos-byUsuariId")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
@@ -98,7 +97,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario,Cliente")]
         [HttpGet("get-Platos-menu")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
@@ -133,7 +132,45 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Platos-menu/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoMenu(string usuarioId)
+        {
 
+            try
+            {
+
+               
+                var entities = await _PlatoService.GetListPlatoMenu(usuarioId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado en el menu, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-Plato-not-add-Menu")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
@@ -168,7 +205,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-indicadores")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
@@ -208,7 +245,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPost("add-plato")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -248,7 +285,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPost("change-status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -294,7 +331,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPut("update-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -338,7 +375,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpDelete("delete-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -371,7 +408,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("getById/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
