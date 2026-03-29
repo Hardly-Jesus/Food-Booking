@@ -25,7 +25,7 @@ async function getPlatoById(){
         });
        
         
-        console.log(result.data);
+       
         llenarFormulario(result.data);
     
     }catch(err){

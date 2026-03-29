@@ -11,7 +11,6 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
    
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Propietario")]
     public class RestauranteController : BaseApiController
     {
 
@@ -30,13 +29,13 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario,Cliente,Admin")]
         [HttpGet("GetAll-restaurante")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllRestaurante()
-        {
+       {
             try
             {
 
@@ -63,6 +62,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario")]
         [HttpPost("add-restaurante")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RestauranteResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -99,7 +99,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
         }
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpDelete("Delete-restaurante/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -139,6 +139,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario")]
         [HttpGet("GetById/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -170,7 +171,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPut("Update-restaurante/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RestauranteResponseDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -215,7 +216,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("GetByUserId")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

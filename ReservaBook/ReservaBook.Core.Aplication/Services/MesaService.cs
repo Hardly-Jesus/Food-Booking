@@ -155,6 +155,12 @@ namespace ReservaBook.Core.Aplication.Services
 
 
                 var map = _mapper.Map<List<MesaResponseDto>>(listMesa);
+
+                foreach(var item in map)
+                {
+                    item.UsuarioId = idUsuario;
+                }
+
                 return map;
 
 
