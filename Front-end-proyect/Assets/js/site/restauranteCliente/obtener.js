@@ -98,13 +98,14 @@ const card = `
           </div>
 
           <div class="mb-3">
-          <a href="/Assets/view/cliente/ordenes/add.html class="text-decoration-none"> 
+          <a href="/Assets/view/cliente/ordenes/add.html?id=${r.id}&usuarioId=${r.usuarioId}" class="text-decoration-none"> 
           <button class="btn btn-outline-danger btn-sm px-3">
            <i class="bi bi-cart-check"></i> Realizar pedido
           </button>
           </a>
           </div>
 
+          
         </div>
 
   

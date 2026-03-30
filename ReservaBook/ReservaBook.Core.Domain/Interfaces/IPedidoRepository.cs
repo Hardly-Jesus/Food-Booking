@@ -9,6 +9,7 @@ namespace ReservaBook.Core.Domain.Interfaces
 
         Task<bool> ChangeStatus(int IdPedido, EstadoPedido pedido);
         Task<List<Pedido>> GetPedidosByRestauranteId(int restauranteId);
+        Task<List<Pedido>> GetPedidosByUsuarioId(string usuarioId);
     }
 }
 

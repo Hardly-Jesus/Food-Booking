@@ -17,17 +17,19 @@ namespace ReservaBook.Core.Aplication.Services
         private readonly IPagoRepository _pagoRepository;
         private readonly IPedidoRepository pedidoRepository;
         private readonly IReseñaRepository reseniaRepository;
+        private readonly IPedidoPlatoRepository pedidoPlatoRepository;
         private readonly IMapper _Mapper;
 
         public PlatoService(IPlatoRepository _PlatoRepository,
-            IRestauranteRepository _RestauranteRepository, 
+            IRestauranteRepository _RestauranteRepository,
             IMenuRepository _menuRepository,
             IPlatoMenuRepository _PatoMenuRepository,
             IMapper _mapper,
             IReservaResporitory reservaResporitory,
             IPagoRepository pagoRepository,
             IPedidoRepository pedidoRepository,
-            IReseñaRepository reseniaRepository) : base(_PlatoRepository, _mapper)
+            IReseñaRepository reseniaRepository,
+            IPedidoPlatoRepository pedidoPlatoRepository) : base(_PlatoRepository, _mapper)
         {
             this._PlatoRepository = _PlatoRepository;
             this._Mapper = _mapper;
@@ -38,7 +40,7 @@ namespace ReservaBook.Core.Aplication.Services
             this._pagoRepository = pagoRepository;
             this.reseniaRepository = reseniaRepository;
             this.pedidoRepository = pedidoRepository;
-
+            this.pedidoPlatoRepository = pedidoPlatoRepository;
         }
 
 
@@ -221,7 +223,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
-          
+
                 var PlatoMenus = await _PatoMenuRepository.GetByMenuId(menu.Id);
 
 
@@ -233,7 +235,7 @@ namespace ReservaBook.Core.Aplication.Services
 
                 var platosUsuario = await _PlatoRepository.GetListPlatoByUsuarioId(UsuarioId);
 
-                if(platosUsuario == null)
+                if (platosUsuario == null)
                 {
                     return [];
                 }
@@ -245,7 +247,157 @@ namespace ReservaBook.Core.Aplication.Services
 
                 var listPlato = _Mapper.Map<List<PlatoResponseDto>>(platosFiltrados);
 
-                if(listPlato == null || listPlato.Count == 0)
+                if (listPlato == null || listPlato.Count == 0)
+                {
+                    return [];
+                }
+
+
+                return listPlato;
+
+
+            }
+            catch (Exception ex)
+            {
+
+
+                throw new Exception("Ocurrio un error al intentar ver los platos " + ex.Message);
+
+
+            }
+
+        }
+
+
+
+
+
+        public async Task<List<PlatoResponseDto>> GetListPlatoByPedidoId(int pedidoId)
+        {
+            try
+            {
+
+                var pedidosPlatos = await pedidoPlatoRepository.GetByPedidoId(pedidoId);
+                var platoList = new List<Plato>();
+                if (pedidosPlatos == null || pedidosPlatos.Count == 0)
+                {
+                    return [];
+                }
+
+
+                foreach (var item in pedidosPlatos)
+                {
+                    var plato = await  _PlatoRepository.GetByIdAsync(item!.IdPlato);
+
+                    if(plato == null)
+                    {
+                        continue;
+                    }   
+
+                    platoList.Add(plato!);
+
+                }
+
+
+                var list = _Mapper.Map<List<PlatoResponseDto>>(platoList);
+                if (list == null || list.Count == 0)
+                {
+                    return [];
+                }
+
+
+                return list;
+
+
+            }
+            catch (Exception ex)
+            {
+
+
+                throw new Exception("Ocurrio un error al intentar ver los platos " + ex.Message);
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<List<PlatoResponseDto>> GetListPlatoAddMenuNotAddPedidoAsync(string UsuarioId, int idPedido)
+        {
+            try
+            {
+
+                var restaurante = await _RestauranteRepository.GetByUserId(UsuarioId);
+                var listPlatoPedido = new List<Plato>();
+
+                if (restaurante == null)
+                {
+                    return [];
+                }
+
+                var menu = await _menuRepository.GetMenuByRestauranteId(restaurante!.Id);
+
+
+                if (menu == null)
+                {
+                    return [];
+                }
+
+
+
+
+                var PlatoMenus = await _PatoMenuRepository.GetByMenuId(menu.Id);
+
+
+                if (PlatoMenus == null || PlatoMenus.Count == 0)
+                {
+                    return [];
+                }
+
+
+                var platosUsuario = await _PlatoRepository.GetListPlatoByUsuarioId(UsuarioId);
+
+                if (platosUsuario == null)
+                {
+                    return [];
+                }
+
+
+
+
+                var pedidoPLatos = await pedidoPlatoRepository.GetByPedidoId(idPedido);
+
+
+
+                var platosFiltrados = PlatoMenus
+                    .Where(p => !pedidoPLatos.Any(pm => pm!.IdPlato == p.PlatoId))
+                    .ToList();
+
+                foreach (var item in platosFiltrados)
+                {
+                    if (item == null)
+                    {
+                        continue;
+                    }
+
+                    var plato = await _PlatoRepository.GetByIdAsync(item!.PlatoId);
+                    listPlatoPedido.Add(plato!);
+                }
+
+                var listPlato = _Mapper.Map<List<PlatoResponseDto>>(listPlatoPedido);
+
+                if (listPlato == null || listPlato.Count == 0)
                 {
                     return [];
                 }
@@ -338,13 +490,13 @@ namespace ReservaBook.Core.Aplication.Services
 
         public async Task<Indicadoresdto?> GetIndicadoresDto(string Usuario)
         {
-            try 
+            try
             {
-                var response = new Indicadoresdto() { TotalPagoProcesado = 0, TotalPedido =  0, TotalResenia = 0, TotalReserva = 0};
+                var response = new Indicadoresdto() { TotalPagoProcesado = 0, TotalPedido = 0, TotalResenia = 0, TotalReserva = 0 };
 
                 var restauranteUsuario = await _RestauranteRepository.GetByUserId(Usuario);
 
-               
+
 
                 var reservas = await reservaResporitory.GetListByRestauranteId(restauranteUsuario!.Id);
 
@@ -369,14 +521,15 @@ namespace ReservaBook.Core.Aplication.Services
 
                 return response;
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
                 throw new Exception("Ocurrio un error al obtener los indicadores" + ex.Message);
 
 
             }
-           
+
         }
     }
 }

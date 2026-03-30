@@ -42,6 +42,29 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             return entities;
 
         }
+
+
+
+
+        public async Task<List<Pedido>> GetPedidosByUsuarioId(string usuarioId)
+        {
+
+            var entities = await _context.Set<Pedido>().Where(p => p.UsuarioId == usuarioId).ToListAsync();
+
+            if (entities == null) return [];
+
+
+            return entities;
+
+        }
+
+
+
+
+
+
+
+
     }
 }
 
