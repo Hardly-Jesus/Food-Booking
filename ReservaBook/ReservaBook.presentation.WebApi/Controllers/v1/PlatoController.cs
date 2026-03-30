@@ -205,6 +205,83 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Plato-not-add-pedido/{propietarioId}/{pedidoId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoNotAddInPedido(string propietarioId, int pedidoId)
+        {
+
+            try
+            {
+
+              
+                var entities = await _PlatoService.GetListPlatoAddMenuNotAddPedidoAsync(propietarioId,pedidoId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener el listado de platos, favor volver a intentar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Platos-pedido/{pedidoId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoByPedidoId(int pedidoId)
+        {
+
+            try
+            {
+
+
+                var entities = await _PlatoService.GetListPlatoByPedidoId(pedidoId);
+
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return Ok(entities!.Count);
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
         [Authorize(Roles = "Propietario")]
         [HttpGet("get-indicadores")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

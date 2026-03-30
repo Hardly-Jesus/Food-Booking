@@ -119,6 +119,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
                 IdRestaurante = restauranteAdded.Id,
+                UsuarioId = "6a458264-d403-48fc-a27d-9d4edc653084",
                 Total = 0m
             };
 
@@ -219,8 +220,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
+                UsuarioId = "6a458264-d403-48fc-a27d-9d4edc653084",
                 Total = 0m
             };
 

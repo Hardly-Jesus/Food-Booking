@@ -13,6 +13,8 @@ namespace ReservaBook.Core.Aplication.Interfaces
         Task<List<PlatoResponseDto>> GetListPlatoMenu(string UsuarioId);
         Task<List<PlatoResponseDto>> GetListPlatoNotAddMenu(string UsuarioId);
         Task<Indicadoresdto?> GetIndicadoresDto(string Usuario);
+        Task<List<PlatoResponseDto>> GetListPlatoAddMenuNotAddPedidoAsync(string UsuarioId, int idPedido);
+        Task<List<PlatoResponseDto>> GetListPlatoByPedidoId(int pedidoId);
     }
 }
 
