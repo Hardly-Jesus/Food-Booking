@@ -29,7 +29,7 @@ async function getMenu(){
 function renderMenu(data) {
 
   if (data.hasErrors || data.nombre === null) {
-      container.innerHTML = `${data.errors}`;
+      container.innerHTML = `${data.errors || "No se encontro el menu del restaurante"}`;
     return;
   }
 
@@ -80,7 +80,7 @@ async function GetPlatosMenu(){
     
     }catch(err){
 
-        console.log("Error al obtener el menu", err);
+        console.log("Error al obtener los platos del menu", err);
     }
 
 
