@@ -299,7 +299,7 @@ namespace ReservaBook.Infraestructure.Indentity.Services
             user.PhoneNumber = !string.IsNullOrWhiteSpace(saveUser.Phone) ? saveUser.Phone : user.PhoneNumber;
             user.UserName = !string.IsNullOrWhiteSpace(saveUser.UserName) ? saveUser.UserName : user.UserName;
             user.ProfileImage = string.IsNullOrWhiteSpace(saveUser.ProfileImage) ? user.ProfileImage : saveUser.ProfileImage;
-            user.RNC = saveUser.RNC ?? "";
+            user.RNC = user.RNC ?? "";
             if (!IsCreated!.Value)
             {
                 user.EmailConfirmed = user.Email == saveUser.Email;
