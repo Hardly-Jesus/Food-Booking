@@ -84,10 +84,14 @@ async function reenderizarPedidos(data) {
             <i class="bi bi-trash"></i> Delete
           </a>
 
-
+           <a href="/Assets/view/cliente/ordenes/pago.html?id=${r.id}" 
+             class="btn btn-outline-success btn-sm px-3 rounded-pill">
+              <i class="bi bi-paypal"></i>  Pagar
+          </a>
+    
 
           <a href="/Assets/view/cliente/ordenes/addPlato.html?id=${r.id}&propietarioId=${r.propietarioId}" 
-             class="btn btn-outline-danger btn-sm px-3 rounded-pill">
+             class="btn btn-outline-primary btn-sm px-3 rounded-pill">
               <i class="bi bi-fork-knife"></i> Add Plato
           </a>
         </div>
