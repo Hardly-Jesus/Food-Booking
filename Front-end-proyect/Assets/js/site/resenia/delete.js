@@ -20,7 +20,7 @@ async function eliminarResena(){
          window.location.href = "/Assets/view/cliente/restaurante/Restaurante.html";
 
   }catch(err){
-    console.log("Ocurrio un error al intentar eliminar la reseña");
+    console.log("Ocurrio un error al intentar eliminar la resenia");
   }
 }
 
