@@ -11,9 +11,10 @@ using System.Security.Claims;
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
 
+   
     [ApiVersion("1.0")]
-    [Authorize] 
-    public class ManagerAccountController : Controller
+    [Authorize(Roles = "Admin")]
+    public class ManagerAccountController : BaseApiController
     {
 
         private readonly IAccountServiceForWebApi _accountService;
@@ -30,12 +31,11 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("Get-Users")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAllUsers()
-        {
+       {
             try
             {
 
@@ -65,32 +65,31 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
     
-        [HttpPost("EditUser")]
-        [Authorize]
+        [HttpPut("EditUser/{usuarioId}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditResponseDto))]
-        public async Task<IActionResult> EditUser([FromForm] EditUserRequestMinDto dto)
+        public async Task<IActionResult> EditUser(string usuarioId,[FromForm] EditUserRequestMinDto dto)
         {
 
             try
             {
-                var UserId = User.FindFirst("UId")?.Value;
-                var role = User.FindFirst(ClaimTypes.Role)?.Value;
-
+                
+               
                 var result = await _accountService.EditUser(
                     new SaveUserDto()
-                    { Id = UserId,
+                    {   Id = usuarioId,
                         Name = dto.Name,
                         LastName = dto.LastName,
                         Email = dto.Email ?? "",
                         Password = dto.Password ?? "",
-                        ProfileImage = FileHandler.Upload(dto.ProfileImage, UserId!, null!, true, ""),
+                        ProfileImage = FileHandler.Upload(dto.ProfileImage, usuarioId!, null!, true, ""),
                         Phone = dto.Phone,
                         UserName = dto.UserName ?? "",
-                        Role = role
+                        Role = ""
                     });
 
 
@@ -112,8 +111,47 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
+
+
+
+
+        [HttpGet("GetById/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EditResponseDto))]
+        public async Task<IActionResult> GetUserById(string usuarioId)
+        {
+
+            try
+            {
+
+
+                var result = await _accountService.GetUserById(usuarioId);
+
+
+                if (result == null)
+                {
+                    return NotFound("Usuario no encontrado, favor verificar");
+                }
+
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+            }
+
+        }
+
+
+
+
+
         [Authorize(Roles = "Admin")]
-        [HttpDelete("delete-user/{id}")]
+        [HttpDelete("DeleteUser/{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
