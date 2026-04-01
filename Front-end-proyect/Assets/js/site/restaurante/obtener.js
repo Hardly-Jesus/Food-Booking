@@ -40,7 +40,6 @@ function renderRestaurante(data) {
 
 
   lista.forEach(r => {
-
     const card = `
   <div class="col-md-6 col-lg-6 mt-4">
     <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
@@ -83,14 +82,14 @@ function renderRestaurante(data) {
         <div class="mt-auto d-flex justify-content-between">
         <button class="btn btn-outline-warning btn-sm px-3"> 
          <a href="/Assets/view/Propietario/restaurante/edit.html?id=${r.id}" class="text-decoration-none">     
-            <i class="bi bi-pencil"></i>
+            <i class="bi bi-pencil"></i> Edit
           </a>
         </button>
 
 
          <a href="/Assets/view/Propietario/restaurante/delete.html?id=${r.id}" class="text-decoration-none"> 
           <button class="btn btn-outline-danger btn-sm px-3">
-            <i class="bi bi-trash"></i>
+            <i class="bi bi-trash"></i> Delete
           </button>
           </a>
 
