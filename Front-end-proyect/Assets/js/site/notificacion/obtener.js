@@ -62,7 +62,7 @@ function renderNotificaciones(data) {
         <div class="mt-auto text-end">
           <a href="/Assets/view/Propietario/notificacion/delete.html?id=${n.id}" class="text-decoration-none"> 
           <button class="btn btn-outline-danger btn-sm px-3">
-            <i class="bi bi-trash"></i>
+            <i class="bi bi-trash"></i> Delete
           </button>
           </a>
         </div>
