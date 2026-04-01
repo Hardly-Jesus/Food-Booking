@@ -47,14 +47,14 @@ function renderUsuarios(data) {
     <div class="col-md-6 col-lg-4 mt-4 me-4">
       <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
 
-        <!-- Imagen -->
+  
         <div style="height: 200px; overflow: hidden;">
           <img src="${image}" 
                class="w-100 h-100" 
                style="object-fit: cover; transition: transform .3s;">
         </div>
 
-        <!-- Header -->
+
         <div class="bg-light px-3 py-2 border-bottom">
           <h6 class="fw-bold text-primary mb-0">
             <i class="bi bi-person-fill"></i>
@@ -62,7 +62,7 @@ function renderUsuarios(data) {
           </h6>
         </div>
 
-        <!-- Body -->
+   
         <div class="card-body d-flex flex-column">
 
           <p class="mb-2 text-dark">
@@ -79,17 +79,17 @@ function renderUsuarios(data) {
             ${r.phone ?? "Sin teléfono"}
           </span>
 
-          <!-- Acciones -->
+       
           <div class="mt-auto d-flex justify-content-between">
 
             <a href="/Assets/view/Admin/usuario/edit.html?id=${r.id}"
                class="btn btn-outline-warning btn-sm px-3 rounded-pill">
-              <i class="bi bi-pencil"></i>
+              <i class="bi bi-pencil"></i> Edit
             </a>
 
             <a href="/Assets/view/Admin/usuario/delete.html?id=${r.id}" 
                class="btn btn-outline-danger btn-sm px-3 rounded-pill">
-              <i class="bi bi-trash"></i>
+              <i class="bi bi-trash"></i> Delete
             </a>
 
           </div>
