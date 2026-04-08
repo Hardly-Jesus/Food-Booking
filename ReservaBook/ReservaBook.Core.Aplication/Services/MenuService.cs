@@ -13,12 +13,14 @@ namespace ReservaBook.Core.Aplication.Services
 
         private readonly IMenuRepository menuRepository;
         private readonly IRestauranteRepository repoRestaurante;
+        private readonly IMapper _mapper;
 
 
         public MenuService(IMenuRepository menuRepository, IMapper _mapper, IRestauranteRepository repoRestaurante) : base(menuRepository, _mapper)
         {
             this.menuRepository = menuRepository;   
-            this.repoRestaurante = repoRestaurante;  
+            this.repoRestaurante = repoRestaurante;
+            this._mapper = _mapper;
         }
 
 
@@ -76,6 +78,46 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
+        public async  Task<MenuResponseDto?> GetByPropietario(string usuarioId)
+        {
+            try
+            {     var response = new MenuResponseDto() { HasErrors = false, Errors = [] };
+
+                var restaurante = await repoRestaurante.GetByUserId(usuarioId);
+
+                if(restaurante == null)
+                {
+                    response.HasErrors = true;
+                    response.Errors.Add("ocurrio un error al intentar obtener el menu, favor verificar que tu restaurante esta registrado");
+                    return response;
+
+                }
+
+                var menu = await menuRepository.GetMenuByRestauranteId(restaurante.Id);
+
+                if(menu == null)
+                {
+                    response.HasErrors = true;
+                    response.Errors.Add("ocurrio un error al intentar obtener el menu, favor verificar que tu restaurante esta registrado, id no encontrado");
+                    return response;
+
+                }
+
+                var map = _mapper.Map<MenuResponseDto>(menu);       
+                return map;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Ocurrio un error al intentar obtener el menu" + ex.Message);
+            
+            }
+
+        }
+
+
+
+
         public override async Task<MenuResponseDto?> UpdateAsync(int id, CreateMenuDto? entity)
         {
 
@@ -101,7 +143,7 @@ namespace ReservaBook.Core.Aplication.Services
 
 
             entity!.Id = IsExit.Id;
-            entity.IdRestaurante = restaurante!.Id;
+            entity.IdRestaurante = IsExit.IdRestaurante;
             return await base.UpdateAsync(id, entity);
 
         }

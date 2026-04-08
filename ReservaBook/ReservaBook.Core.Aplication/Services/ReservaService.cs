@@ -145,7 +145,24 @@ namespace ReservaBook.Core.Aplication.Services
                    
                 }
 
+
                 var map = _mapper.Map<List<ReservaResponseDto>>(entities);
+
+                foreach (var item in entities)
+                {
+
+                    var restaurante = await restauranteRepository.GetByIdAsync(item.IdRestaurante);
+                    var mesa = await mesaRepository.GetByIdAsync(item.IdMesa);
+                    
+                    foreach(var mapItem in map)
+                    {
+                        mapItem.Mesa = mesa!.Nombre;
+                        mapItem.Restaurante = restaurante!.Nombre;
+                        mapItem.PropietarioId = restaurante.UsuarioId;  
+                    }
+                }
+
+
                 return map;
                     
             }
@@ -230,10 +247,14 @@ namespace ReservaBook.Core.Aplication.Services
 
                 entity.Estado = IsExite!.Estado;
                 entity.IdRestaurante = IsExite.IdRestaurante;
-                entity.IdMesa = IsExite.IdMesa;
+                if(IsExite.IdMesa == 0 || IsExite.IdMesa < 0)
+                {
+                    entity.IdMesa = IsExite.IdMesa;
+                }
                 entity.IdUsuario = IsExite.IdUsuario;
                 entity.Id = IsExite.Id;
                 entity.IdUsuario = IsExite.IdUsuario;
+             
 
                 return await base.UpdateAsync(entity.Id,entity);
             }

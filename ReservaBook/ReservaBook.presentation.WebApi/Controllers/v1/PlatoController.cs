@@ -12,7 +12,6 @@ using ReservaBook.presentation.WebApi.Handlers;
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Propietario")]
     public class PlatoController : BaseApiController
     {
 
@@ -28,7 +27,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("get-All-Plato")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(PlatoResponseDto))]
@@ -62,8 +61,268 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
+        [Authorize(Roles = "Propietario")]
+        [HttpGet("get-Platos-byUsuariId")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllByUsuarioId()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoByUsuarioId(userId);
 
 
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Platos-menu")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoMenu()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoMenu(userId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado en el menu, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Platos-menu/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoMenu(string usuarioId)
+        {
+
+            try
+            {
+
+               
+                var entities = await _PlatoService.GetListPlatoMenu(usuarioId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("No se encontrar platos registrado en el menu, favor verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
+        [HttpGet("get-Plato-not-add-Menu")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoNotAddInMenu()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetListPlatoNotAddMenu(userId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener el listado de platos, favor volver a intentar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Plato-not-add-pedido/{propietarioId}/{pedidoId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoNotAddInPedido(string propietarioId, int pedidoId)
+        {
+
+            try
+            {
+
+              
+                var entities = await _PlatoService.GetListPlatoAddMenuNotAddPedidoAsync(propietarioId,pedidoId);
+
+
+                if (entities.Count == 0 || entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener el listado de platos, favor volver a intentar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("get-Platos-pedido/{pedidoId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPlatoByPedidoId(int pedidoId)
+        {
+
+            try
+            {
+
+
+                var entities = await _PlatoService.GetListPlatoByPedidoId(pedidoId);
+
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return Ok(entities!.Count);
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
+        [HttpGet("get-indicadores")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetIndicadores()
+        {
+
+            try
+            {
+
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _PlatoService.GetIndicadoresDto(userId);
+
+
+                if (entities == null)
+                {
+
+                    return NotFound("Hubo un error al obtener los indicadores, favor volver a verificar");
+
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+        }
+
+
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
         [HttpPost("add-plato")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -73,6 +332,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
             try
             {
+
+               
                 if (request == null)
                 {
 
@@ -85,6 +346,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
                 var map = _mapper.Map<CreatePlatoRequestDto>(request);
                 map.Estado = Estado.Disponible.ToString();
                 map.Imagen = FileHandler.Upload(request.Imagen,userId,"",false,"Platos");
+                map.UsuarioId = userId; 
                 var entities = await _PlatoService.AddAsync(map);
 
    
@@ -100,7 +362,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPost("change-status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -146,6 +408,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario")]
         [HttpPut("update-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -166,7 +429,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 var userId = User.FindFirst("UId")!.Value;
                 var map = _mapper.Map<CreatePlatoRequestDto>(request);
-                map.Imagen = FileHandler.Upload(request.Imagen, userId, "", true, "Platos");
+                map.Imagen = FileHandler.Upload(request.Imagen, userId, "", true, "");
                 var entities = await _PlatoService.UpdateAsync(id,map);
 
                 if(entities!.HasError)
@@ -189,7 +452,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("delete-plato/{id}")]
+        [Authorize(Roles = "Propietario")]
+        [HttpDelete("delete-plato/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -221,6 +485,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario")]
         [HttpGet("getById/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -248,50 +513,6 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

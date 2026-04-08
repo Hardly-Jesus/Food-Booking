@@ -88,7 +88,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -133,6 +134,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
                 IdRestaurante = restauranteAdded.Id,
+                UsuarioId = "6a458264-d403-48fc-a27d-9d4edc653084",
                 Total = 0m
             };
 
@@ -148,7 +150,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -160,7 +163,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.PlatosFuertes.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 500.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -263,7 +267,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -308,6 +313,7 @@ namespace ReservaBook.Unitt.Test.Services
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
                 IdRestaurante = restauranteAdded.Id,
+                UsuarioId = "6a458264-d403-48fc-a27d-9d4edc653084",
                 Total = 0m
             };
 
@@ -323,7 +329,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b",
             };
 
 
@@ -399,7 +406,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -443,8 +451,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Hora = TimeOnly.FromDateTime(DateTime.UtcNow),
                 Estado = EstadoPedido.Pendiente,
                 IdMesa = mesaAdded.Id,
-                IdRestaurante = restauranteAdded.Id
-                ,
+                IdRestaurante = restauranteAdded.Id,
+                UsuarioId = "6a458264-d403-48fc-a27d-9d4edc653084",
                 Total = 0m
             };
 
@@ -460,7 +468,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
@@ -472,7 +481,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.PlatosFuertes.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 500.25m,
-                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg"
+                Imagen = "Images//4d7ad823-3ddb-4ff2-9888-b6b831ff64fa/e668a5df-9f29-4d1c-9591-d3f49ae6d543.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 

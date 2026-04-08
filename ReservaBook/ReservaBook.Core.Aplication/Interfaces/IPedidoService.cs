@@ -6,10 +6,11 @@ using ReservaBook.Core.Domain.Entities;
 
 namespace ReservaBook.Core.Aplication.Interfaces
 {
-    public interface IPedidoService : IGenericService<CreatePedidoRequestDto, CreatePedidoRequestDto,PedidoResponseDto,Pedido>
+    public interface IPedidoService : IGenericService<CreatePedidoRequestDto, CreatePedidoRequestDto, PedidoResponseDto, Pedido>
     {
 
         Task<bool> ChangeStatus(int IdPedido, EstadoPedido pedido);
+        Task<List<PedidoResponseDto?>> GetListPedidoUsuario(string usuarioId);
 
     }
 

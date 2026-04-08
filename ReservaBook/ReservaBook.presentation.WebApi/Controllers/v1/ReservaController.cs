@@ -55,6 +55,41 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
+        [HttpGet("get-ById/{id}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReservaResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var entity = await _service.GetByIdAsync(id);
+
+                if (entity == null)
+                {
+
+                    return NotFound("No se encontraron reservas registrada");
+
+                }
+
+
+                return Ok(entity);
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+            }
+        }
+
+
+
+
+
+
 
         [HttpGet("get-all-By-UsuarioId")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -134,7 +169,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("update-reservas/{id}")]
+        [HttpPut("update-reservas/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ReservaResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -179,7 +214,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpPost("delete-reservas/{id}")]
+        [HttpDelete("delete-reservas/{id}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

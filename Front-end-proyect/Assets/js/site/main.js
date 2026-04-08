@@ -1,3 +1,5 @@
+
+
 const inputUserName = document.getElementById("UserName");
 const inputPassword = document.getElementById("Password");
 const errorPassword = document.getElementById("error-password");
@@ -154,7 +156,7 @@ async function LoginEnpoint(userName,Password)
     { return;
     }
    
-     let res = await axios.post("https://localhost:7039/Api/v1/LoginUser/login",{userName,Password}),
+     let res = await axios.post(`${config.API_URL}/Api/v1/LoginUser/login`,{userName,Password}),
      json = await res.data;
 
     errorNoEspecifico.innerText = json.errors; 
@@ -165,6 +167,7 @@ async function LoginEnpoint(userName,Password)
 
     localStorage.setItem("token",json.accessToken)
     localStorage.setItem("rol",json.rol)
+    localStorage.setItem("UsuarioId",json.usuarioId);
     
     redirectForUserRol(json.rol);
   }catch(err){

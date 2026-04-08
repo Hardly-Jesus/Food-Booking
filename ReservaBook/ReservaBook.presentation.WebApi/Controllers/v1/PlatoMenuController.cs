@@ -67,7 +67,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-        [HttpDelete("delete-plato-del-menu")]
+        [HttpDelete("delete-plato-del-menu/{idPlato}/{idMenu}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlatoMenuResponseDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -8,6 +8,7 @@ namespace ReservaBook.Core.Domain.Interfaces
     {
 
         Task<bool> ChangeStatus(int idMesa,string Statu);
+        Task<List<Mesa>>  GetMesasByRestauranteId(int idRestaurante);
 
     }
 }

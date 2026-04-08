@@ -12,7 +12,9 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
         Task<List<PedidosPlatoResponseDto>> AddRangeAsync(List<CreatePedidoPlatoDto> dto);
- 
+   
+
+
     }
 
 }

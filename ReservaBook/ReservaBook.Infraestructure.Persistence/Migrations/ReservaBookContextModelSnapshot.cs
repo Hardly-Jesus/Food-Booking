@@ -186,6 +186,10 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                         .HasPrecision(22, 2)
                         .HasColumnType("decimal(22,2)");
 
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdMesa");
@@ -258,6 +262,10 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
                     b.Property<decimal>("Precio")
                         .HasPrecision(22, 2)
                         .HasColumnType("decimal(22,2)");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -571,7 +579,3 @@ namespace ReservaBook.Infraestructure.Persistence.Migrations
         }
     }
 }
-
-// Prueba
-
-// Prueba
