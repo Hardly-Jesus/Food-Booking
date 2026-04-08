@@ -15,6 +15,7 @@ namespace ReservaBook.Core.Domain.Entities
         public required decimal Precio { get; set; }
         public required string Categoria { get; set; }
         public required string Estado { get; set; } 
+        public required string UsuarioId { get; set; }
 
 
         //foreign key y navigation property

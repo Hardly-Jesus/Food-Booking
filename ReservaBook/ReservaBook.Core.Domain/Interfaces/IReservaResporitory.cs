@@ -9,6 +9,7 @@ namespace ReservaBook.Core.Domain.Interfaces
     {
 
         Task<List<Reserva>?> GetAllReservaByIdUsuario(string IdUsuario);
+        Task<List<Reserva>?> GetListByRestauranteId(int restauranteId);
 
     }
 }

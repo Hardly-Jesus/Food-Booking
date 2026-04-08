@@ -11,6 +11,7 @@ namespace ReservaBook.Core.Aplication.Dtos.mesa
         public string Estado { get; set; } = string.Empty;
         public  int IdRestaurante { get; set; }
         public bool HasError { get; set; }
+        public string UsuarioId { get; set; } = string.Empty;
         public List<string> Errors { get; set; } = new List<string>();
 
     }

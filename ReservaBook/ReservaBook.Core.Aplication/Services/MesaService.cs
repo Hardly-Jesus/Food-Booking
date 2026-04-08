@@ -98,6 +98,8 @@ namespace ReservaBook.Core.Aplication.Services
             
         }
 
+      
+
 
 
         public override async Task<MesaResponseDto?> GetByIdAsync(int id)
@@ -127,6 +129,51 @@ namespace ReservaBook.Core.Aplication.Services
 
             }
         }
+
+
+
+
+
+        public async Task<List<MesaResponseDto>> GetMesasByRestauranteId(string idUsuario)
+        {
+
+            try
+            {
+                var restaurante = await _restauranteRepository.GetByUserId(idUsuario);
+
+                if(restaurante == null)
+                {
+                    return [];
+                }
+
+                var listMesa = await _mesaRepository.GetMesasByRestauranteId(restaurante.Id);
+
+                if(listMesa == null || listMesa.Count <= 0)
+                {
+                    return [];
+                }
+
+
+                var map = _mapper.Map<List<MesaResponseDto>>(listMesa);
+
+                foreach(var item in map)
+                {
+                    item.UsuarioId = idUsuario;
+                }
+
+                return map;
+
+
+
+            }catch(Exception ex)
+            {
+
+                throw new Exception( "Ocurrio un error al obtener las mesas registradas " + ex.Message);
+
+            }
+        }
+
+
 
 
 

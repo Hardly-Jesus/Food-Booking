@@ -9,6 +9,9 @@ namespace ReservaBook.Core.Aplication.Dtos.pedido
         public  DateOnly Fecha { get; set; }
         public  TimeOnly Hora { get; set; }
         public  EstadoPedido Estado { get; set; }
+        public string Mesa { get; set; } = string.Empty;
+        public string Restaurante { get; set; } = string.Empty; 
+        public string? PropietarioId { get; set; }
 
         public  decimal Total { get; set; }
 

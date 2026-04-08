@@ -8,6 +8,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
     {
 
         Task<bool> ChangeStatus(int idMesa, string Status);
+        Task<List<MesaResponseDto>> GetMesasByRestauranteId(string idUsuario);
 
     }
 }

@@ -63,6 +63,43 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
+        [HttpGet("get-All-pedidos/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PedidoResponseDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPedidosByUsuarioId(string usuarioId)
+        {
+            try
+            {
+                var entities = await pedidoService.GetListPedidoUsuario(usuarioId);
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return NotFound("No se encontraron pedidos registrado, favor verificar");
+
+                }
+
+
+                return Ok(entities);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
+
+        }
+
+
+
+
         [HttpPost("add-pedido")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -82,6 +119,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
                 var map = _mapper.Map<CreatePedidoRequestDto>(dto);
                 map.ClienteId = userId;
+                map.UsuarioId = userId;
                 var entity = await pedidoService.AddAsync(map);
 
 

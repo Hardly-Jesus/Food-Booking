@@ -180,6 +180,35 @@ namespace ReservaBook.Core.Aplication.Services
             
             }
         }
+
+
+
+        public  async Task<Restaurante?> GetByUserId(string UserId)
+        {
+            try
+            {
+
+                var restaurante = await _repository.GetByUserId(UserId);
+            
+            
+                if(restaurante != null)
+                {
+                    return restaurante;
+                }
+
+
+                return null;
+
+            
+            }
+            catch(Exception ex)
+            {
+
+                throw new Exception("Ocurrio un error intentando obtenet el restaurante registrado " + ex.Message);
+
+            }   
+       
+        }
     }
 
 

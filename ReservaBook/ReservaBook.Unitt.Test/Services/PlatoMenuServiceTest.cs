@@ -103,13 +103,14 @@ namespace ReservaBook.Unitt.Test.Services
             var plato = new Plato()
             {
 
-                Id  = 0,
+                Id = 0,
                 Nombre = "Mangu con salami",
                 Descripcion = "Es un plato de entrada muy ...",
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.50m,
-                Imagen = "https://i.pinimg.com/originals/ae/63/38/ae633823e1c5d0c395263bc05ec4da36.jpg"
+                Imagen = "https://i.pinimg.com/originals/ae/63/38/ae633823e1c5d0c395263bc05ec4da36.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b",
             };
 
 
@@ -167,7 +168,8 @@ namespace ReservaBook.Unitt.Test.Services
                 Categoria = PlatoCategoria.Entradas.ToString(),
                 Estado = Estado.Disponible.ToString(),
                 Precio = 120.50m,
-                Imagen = "https://i.pinimg.com/originals/ae/63/38/ae633823e1c5d0c395263bc05ec4da36.jpg"
+                Imagen = "https://i.pinimg.com/originals/ae/63/38/ae633823e1c5d0c395263bc05ec4da36.jpg",
+                UsuarioId = "c69fb7ae-7337-4b25-930f-a8a2cd2de22b"
             };
 
 
