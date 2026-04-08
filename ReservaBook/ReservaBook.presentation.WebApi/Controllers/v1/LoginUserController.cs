@@ -36,7 +36,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         {
 
             try
-            {
+            {  
                 return Ok(await _accountService.Authenticate(dto));
 
             }

@@ -30,6 +30,22 @@ public class ReservaRepository : GenericRepository<Reserva>, IReservaResporitory
         return entity;
 
     }
+
+
+    public async Task<List<Reserva>?> GetListByRestauranteId(int restauranteId)
+    {
+
+
+        var entities = await _context.Set<Reserva>().Where(x => x.IdRestaurante == restauranteId).ToListAsync();
+
+        if(entities == null)
+        {
+            return [];
+        }
+
+        return entities;
+
+    }
 }
 
 // Prueba

@@ -10,6 +10,7 @@ namespace ReservaBook.Core.Aplication.Interfaces
 
 
         Task<DeleteMenuResponseDto?> DeleteMenuAsync(int id);
+        Task<MenuResponseDto?> GetByPropietario(string usuarioId);
 
 
     }

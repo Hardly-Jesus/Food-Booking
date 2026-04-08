@@ -9,6 +9,7 @@ namespace ReservaBook.Core.Domain.Interfaces
 
         Task<bool> AddRange(List<PlatoMenu> platoMenus);
         Task<PlatoMenu?> GetByIdPlatoYMenuId(int idplato, int idMenu);
+        Task<List<PlatoMenu?>> GetByMenuId(int menuId);
 
     }
 }

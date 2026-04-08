@@ -12,8 +12,6 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         private readonly ReservaBookContext Context;
 
 
-
-
         public PlatoMenuRepository(ReservaBookContext appContext) : base(appContext)
         {
            Context  = appContext;
@@ -51,6 +49,23 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
             return entity;  
 
         }
+
+
+
+        public async Task<List<PlatoMenu>?> GetByMenuId(int menuId)
+        {
+
+            var entity = await Context.Set<PlatoMenu>().Where(x => x.MenuId == menuId).ToListAsync();
+
+
+            if (entity == null) return null;
+
+
+            return entity;
+
+
+        }
+        
     }
 }
 

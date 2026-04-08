@@ -8,6 +8,7 @@ namespace ReservaBook.Core.Domain.Interfaces
     public interface IMenuRepository : IGenericRepository<Menu>
     {
 
+        Task<Menu?> GetMenuByRestauranteId(int RestaurateId);
 
     }
 }

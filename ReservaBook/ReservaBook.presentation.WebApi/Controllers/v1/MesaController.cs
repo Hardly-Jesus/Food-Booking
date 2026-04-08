@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using ReservaBook.Core.Aplication.Dtos.mesa;
 using ReservaBook.Core.Aplication.Interfaces;
 using ReservaBook.Core.Domain.Common.Enums;
+using ReservaBook.Core.Domain.Entities;
 
 namespace ReservaBook.presentation.WebApi.Controllers.v1
 {
 
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Propietario")]
     public class MesaController : BaseApiController
     {
 
@@ -30,7 +30,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("Get-all-mesa")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -65,8 +65,84 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+        [Authorize(Roles = "Propietario")]
+        [HttpGet("Get-mesas")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MesaResponseDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByUserId()
+        {
+
+            try
+            {
+                var userId = User.FindFirst("UId")!.Value;
+                var entities = await _mesaService.GetMesasByRestauranteId(userId);
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return NotFound("No se encontraron mesas registrada");
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
 
 
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
+        }
+
+
+
+        [Authorize(Roles = "Propietario,Cliente")]
+        [HttpGet("Get-mesas-byUsuarioId/{usuarioId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(MesaResponseDto))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetMesasByUsuarioIdRoute(string usuarioId)
+        {
+
+            try
+            {
+             
+                var entities = await _mesaService.GetMesasByRestauranteId(usuarioId);
+
+                if (entities == null || entities.Count == 0)
+                {
+
+                    return NotFound("No se encontraron mesas registrada");
+
+                }
+
+                return Ok(entities);
+
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+        [Authorize(Roles = "Propietario")]
         [HttpPost("Add-mesa")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -105,7 +181,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
         }
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPost("change-status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -152,8 +228,8 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
-        [HttpPost("Delete/{id}")]
+        [Authorize(Roles = "Propietario")]
+        [HttpDelete("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -190,7 +266,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpGet("GetById/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -230,7 +306,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
-
+        [Authorize(Roles = "Propietario")]
         [HttpPut("Update/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

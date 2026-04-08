@@ -26,6 +26,7 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
 
+
         [HttpGet("get-notificaciones-usuario")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -37,7 +38,6 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
 
 
                 var userId = User.FindFirst("UId")!.Value;
-
 
                 var entities = await service.GetNotificacionByReceptorId(userId);
 
@@ -60,6 +60,10 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             }
            
         }
+
+
+
+
 
 
 
@@ -94,6 +98,9 @@ namespace ReservaBook.presentation.WebApi.Controllers.v1
             }
 
         }
+
+
+
 
 
 

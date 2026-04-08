@@ -15,6 +15,7 @@ namespace ReservaBook.Core.Aplication.Services
         private readonly IMesaRepository mesaRepository;
         private readonly IRestauranteRepository restauranteRepository;  
         private readonly INotificacionRepository notificacionRepository;
+        private readonly IMapper mapper;
 
         public PedidoService(IPedidoRepository _rep, IMesaRepository mesaRepository, IRestauranteRepository restauranteRepository, INotificacionRepository notificacionRepository, IMapper _mapper) : base(_rep, _mapper)
         {
@@ -23,6 +24,7 @@ namespace ReservaBook.Core.Aplication.Services
             this.restauranteRepository = restauranteRepository;
             this.mesaRepository = mesaRepository;
             this.notificacionRepository = notificacionRepository;
+            this.mapper = _mapper;
 
 
         }
@@ -107,6 +109,7 @@ namespace ReservaBook.Core.Aplication.Services
                 entity.IdMesa = mesa.Id;
                 entity.Total = 0;
                 entity.Estado = EstadoPedido.Pendiente;
+               
                 return await base.AddAsync(entity);
             }
             catch (Exception ex)
@@ -159,6 +162,63 @@ namespace ReservaBook.Core.Aplication.Services
 
 
 
+
+        public async Task<List<PedidoResponseDto?>> GetListPedidoUsuario(string usuarioId)
+        {
+
+            try
+            {  
+
+                var response = new PedidoResponseDto();
+                var listResponse = new List<PedidoResponseDto?>();
+                var entities  = await _repo.GetPedidosByUsuarioId(usuarioId);
+
+              
+
+                foreach (var entity in entities)
+                {
+                   var restaurante = await restauranteRepository.GetByIdAsync(entity.IdRestaurante);
+                   var mesa = await mesaRepository.GetByIdAsync(entity.IdMesa);
+
+
+                    response.Mesa = mesa!.Nombre ??  "Desconocida";
+                    response.Restaurante = restaurante!.Nombre ?? "Desconocido";
+                    response.Fecha = entity.Fecha;
+                    response.Hora = entity.Hora;
+                    response.Estado = entity.Estado;
+                    response.Total = entity.Total;
+                    response.Id = entity.Id;
+                    response.IdRestaurante = entity.IdRestaurante;
+                    response.PropietarioId = restaurante.UsuarioId; 
+                    response.IdMesa = entity.IdMesa;    
+                    listResponse.Add(response);
+
+                }
+                
+
+                if(entities == null)
+                {
+                    return [];
+                }
+
+           
+        
+                return listResponse;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al intentar obtener la lista de pedidos del usuario " + ex.Message);
+            }
+
+        }
+
+
+            
+
+
+
         public override async Task<PedidoResponseDto?> UpdateAsync(int id, CreatePedidoRequestDto? entity)
         {
 
@@ -205,6 +265,7 @@ namespace ReservaBook.Core.Aplication.Services
             entity.Estado = IsExit.Estado;
             entity.IdRestaurante = IsExit.IdRestaurante;    
             entity.IdMesa = IsExit.IdMesa;
+            entity.UsuarioId = IsExit.UsuarioId;
             entity.Total = IsExit.Total;
             return await base.UpdateAsync(id, entity);
 

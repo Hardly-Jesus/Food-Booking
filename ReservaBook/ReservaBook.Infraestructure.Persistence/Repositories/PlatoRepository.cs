@@ -1,4 +1,5 @@
-﻿using ReservaBook.Core.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ReservaBook.Core.Domain.Entities;
 using ReservaBook.Core.Domain.Interfaces;
 using ReservaBook.Infraestructure.Persistence.Contexts;
 
@@ -33,18 +34,30 @@ namespace ReservaBook.Infraestructure.Persistence.Repositories
         public async Task<List<Plato?>> GetAllByIdMenu(int idMenu)
         {
 
-
-
-
             return [];
-
-
-
-
 
         }
 
+        public async Task<List<Plato>> GetListPlatoByUsuarioId(string UsuarioId)
+        {
 
+            var entities = await _context.Set<Plato>().Where(x => x.UsuarioId == UsuarioId).ToListAsync();
+
+
+            if (entities == null || entities.Count == 0)
+            {
+
+                return [];
+                
+            
+            }
+
+
+
+            return entities;
+
+
+        }
     }
 }
 

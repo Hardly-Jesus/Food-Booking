@@ -1,4 +1,6 @@
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const erroPassword = document.getElementById("error-password");
     const formChangePassword = document.getElementById("change-password-form");
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            await axios.post("https://localhost:7039/Api/v1/LoginUser/change-password",
+            await axios.post(`${config.API_URL}/Api/v1/LoginUser/change-password`,
                 {
                     id: userId,
                     password: password,

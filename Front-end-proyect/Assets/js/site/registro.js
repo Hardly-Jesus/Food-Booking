@@ -357,7 +357,7 @@ async function RegistroEnpoint(Name,lastName,email,userName,Password,Phone,Image
         
            
       
-       let res = await  axios.post("https://localhost:7039/Api/v1/LoginUser/register",formData),
+       let res = await  axios.post(`${config.API_URL}/Api/v1/LoginUser/register`,formData),
        Json = await res.data;
            
        errorNotEspecifico.innerText = Json.errors;
