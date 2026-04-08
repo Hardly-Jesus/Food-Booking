@@ -16,7 +16,7 @@ async function getPlatoById(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Plato/getById/${id}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/getById/${id}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -73,7 +73,7 @@ async function editarPlato() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-        `https://localhost:7039/Api/v1/Plato/update-plato/${id}`,
+        `${config.API_URL}/Api/v1/Plato/update-plato/${id}`,
         formData,
         {
             headers: {

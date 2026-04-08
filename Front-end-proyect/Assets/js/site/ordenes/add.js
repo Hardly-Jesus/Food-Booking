@@ -1,6 +1,3 @@
-
-
-
 const formAddOrden = document.getElementById("form-orden-add");
 const containerSelectMesas = document.getElementById("mesasContainer");
 
@@ -25,7 +22,7 @@ async function GetMesas()
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Mesa/Get-mesas-byUsuarioId/${usuarioId}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Mesa/Get-mesas-byUsuarioId/${usuarioId}`,{
             headers: {
                  Authorization: `Bearer ${token}`
             }
@@ -104,7 +101,7 @@ async function addOrden(fecha,hora,idMesa,idRestaurante)
        
                
        const token = localStorage.getItem("token"); 
-       const result = await axios.post("https://localhost:7039/Api/v1/Pedido/add-pedido",{fecha,hora,idMesa,idRestaurante}
+       const result = await axios.post(`${config.API_URL}/Api/v1/Pedido/add-pedido`,{fecha,hora,idMesa,idRestaurante}
         ,{
             headers: {
                 Authorization: `Bearer ${token}`

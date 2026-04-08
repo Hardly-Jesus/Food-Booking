@@ -1,4 +1,3 @@
-
 const containerIndciadores = document.getElementById("IndicadodoresContainer");
 
 
@@ -7,7 +6,7 @@ async function getIndicadoresDasboard(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Plato/get-indicadores`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-indicadores`,{
             headers: {
                
                 Authorization: `Bearer ${token}`    

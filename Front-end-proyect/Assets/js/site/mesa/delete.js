@@ -1,5 +1,3 @@
-
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -16,7 +14,7 @@ btnEliminar.addEventListener("click", async () => {
         const token = localStorage.getItem("token");
 
         await axios.delete(
-            `https://localhost:7039/Api/v1/Mesa/Delete/${id}`,
+            `${config.API_URL}/Api/v1/Mesa/Delete/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

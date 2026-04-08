@@ -1,6 +1,3 @@
-
-
-
 const formEditMesa = document.getElementById("form-edit-mesa");
 const inputName = document.getElementById("Name");
 const inputDescripcion = document.getElementById("descripcion");
@@ -18,7 +15,7 @@ async function getMesasForUser(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Mesa/GetById/${id}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Mesa/GetById/${id}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -59,7 +56,7 @@ async function editarMesas() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-        `https://localhost:7039/Api/v1/Mesa/Update/${id}`,{
+        `${config.API_URL}/Api/v1/Mesa/Update/${id}`,{
           nombre,
           descripcion,
           cantidadPersonas

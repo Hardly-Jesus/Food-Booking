@@ -1,4 +1,3 @@
-
 const formEditPlato = document.getElementById("menu-edit-form");
 const inputNombre = document.getElementById("nombre");
 const inputDescripcion = document.getElementById("descripcion");
@@ -13,7 +12,7 @@ async function getMenuById(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Menu/get-byId/${id}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Menu/get-byId/${id}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -58,7 +57,7 @@ async function editarMenu() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-        `https://localhost:7039/Api/v1/Menu/update-menu/${id}`,{nombre,descripcion},
+        `${config.API_URL}/Api/v1/Menu/update-menu/${id}`,{nombre,descripcion},
         {
             headers: {
                 Authorization: `Bearer ${token}`

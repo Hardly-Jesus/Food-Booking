@@ -46,7 +46,7 @@ async function addRestaurante(nombre,direccion,telefono,horarioInicio,horarioFin
 
        const token = localStorage.getItem("token"); 
 
-       const result = await axios.post("https://localhost:7039/Api/v1/Restaurante/add-restaurante",formData
+       const result = await axios.post(`${config.API_URL}/Api/v1/Restaurante/add-restaurante`,formData
         ,{
             headers: {
                 Authorization: `Bearer ${token}`

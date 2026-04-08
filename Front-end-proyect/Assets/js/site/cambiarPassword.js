@@ -1,4 +1,3 @@
-
 const formResset = document.getElementById("resset-password");
 const inputUserName = document.getElementById("userName");
 const errorUserName = document.getElementById("error-userName");
@@ -47,7 +46,7 @@ async function RessetPasswordEnpoint(userName){
 
    try{
 
-      let response = await axios.post("https://localhost:7039/Api/v1/LoginUser/get-resset-token",{
+      let response = await axios.post(`${config.API_URL}/Api/v1/LoginUser/get-resset-token`,{
          userName
       }),
         

@@ -1,4 +1,3 @@
-
 const inputName= document.getElementById("Name");
 const inputDireccion = document.getElementById("direccion");
 const inputTelefono = document.getElementById("telefono");
@@ -22,7 +21,7 @@ async function getRestauranteByUsuarioId(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Restaurante/GetByUserId",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Restaurante/GetByUserId/${id}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -77,7 +76,7 @@ async function editarRestaurante() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-        `https://localhost:7039/Api/v1/Restaurante/Update-restaurante/${id}`,
+        `${config.API_URL}/Api/v1/Restaurante/Update-restaurante/${id}`,
         formData,
         {
             headers: {

@@ -18,7 +18,7 @@ async function GetUser(){
 try{
    
     const token = localStorage.getItem("token");
-    const result = await axios.get(`https://localhost:7039/Api/v1/ManagerAccount/GetById/${id}`,{
+    const result = await axios.get(`${config.API_URL}/Api/v1/ManagerAccount/GetById/${id}`,{
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -73,7 +73,7 @@ async function editUser(name,lastName,email,userName,password,telefono,Profileim
 
 
         const token = localStorage.getItem("token");
-        const result = await axios.put(`https://localhost:7039/Api/v1/ManagerAccount/EditUser/${id}`,data,{
+        const result = await axios.put(`${config.API_URL}/Api/v1/ManagerAccount/EditUser/${id}`,data,{
             
              headers: {
               

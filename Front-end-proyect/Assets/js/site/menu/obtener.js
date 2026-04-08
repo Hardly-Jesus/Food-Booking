@@ -8,7 +8,7 @@ async function getMenu(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Menu/get-menus-propietario`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Menu/get-menus-propietario`,{
             headers: {
                
                 Authorization: `Bearer ${token}`    
@@ -68,7 +68,7 @@ async function GetPlatosMenu(){
      try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Plato/get-Platos-menu`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-Platos-menu`,{
             headers: {
                
                 Authorization: `Bearer ${token}`    

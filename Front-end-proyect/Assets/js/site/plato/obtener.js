@@ -8,7 +8,7 @@ async function getPlatosByUser(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Plato/get-Platos-byUsuariId",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-Platos-byUsuariId`,{
             headers: {
                
                 Authorization: `Bearer ${token}`

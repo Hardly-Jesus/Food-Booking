@@ -13,7 +13,7 @@ async function confirmarCuenta() {
     if (!userId || !token) return;
 
     try {
-        const response = await axios.post("https://localhost:7039/Api/v1/LoginUser/confirm-account", {
+        const response = await axios.post(`${config.API_URL}/Api/v1/LoginUser/confirm-account`, {
             userId,
             token
         });

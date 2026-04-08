@@ -1,4 +1,3 @@
-
 const formAddMesa = document.getElementById("form-add-mesa");
 const inputName = document.getElementById("Name");
 const inputDescripcion = document.getElementById("descripcion");
@@ -29,7 +28,7 @@ async function addMesa(nombre,descripcion,cantidadPersonas)
 
        const token = localStorage.getItem("token"); 
 
-       const result = await axios.post("https://localhost:7039/Api/v1/Mesa/Add-mesa",
+       const result = await axios.post(`${config.API_URL}/Api/v1/Mesa/Add-mesa`,
         {
           nombre,
           descripcion,

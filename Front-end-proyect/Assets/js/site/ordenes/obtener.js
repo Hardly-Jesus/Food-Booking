@@ -9,7 +9,7 @@ async function GetPedidosUsuario()
     try{
       
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Pedido/get-All-pedidos/${usuarioId}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Pedido/get-All-pedidos/${usuarioId}`,{
            headers: {
             Authorization: `Bearer ${token}`
            } 
@@ -128,7 +128,7 @@ async function GetPlatosPedidos(pedidoId){
      try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Plato/get-Platos-pedido/${pedidoId}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-Platos-pedido/${pedidoId}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`    

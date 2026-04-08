@@ -19,7 +19,7 @@ async function addMenu(){
     const token = localStorage.getItem("token");
     const nombre = inputNombre.value;
     const descripcion = inputDescripcion.value;
-    const result = await axios.post("https://localhost:7039/Api/v1/Menu/add-menu",{nombre,descripcion},
+    const result = await axios.post(`${config.API_URL}/Api/v1/Menu/add-menu`,{nombre,descripcion},
       {
           headers: {
                Authorization: `Bearer ${token}`

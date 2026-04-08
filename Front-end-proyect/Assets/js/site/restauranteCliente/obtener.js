@@ -1,4 +1,3 @@
-
 const containerRestaurante = document.getElementById("RestauranteContainer");
 
 
@@ -7,7 +6,7 @@ async function GetRestaurante(){
 try
 {
     const token = localStorage.getItem("token");
-    const result = await axios.get("https://localhost:7039/Api/v1/Restaurante/GetAll-restaurante",{
+    const result = await axios.get(`${config.API_URL}/Api/v1/Restaurante/GetAll-restaurante`,{
        headers: {
            Authorization: `Bearer ${token}`
        }
@@ -210,7 +209,7 @@ async function  publicarReseña(id){
       const cantidadEstrella = Number(document.getElementById(`cantidadEstrella${id}`).value);
       const idRestaurante = id;
       const token = localStorage.getItem("token");
-      const result = await axios.post("https://localhost:7039/Api/v1/Reseña/add-reseña",{descripcion,cantidadEstrella,idRestaurante},{
+      const result = await axios.post(`${config.API_URL}/Api/v1/Reseña/add-reseña`,{descripcion,cantidadEstrella,idRestaurante},{
         headers:{
           Authorization: `Bearer ${token}`
         }
@@ -233,7 +232,7 @@ async function GetReseñaRestaurante(id){
 
   try{
          const token = localStorage.getItem("token");
-         const result = await axios.get(`https://localhost:7039/Api/v1/Reseña/get-all-resenia/${id}`,{
+         const result = await axios.get(`${config.API_URL}/Api/v1/Reseña/get-all-resenia/${id}`,{
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -303,7 +302,6 @@ function renderizarResenia(data,id){
 async function editarResena(id){
 
 }
-
 
 
 

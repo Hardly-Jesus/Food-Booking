@@ -2,7 +2,6 @@ const formAddPago = document.getElementById("form-add-pago");
 
 
 
-
 const params = new URLSearchParams(window.location.search);
 const id = Number(params.get("id"));
 
@@ -28,7 +27,7 @@ async function AddPago(monto,idPedido)
        
                
        const token = localStorage.getItem("token"); 
-       const result = await axios.post("https://localhost:7039/Api/v1/Pago/add-pago",{monto,idPedido}
+       const result = await axios.post(`${config.API_URL}/Api/v1/Pago/add-pago`,{monto,idPedido}
         ,{
             headers: {
                 Authorization: `Bearer ${token}`

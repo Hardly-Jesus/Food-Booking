@@ -11,7 +11,7 @@ async function eliminarResena(){
   try{
     
          const token = localStorage.getItem("token");
-         const result = await axios.delete(`https://localhost:7039/Api/v1/Reseña/delete-resenia/${id}`,{
+         const result = await axios.delete(`${config.API_URL}/Api/v1/Reseña/delete-resenia/${id}`,{
           headers: {
             Authorization: `Bearer ${token}`
           }

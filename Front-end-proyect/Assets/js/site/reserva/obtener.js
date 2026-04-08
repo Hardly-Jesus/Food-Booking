@@ -6,7 +6,7 @@ async function getReserva(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Reserva/get-all-By-UsuarioId",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Reserva/get-all-By-UsuarioId`,{
             headers: {
                
                 Authorization: `Bearer ${token}`

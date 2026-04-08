@@ -34,7 +34,7 @@ async function GetPedido()
         
    
         const token = localStorage.getItem("token");
-        const resultPedido = await axios.get(`https://localhost:7039/Api/v1/Pedido/update-pedido/${id}`,{
+        const resultPedido = await axios.get(`${config.API_URL}/Api/v1/Pedido/update-pedido/${id}`,{
             headers: {
                  Authorization: `Bearer ${token}`
             }
@@ -71,7 +71,7 @@ async function EditPedido(fecha,hora) {
 
     const token = localStorage.getItem("token");
     await axios.put(
-        `https://localhost:7039/Api/v1/Pedido/update-pedido/${id}`,
+        `${config.API_URL}/Api/v1/Pedido/update-pedido/${id}`,
         {fecha,hora},
         {
             headers: {
