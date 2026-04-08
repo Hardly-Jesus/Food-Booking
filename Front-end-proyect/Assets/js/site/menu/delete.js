@@ -11,7 +11,7 @@ btnEliminar.addEventListener("click", async () => {
         const token = localStorage.getItem("token");
 
         await axios.delete(
-            `https://localhost:7039/Api/v1/Menu/delete-menu/${id}`,
+            `${config.API_URL}/Api/v1/Menu/delete-menu/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

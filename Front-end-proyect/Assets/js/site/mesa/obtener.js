@@ -1,4 +1,3 @@
-
 const container = document.getElementById("mesaContainer");
 
 
@@ -9,7 +8,7 @@ async function getMesas(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Mesa/Get-mesas",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Mesa/Get-mesas`,{
             headers: {
                
                 Authorization: `Bearer ${token}`

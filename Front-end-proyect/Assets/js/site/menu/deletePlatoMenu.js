@@ -1,4 +1,3 @@
-
 const params = new URLSearchParams(window.location.search);
 const idPlato = params.get("idPlato");
 const idMenu = params.get("idMenu");
@@ -13,7 +12,7 @@ btnEliminar.addEventListener("click", async () => {
         const token = localStorage.getItem("token");
 
         await axios.delete(
-            `https://localhost:7039/Api/v1/PlatoMenu/delete-plato-del-menu/${idPlato}/${idMenu}`,
+            `${config.API_URL}/Api/v1/PlatoMenu/delete-plato-del-menu/${idPlato}/${idMenu}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

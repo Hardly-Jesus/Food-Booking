@@ -2,7 +2,6 @@ const formAddReserva = document.getElementById("reserva-add-form");
 const containerInput = document.getElementById("container-input");
 
 
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 const idRestaurante = params.get("idRestaurante");
@@ -22,7 +21,7 @@ async function GetMesas()
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Mesa/Get-mesas-byUsuarioId/${id}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Mesa/Get-mesas-byUsuarioId/${id}`,{
             headers: {
                  Authorization: `Bearer ${token}`
             }
@@ -113,7 +112,7 @@ async function addReserva(fecha,hora,idMesa)
        
                
        const token = localStorage.getItem("token"); 
-       const result = await axios.post("https://localhost:7039/Api/v1/Reserva/add-reservas",{fecha,hora,idMesa,idRestaurante}
+       const result = await axios.post(`${config.API_URL}/Api/v1/Reserva/add-reservas`,{fecha,hora,idMesa,idRestaurante}
         ,{
             headers: {
                 Authorization: `Bearer ${token}`

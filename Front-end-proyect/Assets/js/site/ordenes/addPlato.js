@@ -15,7 +15,7 @@ async function getPlatosByMenu(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Plato/get-Plato-not-add-pedido/${propietarioId}/${PedidoId}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-Plato-not-add-pedido/${propietarioId}/${PedidoId}`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -112,7 +112,7 @@ async function AddPlatoPedido(){
         console.log(data); 
 
         const result = await axios.post(
-            "https://localhost:7039/Api/v1/PedidoPlato/Add-platos-all-pedido",
+            `${config.API_URL}/Api/v1/PedidoPlato/Add-platos-all-pedido`,
             data,
             {
                 headers:{

@@ -40,7 +40,7 @@ async function addPlato(nombre,descripcion,imagen,precio,categoria)
      
        const token = localStorage.getItem("token"); 
 
-       const result = await axios.post("https://localhost:7039/Api/v1/Plato/add-plato",formData
+       const result = await axios.post(`${config.API_URL}/Api/v1/Plato/add-plato`,formData
         ,{
             headers: {
                 Authorization: `Bearer ${token}`

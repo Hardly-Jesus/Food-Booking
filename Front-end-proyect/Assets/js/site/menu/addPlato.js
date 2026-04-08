@@ -1,4 +1,3 @@
-
 const containerInputPlato = document.getElementById("containerInputPlato");
 const formAddPlato = document.getElementById("form-add-platoMenu");
 
@@ -13,7 +12,7 @@ async function getPlatosByUser(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Plato/get-Plato-not-add-Menu",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Plato/get-Plato-not-add-Menu`,{
             headers: {
                
                 Authorization: `Bearer ${token}`
@@ -93,7 +92,7 @@ async function AddPlatoMenu(){
         const IdPlatos = ids;
         const token = localStorage.getItem("token");
 
-        const result = await axios.post("https://localhost:7039/Api/v1/PlatoMenu/Add-plato-all-menu",{idMenu,IdPlatos},{
+        const result = await axios.post(`${config.API_URL}/Api/v1/PlatoMenu/Add-plato-all-menu`,{idMenu,IdPlatos},{
             headers:{
                 Authorization: `Bearer ${token}`
             }

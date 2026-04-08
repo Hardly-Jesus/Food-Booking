@@ -1,5 +1,3 @@
-
-
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -13,7 +11,7 @@ btnEliminar.addEventListener("click", async () => {
         const token = localStorage.getItem("token");
 
         await axios.delete(
-            `https://localhost:7039/Api/v1/Notificacion/delete-notificaciones/${id}`,
+            `${config.API_URL}/Api/v1/Notificacion/delete-notificaciones/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`

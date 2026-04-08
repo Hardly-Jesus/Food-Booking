@@ -1,4 +1,3 @@
-
 const container = document.getElementById("RestauranteContainer");
 const btnAddRestaurante = document.getElementById("btn-add-restaurante");
 
@@ -9,7 +8,7 @@ async function getRestauranteByUsuarioId(){
     try{
         
         const token = localStorage.getItem("token");
-        const result = await axios.get("https://localhost:7039/Api/v1/Restaurante/GetByUserId",{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Restaurante/GetByUserId`,{
             headers: {
                
                 Authorization: `Bearer ${token}`

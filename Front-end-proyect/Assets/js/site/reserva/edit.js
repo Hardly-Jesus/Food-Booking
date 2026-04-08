@@ -35,7 +35,7 @@ async function GetMesas()
         
      
         const token = localStorage.getItem("token");
-        const result = await axios.get(`https://localhost:7039/Api/v1/Mesa/Get-mesas-byUsuarioId/${usuarioId}`,{
+        const result = await axios.get(`${config.API_URL}/Api/v1/Mesa/Get-mesas-byUsuarioId/${usuarioId}`,{
             headers: {
                  Authorization: `Bearer ${token}`
             }
@@ -87,7 +87,7 @@ async function GetReserva()
         
    
         const token = localStorage.getItem("token");
-        const resultReserva = await axios.get(`https://localhost:7039/Api/v1/Reserva/get-ById/${id}`,{
+        const resultReserva = await axios.get(`${config.API_URL}/Api/v1/Reserva/get-ById/${id}`,{
             headers: {
                  Authorization: `Bearer ${token}`
             }
@@ -130,7 +130,7 @@ async function EditReserva(fecha,hora,idMesa) {
 
     const token = localStorage.getItem("token");
     await axios.put(
-        `https://localhost:7039/Api/v1/Reserva/update-reservas/${id}`,
+        `${config.API_URL}/Api/v1/Reserva/update-reservas/${id}`,
         {fecha,hora,idMesa},
         {
             headers: {
