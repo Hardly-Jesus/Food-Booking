@@ -40,8 +40,9 @@ builder.Services.AddCors(options =>
         {
             policy
                  .WithOrigins("http://127.0.0.1:5500",
-                              "http://localhost:5500")
-                .AllowAnyOrigin()
+                              "http://localhost:5500",
+                              "http://localhost:3000",
+                              "https://food-booking-frond-end-abdbdqezgvbsdhb7.canadacentral-01.azurewebsites.net")
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
@@ -52,7 +53,7 @@ builder.Services.AddControllers();
 //prueba git
 var app = builder.Build();
 await app.Services.RunIdentitySeed();
-app.UseCors("PermitirFrontend");
+
 
 
 // Configure the HTTP request pipeline.
@@ -65,6 +66,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCors("PermitirFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHealthChecks("/health");
