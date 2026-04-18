@@ -42,7 +42,7 @@ builder.Services.AddCors(options =>
                  .WithOrigins("http://127.0.0.1:5500",
                               "http://localhost:5500",
                               "http://localhost:3000",
-                              "https://food-booking-frond-end-abdbdqezgvbsdhb7.canadacentral-01.azurewebsites.net")
+                              "https://foodbooking-dev-front-end-f5hfabhyh8hhdma3.canadacentral-01.azurewebsites.net") //para que funcione el despligue del entorno dev
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
