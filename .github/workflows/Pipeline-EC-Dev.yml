@@ -58,7 +58,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./ReservaBook/ReservaBook.sln --configuration Release
 
       - name: dotnet publish
         run: dotnet publish ${{env.DOTNET_WEBAPP_PATH}} -c Release -o ${{env.DOTNET_ROOT}}/myapp
