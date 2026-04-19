@@ -29,6 +29,9 @@ on:
   push:
     branches: [ "QA" ]
 
+  pull_request:
+    branches: [ "QA" ]
+    
   workflow_dispatch:
 
 permissions:
